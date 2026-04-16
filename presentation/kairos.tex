@@ -37,6 +37,12 @@
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
+\usepackage{adjustbox}
+
+% Shrink any tikzpicture that would overflow its \linewidth, leaving smaller ones untouched.
+\newenvironment{fittikz}[1][]%
+  {\par\noindent\begin{adjustbox}{max width=\linewidth,max totalheight=0.72\textheight,center}\begin{tikzpicture}[#1]}%
+  {\end{tikzpicture}\end{adjustbox}\par}
 
 \graphicspath{{figures/}}
 
@@ -88,7 +94,8 @@
 
 % A clean card: navy panel, hairline gold rule, short top accent stripe
 \newcommand{\kcard}[4]{% {accent color}{number}{title}{body}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
           minimum width=4.6cm,minimum height=4.4cm,
           text width=4.1cm,align=left,anchor=north west,
@@ -100,6 +107,8 @@
       }%
     };
   \end{tikzpicture}%
+  }\endgroup
+  \usebox0%
 }
 
 % Section divider: big centered numeral
@@ -109,13 +118,12 @@
 
 % Quote block
 \newcommand{\kquote}[2]{%
-  \begin{tikzpicture}
+  \noindent\begin{tikzpicture}
     \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
-          inner sep=12pt,text width=\linewidth]{%
-      \parbox{\linewidth}{%
-        {\color{KCream}\itshape\small #1}\\[0.5em]
-        {\color{KMuted}\scriptsize\hfill --- #2}%
-      }%
+          inner sep=10pt,text width=\dimexpr\linewidth-24pt\relax,
+          align=left,anchor=north west] (kq) at (0,0) {%
+      {\color{KCream}\itshape\small #1}\\[0.5em]
+      {\color{KMuted}\scriptsize\hfill --- #2}%
     };
   \end{tikzpicture}%
 }
@@ -156,7 +164,8 @@
     };
 
     \node[anchor=south east] at ($(current page.south east)+(-1.1,1.0)$) {%
-      \begin{tikzpicture}[scale=0.85]
+      \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}[scale=0.85]
         \foreach \s in {0,...,48}{
           \pgfmathsetmacro{\x}{\s*0.13}
           \pgfmathsetmacro{\ya}{0.4*sin(\x*90)}
@@ -169,6 +178,7 @@
           (0,-0.85) -- (6.2,-0.85)
           node[midway,below=-1pt,text=KMuted,font=\scriptsize\itshape] {$5' \longrightarrow 3'$};
       \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup
     };
 
     \draw[KRule,line width=0.3pt] ($(current page.south west)+(1.1,0.55)$) --
@@ -207,7 +217,8 @@
 \begin{column}{0.38\textwidth}
   \centering
   \vspace{0.6em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
           inner sep=14pt,text width=6cm,align=center]{%
       {\color{KMuted}\scriptsize chronos}\\[0.2em]
@@ -217,7 +228,8 @@
       {\color{KGold}\Large\bfseries the opportune moment}\\[0.5em]
       {\color{KCream}\scriptsize\itshape a pause, a release, a hand-off}%
     };
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{column}
 \end{columns}
 \end{frame}
@@ -268,7 +280,7 @@
 \begin{frame}{Today's roadmap}
 \vspace{0.1em}
 \begin{center}
-\resizebox{0.96\linewidth}{!}{%
+\begin{adjustbox}{max width=0.96\linewidth,center}
 \begin{tikzpicture}[every node/.style={align=left}]
   \node[anchor=north west,text=KMuted,font=\scriptsize] at (0,0.6) {Prologue};
   \node[anchor=north west] at (0,0.2) {%
@@ -311,7 +323,8 @@
     {\color{KGold}\bfseries\small Contributions \& thanks}\\[0.3em]
     {\color{KWhite}\footnotesize Summary, acknowledgements, references,
      appendix of formulas.}}};
-\end{tikzpicture}}
+\end{tikzpicture}
+\end{adjustbox}
 \end{center}
 \vspace{0.2em}
 \begin{center}
@@ -323,6 +336,7 @@
 \begin{frame}{Three pillars of \smallKAIROS}
   \vspace{0.4em}
   \begin{center}
+  \begingroup\setbox0=\hbox{%
   \begin{tikzpicture}[every node/.style={align=left}]
     \node[anchor=north west] at (0,0) {%
       \kcard{KSky}{01}{Positional regression}{%
@@ -339,7 +353,8 @@
         Histone marks, accessibility, methylation, GC: what \goldbf{accelerates}
         or \goldbf{stalls} Pol II, position by position?
       }};
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
   \end{center}
   \vspace{1.2em}
   \begin{center}
@@ -368,7 +383,8 @@
 \begin{column}{0.48\textwidth}
   \centering
   \vspace{0.6em}
-  \begin{tikzpicture}[node distance=0.5cm]
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}[node distance=0.5cm]
     % DNA strand
     \draw[KRule,line width=0.7pt] (0,0) -- (9,0);
     \node[KMuted,font=\scriptsize,anchor=north] at (0.3,-0.15) {promoter};
@@ -389,7 +405,8 @@
     \draw[KCream,decorate,decoration={snake,amplitude=1.4pt,segment length=5pt},line width=0.6pt]
       (5,0.7) .. controls (4.3,1.4) and (3.6,1.4) .. (3,1.2);
     \node[KCream,font=\tiny\itshape] at (3.2,1.55) {nascent RNA};
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{0.8em}
   {\color{KMuted}\scriptsize\itshape A cartoon. Real polymerase is a 500 kDa molecular machine.}
@@ -419,7 +436,8 @@
 \begin{column}{0.46\textwidth}
   \centering
   \vspace{0.3em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \begin{axis}[
       width=7.0cm,height=5.0cm,
       axis lines=left,
@@ -441,7 +459,8 @@
     \node[KGoldSoft,font=\tiny\itshape] at (1.2,3.2) {pause};
     \node[KGoldSoft,font=\tiny\itshape] at (5.3,4.0) {fast body};
     \node[KGoldSoft,font=\tiny\itshape] at (6.4,2.8) {terminal slowdown};
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{0.3em}
   {\color{KMuted}\scriptsize\itshape Stylised gene-body velocity profile.}
@@ -500,7 +519,8 @@
 \begin{column}{0.46\textwidth}
   \centering
   \vspace{0.6em}
-  \begin{tikzpicture}[scale=0.95]
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}[scale=0.95]
     \begin{scope}[yshift=1.3cm]
       \draw[KSky,line width=1.1pt,domain=0:8,smooth,samples=120,variable=\x]
         plot ({\x},{0.65 + 0.50*sin(\x*55+20) + 0.20*cos(\x*100)});
@@ -515,7 +535,8 @@
     \draw[->,KGold,line width=1pt] (3.32,0) -- (4.05,0);
     \fill[KGoldSoft,opacity=0.18] (5.4,-0.15) rectangle (6.2,2.1);
     \node[KGoldSoft,font=\scriptsize\itshape] at (5.8,2.3) {pause};
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
   \vspace{0.5em}
 
   {\color{KMuted}\scriptsize\itshape Speed varies along the gene body --- KAIROS recovers $v(x)$.}
@@ -550,7 +571,8 @@
 \begin{column}{0.48\textwidth}
   \centering
   \vspace{0.3em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \begin{axis}[
       width=7.2cm,height=5.0cm,
       axis lines=left,
@@ -572,7 +594,8 @@
       \addplot[KGold,line width=1.1pt,dashed,domain=0:20]{2.05};
       \addlegendentry{\color{KWhite}HMM gene-wide}
     \end{axis}
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{0.3em}
   {\color{KMuted}\scriptsize\itshape A scalar misses pauses, slowdowns, landmarks.}
@@ -605,7 +628,8 @@
 \begin{column}{0.46\textwidth}
   \centering
   \vspace{0.4em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     % four stacked rows = time
     \foreach \row [count=\i from 0] in {10,25,40,60}{
       \begin{scope}[yshift=-\i*0.9cm]
@@ -621,7 +645,8 @@
     \node[KCream,font=\scriptsize\itshape,anchor=south] at (4,0.45) {gene body};
     \draw[->,KGold,line width=0.6pt] (8.3,-3.2) -- (8.3,0.5)
       node[midway,right=-1pt,text=KMuted,font=\tiny\itshape,rotate=-90,anchor=south]{time};
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{0.4em}
   {\color{KMuted}\scriptsize\itshape Wave-front position over time $=$ gene-wide rate.}
@@ -654,7 +679,8 @@
 \begin{column}{0.44\textwidth}
   \centering
   \vspace{0.4em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \begin{axis}[
       width=6.8cm,height=5.0cm,
       axis lines=left,
@@ -678,7 +704,8 @@
         {0.60/(0.72 + 0.32*sin(deg(x*0.9)))};
       \addlegendentry{\color{KWhite}$1/v(x) \propto$ reads}
     \end{axis}
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{column}
 \end{columns}
 \end{frame}
@@ -705,7 +732,8 @@
 \begin{column}{0.42\textwidth}
   \centering
   \vspace{0.8em}
-  \begin{tikzpicture}[scale=0.70]
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}[scale=0.70]
     \foreach \t [count=\i from 0] in {0,10,25,40}{
       \begin{scope}[xshift=\i*1.85cm]
         \node[KCream,font=\tiny,anchor=south] at (0.55,1.35) {$t=\t$ min};
@@ -721,10 +749,12 @@
     }
     \draw[->,KSky,line width=0.6pt] (-0.1,-0.45) -- (6.85,-0.45)
       node[midway,below=1pt,text=KMuted,font=\tiny\itshape] {time (minutes after estradiol)};
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{1.4em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \node[rectangle,draw=KRule,line width=0.3pt,fill=KNavyLight,
           inner sep=8pt,text width=6.0cm] {%
       {\color{KGold}\footnotesize\bfseries Scale}\\[0.25em]
@@ -732,7 +762,8 @@
        $\times$\,50k bins\,$\times$\,4 time points
        $\approx 2\!\times\!10^9$ tensor cells.}%
     };
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{column}
 \end{columns}
 \end{frame}
@@ -741,6 +772,7 @@
 \begin{frame}{From BED files to a space-time tensor}
 \vspace{0.2em}
 \begin{center}
+\begingroup\setbox0=\hbox{%
 \begin{tikzpicture}[node distance=1.05cm,every node/.style={align=center,font=\scriptsize}]
   \tikzset{stg/.style={rectangle,rounded corners=1pt,draw=KRule,line width=0.3pt,
            fill=KNavyLight,text=KWhite,minimum width=2.3cm,minimum height=1.1cm,inner sep=4pt}}
@@ -760,7 +792,8 @@
     (legend) at ($(c)+(0,-2.4)$)
     {\color{KGold}\bfseries\footnotesize For every gene $g$: positions $\times$ time points matrix $R_g$.\\
      \color{KMuted}\footnotesize $M \approx 50\text{--}300$ bins, $T = 4$ time points, entries are read counts.};
-\end{tikzpicture}
+\end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{center}
 \vspace{0.8em}
 \begin{center}
@@ -796,7 +829,8 @@
 \begin{column}{0.44\textwidth}
   \centering
   \vspace{0.3em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \begin{axis}[
       width=7cm,height=5cm,
       axis lines=left,
@@ -820,7 +854,8 @@
     \node[KGold,font=\tiny\itshape] at (5.2,1.0) {bias};
     \draw[KGoldSoft,line width=0.5pt,dashed] (3.6,0) -- (3.6,3.8);
     \node[KGoldSoft,font=\tiny] at (3.6,4.0) {250 bp};
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{column}
 \end{columns}
 \end{frame}
@@ -872,7 +907,8 @@
 \begin{column}{0.44\textwidth}
   \centering
   \vspace{0.4em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \begin{axis}[
       width=7.0cm,height=5.1cm,
       axis lines=left,
@@ -891,7 +927,8 @@
       \addplot[only marks,mark=*,mark options={KGold,scale=1.2,draw=KGold}]
         coordinates {(0,0.6)(10,2.0)(25,4.3)(40,7.1)};
     \end{axis}
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{0.4em}
   {\color{KMuted}\scriptsize\itshape slope $\widehat\beta(x^\star) \approx 0.17$
@@ -930,7 +967,8 @@
 \begin{column}{0.48\textwidth}
   \centering
   \vspace{0.3em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \begin{axis}[
       width=7.2cm,height=5.0cm,
       axis lines=left,
@@ -953,7 +991,8 @@
       \addplot[KGoldSoft,line width=1pt,dashed,domain=-3:43,samples=2]{0.3+0.17*x};
       \addlegendentry{\color{KWhite}Huber (robust)}
     \end{axis}
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{column}
 \end{columns}
 \end{frame}
@@ -984,7 +1023,8 @@
 \begin{column}{0.44\textwidth}
   \centering
   \vspace{0.5em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \draw[KRule,line width=0.4pt] (0,0) -- (8,0);
     \foreach \s/\c in {0/KMuted,0.6/KMuted,1.0/KMuted,1.6/KSky,2.4/KSky,3.2/KGoldSoft,4.0/KGoldSoft,4.8/KGold,5.6/KGold,6.4/KGold,7.2/KGold}{
       \fill[\c,opacity=0.85] (\s,0) rectangle (\s+0.55,0.4);
@@ -994,7 +1034,8 @@
     \node[KGold,font=\tiny,anchor=south] at (6.2,0.45) {elongated};
     \draw[->,KMuted,line width=0.4pt] (0,-0.25) -- (8,-0.25)
       node[midway,below,font=\tiny]{position $x$ along gene body};
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{0.9em}
   {\color{KMuted}\scriptsize\itshape Only transition + elongated positions enter
@@ -1030,7 +1071,8 @@
 \begin{column}{0.48\textwidth}
   \centering
   \vspace{0.3em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \begin{axis}[
       width=7cm,height=5cm,
       axis lines=left,
@@ -1054,7 +1096,8 @@
         };
       \addplot[KSky,line width=0.8pt,dashed,domain=0:5]{x};
     \end{axis}
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{0.3em}
   {\color{KMuted}\scriptsize\itshape Spearman $r = 0.93$ on simulation.}
@@ -1113,22 +1156,25 @@
   \begin{itemize}
     \setlength{\itemsep}{0.25em}
     \item Treat $\{\widehat\beta(x)\}_{x\in g}$ as elements of an abelian group.
-    \item Estimator
-      $\;Z_M = \dfrac{1}{M-1}\sum_{x} \mathbf{1}[\widehat\beta(x)\ne 0]\,f(\widehat\beta(x))$.
+    \item Estimator\,:\ {\small $Z_M \!=\! \tfrac{1}{M-1}\!\sum_{x}\! \mathbf{1}[\widehat\beta(x)\!\ne\! 0]\,f(\widehat\beta(x))$.}
     \item Spectral concentration $\psi$ measures \skyit{how tightly} the signal
           concentrates on one dominant mode.
   \end{itemize}
   \vspace{0.4em}
   {\color{KWhite}\small In practice:}
+  {\footnotesize
   \[
     \psi(g) \;=\; \frac{\lambda_{1}^{2}}{\sum_j \lambda_j^{2}},
-    \qquad \{\lambda_j\} = \text{SVD of position-time matrix}.
   \]
+  }\vspace{-0.6em}
+
+  {\color{KMuted}\scriptsize\itshape where $\{\lambda_j\}$ are singular values of the position$\times$time matrix.}
 \end{column}
 \begin{column}{0.42\textwidth}
   \centering
   \vspace{0.4em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
           rounded corners=1pt,inner sep=11pt,text width=6.3cm,align=center]{%
       {\color{KGold}\bfseries\small Preview of main result}\\[0.55em]
@@ -1137,7 +1183,8 @@
       {\color{KGoldSoft}\Huge\bfseries $r \,=\, 0.557$}\\[0.35em]
       {\color{KMuted}\scriptsize $n\!\approx\!2{,}500$ genes $\;\cdot\;$ $p < 10^{-12}$}%
     };
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{0.9em}
   \includegraphics[width=0.92\linewidth]{final_psi_correlation.png}
@@ -1173,7 +1220,8 @@
 \begin{column}{0.46\textwidth}
   \centering
   \vspace{0.3em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \begin{axis}[
       width=7cm,height=5.2cm,
       axis lines=left,
@@ -1198,7 +1246,8 @@
         coordinates {(1,0.28)(2,0.22)(3,0.18)(4,0.14)(5,0.10)(6,0.05)(7,0.02)(8,0.01)};
       \addlegendentry{\color{KWhite}diffuse gene}
     \end{axis}
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{column}
 \end{columns}
 \end{frame}
@@ -1207,6 +1256,7 @@
 \begin{frame}{Three synthetic genes}
 \vspace{0.3em}
 \begin{center}
+\begingroup\setbox0=\hbox{%
 \begin{tikzpicture}[node distance=0.8cm]
   \foreach \lbl/\idx/\psi/\col in {coherent wave/0/0.78/KGold,pause-and-go/1/0.54/KGoldSoft,diffuse noise/2/0.22/KSky}{
     \begin{scope}[xshift=\idx*5.2cm]
@@ -1235,7 +1285,8 @@
       };
     \end{scope}
   }
-\end{tikzpicture}
+\end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{center}
 \vspace{0.6em}
 \begin{center}
@@ -1289,7 +1340,8 @@
 \begin{column}{0.54\textwidth}
   \centering
   \vspace{0.6em}
-  \begin{tikzpicture}[node distance=2.4cm,every node/.style={font=\small}]
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}[node distance=2.4cm,every node/.style={font=\small}]
     \node[circle,draw=KGold,fill=KNavyLight,text=KWhite,
           minimum size=1.6cm,line width=0.6pt] (s0) {$S_0$};
     \node[circle,draw=KGold,fill=KNavyLight,text=KWhite,
@@ -1302,7 +1354,8 @@
       {emit:\\$\mathrm{NB}(\mu_0,\phi)$};
     \node[below=1cm of s1,text=KSky,font=\scriptsize,align=center]
       {emit:\\$\mathrm{NB}(\mu_1,\phi),\ \mu_1\!\gg\!\mu_0$};
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{0.6em}
   {\color{KMuted}\scriptsize\itshape Absorbing $S_1$ encodes the wave-front:
@@ -1335,7 +1388,8 @@
 \begin{column}{0.46\textwidth}
   \centering
   \vspace{0.1em}
-  \begin{tikzpicture}[node distance=0.30cm,every node/.style={align=center,font=\tiny}]
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}[node distance=0.30cm,every node/.style={align=center,font=\tiny}]
     \tikzset{stg/.style={rectangle,rounded corners=1pt,draw=KRule,line width=0.3pt,
              fill=KNavyLight,text=KWhite,minimum width=2.6cm,minimum height=0.62cm,inner sep=2pt}}
     \tikzset{arr/.style={->,KGold,line width=0.6pt,shorten >=1pt}}
@@ -1350,7 +1404,8 @@
     \draw[arr] (f) -- (bw);
     \draw[arr] (bw) -- (v);
     \draw[arr] (v) -- (r);
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{column}
 \end{columns}
 \end{frame}
@@ -1536,6 +1591,7 @@
 \begin{frame}{Epigenetic feature pipeline}
 \vspace{0.2em}
 \begin{center}
+\begingroup\setbox0=\hbox{%
 \begin{tikzpicture}[node distance=0.95cm,every node/.style={align=center,font=\scriptsize}]
   \tikzset{stg/.style={rectangle,rounded corners=1pt,draw=KRule,line width=0.3pt,
            fill=KNavyLight,text=KWhite,minimum width=2.4cm,minimum height=1.1cm,inner sep=4pt}}
@@ -1554,7 +1610,8 @@
     (legend) at ($(c)+(0,-2.4)$)
     {\color{KGold}\bfseries\footnotesize Marks included: H3K4me3, H3K27ac, H3K36me3, H3K9me3, H3K27me3, DNase, WGBS, GC, CpG, exon-distance.\\
      \color{KMuted}\footnotesize Aligned to the same 250 bp grid as the speed estimates.};
-\end{tikzpicture}
+\end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{center}
 \end{frame}
 
@@ -1584,7 +1641,8 @@
 \begin{column}{0.42\textwidth}
   \centering
   \vspace{0.3em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
           inner sep=10pt,text width=6.2cm,align=left]{%
       {\color{KGold}\bfseries\small Preliminary hits}\\[0.5em]
@@ -1600,7 +1658,8 @@
       {\color{KMuted}\scriptsize\itshape standardised effect on $\log\widehat v(x)$
        (sign\,=\,direction).}%
     };
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{0.6em}
   {\color{KMuted}\scriptsize\itshape H3K36me3 accelerates; H3K27me3 and methylation stall.}
@@ -1612,6 +1671,7 @@
 \begin{frame}{Standardised effects on $\log\widehat v(x)$}
 \vspace{0.1em}
 \begin{center}
+\begingroup\setbox0=\hbox{%
 \begin{tikzpicture}
   \begin{axis}[
     width=12cm,height=5.4cm,
@@ -1648,7 +1708,8 @@
         -0.02 10 0.02 \\
       };
   \end{axis}
-\end{tikzpicture}
+\end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{center}
 \vspace{0.1em}
 \begin{center}
@@ -1685,7 +1746,8 @@
 \begin{column}{0.46\textwidth}
   \centering
   \vspace{0.3em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \begin{axis}[
       width=7.2cm,height=5.0cm,
       axis lines=left,
@@ -1707,7 +1769,8 @@
     \end{axis}
     \node[KSky,font=\tiny\itshape] at (3.5,3.3) {bulk positions};
     \node[KGold,font=\tiny\itshape] at (1.2,1.6) {flagged pause bins};
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{column}
 \end{columns}
 \end{frame}
@@ -1771,29 +1834,30 @@
 \begin{frame}{Interactive web application}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
-  \vspace{0.3em}
-  {\color{KWhite}\small A Flask / Plotly dashboard to explore the full tensor interactively:}
-  \begin{itemize}
-    \setlength{\itemsep}{0.25em}
+  \vspace{0.2em}
+  {\color{KWhite}\footnotesize A Flask / Plotly dashboard to explore the full tensor interactively:}
+  \begin{itemize}\footnotesize
+    \setlength{\itemsep}{0.15em}
     \item search any gene; view coverage, $\widehat\beta(x)$, $\psi$, DANKO rate
     \item overlay histone-mark tracks and exon structure
     \item compare GRO-seq replicate $\to$ HMM call $\to$ KAIROS call
     \item export per-gene CSV and SVG for downstream work
   \end{itemize}
-  \medskip
-  {\color{KGold}\bfseries\small Stack.}\ \ {\color{KWhite}\small Flask + Gunicorn + Plotly + HTMX; one-line \texttt{requirements.txt} deploy.}
-  \medskip
+  \smallskip
+  {\color{KGold}\bfseries\footnotesize Stack.}\ {\color{KWhite}\footnotesize Flask + Gunicorn + Plotly + HTMX.}
+  \smallskip
 
-  {\color{KGold}\bfseries\small Repo.}\\[0.2em]
-  {\color{KSky}\small\texttt{github.com/mathornton01/ad-speed-profile-viewer}}
+  {\color{KGold}\bfseries\footnotesize Repo.}\ {\color{KSky}\scriptsize\texttt{github.com/mathornton01/ad-speed-profile-viewer}}
 \end{column}
 \begin{column}{0.44\textwidth}
   \centering
   \vspace{0.4em}
-  \begin{tikzpicture}
+  \begingroup\setbox0=\hbox{%
+\begin{tikzpicture}
     \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
           inner sep=4pt]{\includegraphics[width=6.2cm]{ad_speed_comparison.png}};
-  \end{tikzpicture}
+  \end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 
   \vspace{0.4em}
   {\color{KMuted}\scriptsize\itshape Dashboard: per-gene speed profile with DANKO overlay.}
@@ -1805,6 +1869,7 @@
 \begin{frame}{Contributions}
 \vspace{0.4em}
 \begin{center}
+\begingroup\setbox0=\hbox{%
 \begin{tikzpicture}[every node/.style={align=left}]
   \node[anchor=north west] at (0,0) {%
     \kcard{KSky}{A}{First Python port of groHMM}{%
@@ -1821,7 +1886,8 @@
       Flask webapp with reproducible pipeline. Raw BED $\to$ speed profile
       $\to$ covariate regression, \goldbf{all in one repo}.
   }};
-\end{tikzpicture}
+\end{tikzpicture}%
+}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi\endgroup%
 \end{center}
 \vspace{1em}
 \begin{center}
