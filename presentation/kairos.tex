@@ -93,22 +93,23 @@
 \newcommand{\creambf}[1]{{\color{KCream}\bfseries #1}}
 
 % A clean card: navy panel, hairline gold rule, short top accent stripe
+\newsavebox{\kcardbox}
 \newcommand{\kcard}[4]{% {accent color}{number}{title}{body}
-  \begingroup\setbox0=\hbox{%
-\begin{tikzpicture}
-    \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
-          minimum width=4.6cm,minimum height=4.4cm,
-          text width=4.1cm,align=left,anchor=north west,
-          inner sep=10pt] (c) at (0,0) {%
-      \parbox{4.1cm}{\vspace{0.1em}%
-        {\color{#1}\rule{1.0cm}{1.8pt}}\\[0.6em]
-        {\color{KSky}\scriptsize\bfseries #2}\hspace{0.4em}{\color{KGold}\small\bfseries #3}\\[0.55em]
-        {\color{KWhite}\scriptsize\raggedright #4\par}%
-      }%
-    };
-  \end{tikzpicture}%
-  }\endgroup
-  \usebox0%
+  \savebox{\kcardbox}{%
+    \begin{tikzpicture}
+      \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
+            minimum width=4.6cm,minimum height=4.4cm,
+            text width=4.1cm,align=left,anchor=north west,
+            inner sep=10pt] (c) at (0,0) {%
+        \parbox{4.1cm}{\vspace{0.1em}%
+          {\color{#1}\rule{1.0cm}{1.8pt}}\\[0.6em]
+          {\color{KSky}\scriptsize\bfseries #2}\hspace{0.4em}{\color{KGold}\small\bfseries #3}\\[0.55em]
+          {\color{KWhite}\scriptsize\raggedright #4\par}%
+        }%
+      };
+    \end{tikzpicture}%
+  }%
+  \usebox{\kcardbox}%
 }
 
 % Section divider: big centered numeral
@@ -145,9 +146,9 @@
     \node[anchor=north west] at ($(current page.north west)+(1.1,-1.6)$) {%
       {\fontsize{72pt}{72pt}\selectfont\bfseries\color{KGold}KAIROS}%
     };
-    \node[anchor=north west,text width=14cm]
-      at ($(current page.north west)+(1.1,-3.5)$) {%
-      {\color{KCream}\LARGE\itshape Kinetic Analysis of Instantaneous RNA Output by Sequencing}%
+    \node[anchor=north west,text width=14.5cm]
+      at ($(current page.north west)+(1.1,-3.4)$) {%
+      {\color{KCream}\large\itshape Kinetic Analysis of Instantaneous RNA Output by Sequencing}%
     };
     \draw[KGold,line width=0.8pt] ($(current page.north west)+(1.1,-4.4)$) --
                                    ($(current page.north west)+(5.1,-4.4)$);
@@ -249,8 +250,7 @@
     \setlength{\itemsep}{0.15em}
     \item Algebraic summaries for high-dimensional biological data.
     \item Transcriptional kinetics and chromatin dynamics.
-    \item Connections between RNA polymerase behaviour and
-          neurodegenerative disease (AD, PD).
+    \item Position-resolved regression methods for genomic time-courses.
     \item Open, reproducible tooling for nascent-RNA analysis.
   \end{itemize}
   {\color{KCream}\itshape\footnotesize Today's talk is a slice of that program ---
@@ -313,9 +313,9 @@
   \node[anchor=north west,text=KMuted,font=\scriptsize] at (5.5,-3.0) {Section 04};
   \node[anchor=north west] at (5.5,-3.4) {%
     \parbox{5.2cm}{%
-    {\color{KGold}\bfseries\small Applications \& outlook}\\[0.3em]
-    {\color{KWhite}\footnotesize Neurodegeneration hypothesis,
-     interactive platform, open questions.}}};
+    {\color{KGold}\bfseries\small Platform \& outlook}\\[0.3em]
+    {\color{KWhite}\footnotesize Interactive dashboard,
+     contributions, open methodological questions.}}};
 
   \node[anchor=north west,text=KMuted,font=\scriptsize] at (11,-3.0) {Close};
   \node[anchor=north west] at (11,-3.4) {%
@@ -658,23 +658,26 @@
 \begin{frame}{The $1/v$ principle}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
-  \vspace{0.4em}
-  {\color{KWhite}\small
-  If Pol II moves through position $x$ at speed $v(x)$, the
-  \goldbf{dwell-time} density is proportional to $1/v(x)$.}
-  \medskip
-
-  {\color{KWhite}\small
-  In a nascent-RNA snapshot at elapsed time $t$:}
+  \vspace{0.2em}
+  {\color{KWhite}\footnotesize
+  Pol II spends $1/v(x)$ units of time per unit length at $x$. Cumulative
+  nascent-RNA at $x$ grows linearly in $t$, scaled by that dwell:}
+  \vspace{-0.3em}
   \[
-     \textstyle \mathbb{E}[r(x,t)] \,\propto\, t/v(x)
-     \;\Longrightarrow\;
-     \widehat{v}(x) \,\propto\, t/r(x,t).
+    \textstyle \mathbb{E}[\,r(x,t)\,]\;=\;\dfrac{c\,t}{v(x)}.
   \]
-  \medskip
-
-  {\color{KCream}\itshape\small Slow regions look dark with reads; fast
-  regions look sparse.\ \ The inverse relationship is the kinetic signature.}
+  \vspace{-0.7em}
+  {\color{KWhite}\footnotesize So a straight-line fit in time at every position
+  estimates $1/v$:}
+  \vspace{-0.3em}
+  \[
+    \textstyle \widehat\beta(x) \;=\; \dfrac{c}{v(x)}
+    \;\Longrightarrow\;
+    \widehat v(x) \;\propto\; \dfrac{1}{\widehat\beta(x)}.
+  \]
+  \vspace{-0.6em}
+  {\color{KCream}\itshape\scriptsize Slow regions accumulate reads quickly;
+  fast regions stay sparse. The slope in time is the kinetic fingerprint.}
 \end{column}
 \begin{column}{0.44\textwidth}
   \centering
@@ -885,24 +888,29 @@
 \begin{frame}{Positional regression: the estimator}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
-  \vspace{0.4em}
-  {\color{KWhite}\small For gene $g$, position $x$, time points
-  $t_i \in \{0,10,25,40\}$:}
+  \vspace{0.1em}
+  {\color{KWhite}\scriptsize For gene $g$, position bin $x$, and time points
+  $t_i\in\{0,10,25,40\}$ min:}
+  \vspace{-0.3em}
   \[
-    r_g(x,t_i) \;=\; \alpha_g(x) + \beta_g(x)\,t_i + \varepsilon_i .
+    \textstyle r_g(x,t_i) = \alpha_g(x) + \beta_g(x)\,t_i + \varepsilon_i .
   \]
-  {\color{KWhite}\small The local slope $\widehat\beta_g(x)$ is the
-  \goldbf{positional accumulation rate} (PAR). Since dwell time is
-  $\propto 1/v(x)$:}
+  \vspace{-0.7em}
+  {\color{KWhite}\scriptsize $\alpha_g(x)$ absorbs baseline depth; slope
+  $\widehat\beta_g(x)$ is the \goldbf{positional accumulation rate} (PAR).
+  By the $1/v$ principle:}
+  \vspace{-0.3em}
   \[
     \widehat v_g(x) \;\propto\; 1/\widehat\beta_g(x).
   \]
+  \vspace{-0.5em}
+  {\scriptsize
   \begin{itemize}
-    \setlength{\itemsep}{0.25em}
+    \setlength{\itemsep}{0.1em}
     \item Robust M-estimator (Huber loss)
-    \item Positions smoothed with a $\pm\,250$\,bp window
-    \item Aggregated to gene level via algebraic diversity $Z_M$
-  \end{itemize}
+    \item Smoothed with $\pm\,250$\,bp window
+    \item Aggregated per gene via diversity $Z_M$
+  \end{itemize}}
 \end{column}
 \begin{column}{0.44\textwidth}
   \centering
@@ -1150,25 +1158,28 @@
 \begin{frame}{From position to gene: algebraic diversity}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.55\textwidth}
-  \vspace{0.3em}
-  {\color{KWhite}\small Per-position slopes are noisy. To get a
-  \goldbf{gene-level} speed we adopt the algebraic-diversity framework:}
-  \begin{itemize}
-    \setlength{\itemsep}{0.25em}
-    \item Treat $\{\widehat\beta(x)\}_{x\in g}$ as elements of an abelian group.
-    \item Estimator\,:\ {\small $Z_M \!=\! \tfrac{1}{M-1}\!\sum_{x}\! \mathbf{1}[\widehat\beta(x)\!\ne\! 0]\,f(\widehat\beta(x))$.}
-    \item Spectral concentration $\psi$ measures \skyit{how tightly} the signal
-          concentrates on one dominant mode.
-  \end{itemize}
-  \vspace{0.4em}
-  {\color{KWhite}\small In practice:}
-  {\footnotesize
-  \[
-    \psi(g) \;=\; \frac{\lambda_{1}^{2}}{\sum_j \lambda_j^{2}},
-  \]
-  }\vspace{-0.6em}
+  \vspace{0.1em}
+  {\color{KWhite}\scriptsize Per-position slopes are noisy.\ \ We want one
+  scalar per gene that respects structure.}
 
-  {\color{KMuted}\scriptsize\itshape where $\{\lambda_j\}$ are singular values of the position$\times$time matrix.}
+  {\color{KGold}\bfseries\scriptsize Algebraic diversity $Z_M$.}
+  \vspace{-0.2em}
+  \[
+    \textstyle Z_M = \dfrac{1}{M-1}\!\sum_{x=1}^{M}\!
+       \mathbf{1}[\widehat\beta(x)\!\ne\!0]\,f(\widehat\beta(x)).
+  \]
+  \vspace{-0.6em}
+  {\color{KMuted}\scriptsize $f$ a monotone resolution function; $Z_M$ counts
+  effectively distinct slopes weighted by magnitude.}
+
+  {\color{KGold}\bfseries\scriptsize Spectral concentration $\psi$.}
+  \vspace{-0.2em}
+  \[
+    \textstyle \psi(g) = \dfrac{\lambda_1^{2}}{\sum_j \lambda_j^{2}}.
+  \]
+  \vspace{-0.7em}
+  {\color{KMuted}\scriptsize $\{\lambda_j\}$: singular values of $R_g$.\ \
+  Near $1$ $\Rightarrow$ one rank-one mode explains the signal: a clean wave.}
 \end{column}
 \begin{column}{0.42\textwidth}
   \centering
@@ -1196,26 +1207,26 @@
 \begin{frame}{Why SVD? The intuition behind $\psi$}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.50\textwidth}
-  \vspace{0.2em}
-  {\color{KWhite}\footnotesize The position-by-time matrix $R_g$ has an SVD:}
-  \vspace{-0.4em}
+  \vspace{0.1em}
+  {\color{KWhite}\scriptsize The position-by-time read matrix $R_g\!\in\!\mathbb{R}^{M\times T}$
+  factorises as a sum of rank-one terms:}
+  \vspace{-0.3em}
   \[
-    \textstyle R_g \;=\; \sum_j \lambda_j\,\mathbf{u}_j\,\mathbf{w}_j^{\!\top}.
+    \textstyle R_g = \!\sum_{j=1}^{\min(M,T)}\! \lambda_j\,\mathbf{u}_j\,\mathbf{w}_j^{\!\top},
   \]
   \vspace{-0.6em}
-  {\color{KWhite}\footnotesize If transcription is a coherent wave, \creambf{one}
-  rank-one component dominates: $\mathbf{u}_1$ is the position profile,
-  $\mathbf{w}_1$ is its growth in time.}
+  {\color{KMuted}\scriptsize $\lambda_j\!\ge\!0$ singular values; $\mathbf{u}_j$ position modes; $\mathbf{w}_j$ time modes.}
 
-  \vspace{-0.2em}
+  {\color{KWhite}\scriptsize A coherent wave has \creambf{one} dominant mode.
+  $\psi$ is the fraction of energy in that first mode:}
+  \vspace{-0.3em}
   \[
-    \psi(g) \;=\; \frac{\lambda_1^2}{\sum_j \lambda_j^2}
+    \psi(g) = \dfrac{\lambda_1^2}{\sum_j \lambda_j^2}\;\in\;(0,1].
   \]
   \vspace{-0.7em}
-  {\color{KMuted}\scriptsize $\psi\!\to\!1$: a single clean wave.\ \ $\psi\!\to\!0$: diffuse, no coherent elongation.}
+  {\color{KMuted}\scriptsize $\psi\!\to\!1$: one clean wave-front.\ \ $\psi\!\to\!0$: diffuse.}
 
-  {\color{KCream}\itshape\footnotesize $\psi$ is a dimensionless
-  \goldbf{coherence score} --- but it tracks wave-front speed remarkably well.}
+  {\color{KCream}\itshape\scriptsize Dimensionless, scale-free, tracks wave-front speed.}
 \end{column}
 \begin{column}{0.46\textwidth}
   \centering
@@ -1775,43 +1786,7 @@
 \end{columns}
 \end{frame}
 
-% ============================================================ 38 NEURODEGEN ==
-\begin{frame}{Why this matters for neurodegeneration}
-\begin{columns}[T,onlytextwidth]
-\begin{column}{0.52\textwidth}
-  \vspace{0.2em}
-  {\color{KGold}\bfseries\footnotesize The hypothesis.}\\[0.15em]
-  {\color{KWhite}\footnotesize In Alzheimer's disease, Parkinson's, and ALS, long
-  neuronal genes (MAPT, APP, SNCA, C9orf72) are over-represented among
-  transcriptionally altered loci.}
-
-  {\color{KGold}\bfseries\footnotesize Why kinetics might be the right lens.}
-  \begin{itemize}
-    \setlength{\itemsep}{0.15em}
-    \item DNA damage accumulates in neurons --- it stalls Pol II.
-    \item Stalled Pol II triggers R-loop formation and splicing defects.
-    \item Very long genes are most sensitive: more places to stall.
-    \item A gene-wide rate hides where the stalls actually are.
-  \end{itemize}
-  {\color{KCream}\itshape\footnotesize KAIROS provides the position-resolved
-  measurement that the AD transcriptional-kinetics story needs.}
-\end{column}
-\begin{column}{0.44\textwidth}
-  \vspace{0.2em}
-  \kquote{In neurons, transcription is a long, slow journey across tens of
-  kilobases. Every kairotic stumble becomes a potential site of
-  neurodegenerative decline.}{Ongoing work, this group}
-  \vspace{0.3em}
-
-  {\color{KGold}\bfseries\footnotesize Next steps.}\\[0.15em]
-  {\color{KWhite}\footnotesize Apply KAIROS to iPSC-derived neuron GRO-seq cohorts
-  with and without AD risk variants. Are long-gene pause landscapes
-  genetically patterned?}
-\end{column}
-\end{columns}
-\end{frame}
-
-% ============================================================ 39 SECTION 04 DIVIDER ==
+% ============================================================ 38 SECTION 04 DIVIDER ==
 {\setbeamercolor{background canvas}{bg=KNavyDark}
 \setbeamertemplate{footline}{}
 \begin{frame}[plain]
@@ -1915,9 +1890,9 @@
   \begin{itemize}
     \setlength{\itemsep}{0.25em}
     \item Do pause sites predict alternative-splicing outcomes?
-    \item Does Pol II stalling correlate with \skyit{neurodegeneration} signatures (AD, PD)?
     \item How do CDK9 / DRB perturbations reshape $v(x)$?
     \item Cross-species conservation of kinetic landscapes.
+    \item What chromatin contexts make $v(x)$ most variable?
   \end{itemize}
 \end{column}
 \end{columns}
@@ -1966,9 +1941,9 @@
     \node[anchor=north west] at ($(current page.north west)+(1.1,-1.2)$) {%
       {\fontsize{64pt}{64pt}\selectfont\bfseries\color{KGold}KAIROS}%
     };
-    \node[anchor=north west,text width=14cm]
+    \node[anchor=north west,text width=14.5cm]
       at ($(current page.north west)+(1.1,-3.0)$) {%
-      {\color{KCream}\Large\itshape Kinetic Analysis of Instantaneous RNA Output by Sequencing}%
+      {\color{KCream}\large\itshape Kinetic Analysis of Instantaneous RNA Output by Sequencing}%
     };
     \draw[KGold,line width=0.8pt] ($(current page.north west)+(1.1,-3.8)$) --
                                    ($(current page.north west)+(5.1,-3.8)$);
