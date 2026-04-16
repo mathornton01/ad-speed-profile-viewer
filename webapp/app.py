@@ -44,6 +44,7 @@ PROFILES_DIR  = BASE / "results" / "speed_profiles"
 RESULTS_DIR   = BASE / "results"
 EPIGENOMICS_DIR = BASE / "results" / "epigenomics"
 TEMPORAL_DIR  = BASE / "results" / "temporal_profiles"
+PRESENTATION_DIR = BASE / "presentation"
 STRATEGY_LOG  = BASE / "STRATEGY_LOG.md"
 
 # ---------------------------------------------------------------------------
@@ -290,6 +291,44 @@ def api_correlations():
 def api_figure(fname):
     """Serve result figures."""
     return send_from_directory(str(RESULTS_DIR), fname)
+
+
+@app.route("/presentation/<path:fname>")
+def presentation(fname):
+    """
+    Serve PDF presentations and speaker notes from presentation/.
+    Forces Content-Disposition: attachment so the browser downloads the file.
+    Whitelists *.pdf only.
+    """
+    if not fname.lower().endswith(".pdf"):
+        return jsonify({"error": "Only .pdf downloads are allowed here."}), 400
+    return send_from_directory(
+        str(PRESENTATION_DIR),
+        fname,
+        as_attachment=True,
+        mimetype="application/pdf",
+    )
+
+
+@app.route("/api/presentation")
+def api_presentation():
+    """
+    List PDFs available in presentation/ with size and mtime so the UI can
+    offer fresh download links.
+    """
+    if not PRESENTATION_DIR.exists():
+        return jsonify({"files": []})
+    files = []
+    for p in sorted(PRESENTATION_DIR.glob("*.pdf")):
+        stat = p.stat()
+        files.append({
+            "name":       p.name,
+            "url":        f"/presentation/{p.name}",
+            "size_bytes": stat.st_size,
+            "size_mb":    round(stat.st_size / (1024 * 1024), 2),
+            "mtime":      datetime.utcfromtimestamp(stat.st_mtime).isoformat() + "Z",
+        })
+    return jsonify({"files": files})
 
 
 # ---------------------------------------------------------------------------

@@ -95,6 +95,35 @@
       gap: 8px;
       white-space: nowrap;
     }
+    #header-downloads {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 12px;
+    }
+    .hdr-dl {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--accent-lt);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .hdr-dl:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: var(--accent-lt);
+    }
+    .hdr-dl .meta {
+      color: var(--text-muted);
+      font-weight: 400;
+    }
 
     .body-grid {
       display: grid;
@@ -621,6 +650,7 @@
   <span>🧬</span>
   <h1>AD RNAPII Speed Profiles</h1>
   <span class="sub">MCF-7 · E2 time course · GSE41324 · Danko et al. 2013</span>
+  <div id="header-downloads"></div>
   <div id="header-status">
     <span class="status-dot" id="status-dot"></span>
     <span id="gene-count">Loading…</span>
@@ -1511,11 +1541,45 @@ const CONFIG = { displayModeBar: false, responsive: true };
     loadCorrelations();
     loadDashboard();
     checkStatus();
+    loadPresentationDownloads();
   } catch(e) {
     document.getElementById('gene-count').textContent = 'Error: ' + e.message;
     document.getElementById('status-dot').style.background = '#f44336';
   }
 })();
+
+/* ============================================================
+   Presentation PDF download links (header)
+============================================================ */
+async function loadPresentationDownloads() {
+  const host = document.getElementById('header-downloads');
+  if (!host) return;
+  try {
+    const resp = await fetch('/api/presentation');
+    if (!resp.ok) return;
+    const payload = await resp.json();
+    const files   = payload.files || [];
+    if (!files.length) return;
+
+    // Friendly labels; fall back to filename stem
+    const label = (name) => {
+      const n = name.toLowerCase();
+      if (n === 'kairos.pdf')        return 'Slides';
+      if (n === 'kairos_notes.pdf')  return 'Notes';
+      if (n === 'ad_speed_profile_viewer.pdf') return 'Long deck';
+      return name.replace(/\.pdf$/i, '');
+    };
+
+    host.innerHTML = files.map(f =>
+      `<a class="hdr-dl" href="${f.url}" title="${f.name} · ${f.size_mb} MB · updated ${f.mtime.slice(0,10)}" download>
+         📄 ${label(f.name)}
+         <span class="meta">${f.size_mb}MB</span>
+       </a>`
+    ).join('');
+  } catch(e) {
+    // silent: downloads area is non-critical
+  }
+}
 
 /* ============================================================
    Dashboard loaders
