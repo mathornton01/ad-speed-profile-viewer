@@ -55,28 +55,29 @@
 % Frame title: gold text, thin gold rule, consistent left margin
 \setbeamertemplate{frametitle}{%
   \nointerlineskip
-  \vspace{0.8em}%
+  \vspace{0.6em}%
   \hspace{1.1em}{\insertframetitle}\par
-  \vspace{0.2em}%
-  \hspace{1.1em}{\color{KGold}\rule{0.92\paperwidth}{0.4pt}}%
-  \vspace{0.4em}%
+  \vspace{0.15em}%
+  \hspace{1.1em}{\color{KGold}\rule{\dimexpr\textwidth-1.1em\relax}{0.4pt}}%
+  \vspace{0.3em}%
 }
 
 % Itemize bullets --- small, restrained
 \setbeamertemplate{itemize item}{\color{KGold}\raisebox{0.25ex}{\scriptsize$\blacktriangleright$}}
 \setbeamertemplate{itemize subitem}{\color{KSky}\scriptsize$\bullet$}
 \setlength{\leftmargini}{1.3em}
-\setbeamertemplate{itemize/enumerate body begin}{\small}
+\setbeamertemplate{itemize/enumerate body begin}{\footnotesize}
+\setlength{\parskip}{0.2em plus 0.1em}
+\setlength{\medskipamount}{0.4em plus 0.1em minus 0.1em}
+\setlength{\smallskipamount}{0.2em plus 0.05em minus 0.05em}
 
 % Footer: hairline rule, subtle page counter
 \setbeamertemplate{footline}{%
   \leavevmode%
-  \vbox{%
-    \hbox to \paperwidth{\hskip1.1em{\color{KRule}\rule{\dimexpr\paperwidth-2.2em\relax}{0.3pt}}\hskip1.1em}%
-    \vskip0.35ex
-    \hbox to \paperwidth{\hskip1.1em{\color{KMuted}\scriptsize KAIROS\,\textbullet\,Thornton\,\textbullet\,ETAMU Colloquium 2026}\hfil{\color{KMuted}\scriptsize\insertframenumber}\hskip1.1em}%
-    \vskip0.7ex
-  }%
+  \begin{beamercolorbox}[ht=2.4ex,dp=1.4ex,leftskip=1.1em,rightskip=1.1em]{}%
+    {\color{KMuted}\scriptsize KAIROS\,\textbullet\,Thornton\,\textbullet\,ETAMU Colloquium 2026}%
+    \hfill{\color{KMuted}\scriptsize\insertframenumber}%
+  \end{beamercolorbox}%
 }
 
 % --- Helper macros ------------------------------------------------------
@@ -225,40 +226,36 @@
 \begin{frame}{About this work}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.55\textwidth}
-  \vspace{0.3em}
-  {\color{KGold}\bfseries\small Speaker.}\\[0.2em]
-  {\color{KWhite}\small Micah Thornton, PhD --- Assistant Professor of
+  \vspace{0.2em}
+  {\color{KGold}\bfseries\footnotesize Speaker.}\\[0.15em]
+  {\color{KWhite}\footnotesize Micah Thornton, PhD --- Assistant Professor of
   Mathematics at Texas Woman's University. Background in biostatistics,
   algebraic diversity theory, and quantitative genomics.}
-  \medskip
 
-  {\color{KGold}\bfseries\small Ongoing research program.}
+  {\color{KGold}\bfseries\footnotesize Ongoing research program.}
   \begin{itemize}
-    \setlength{\itemsep}{0.2em}
+    \setlength{\itemsep}{0.15em}
     \item Algebraic summaries for high-dimensional biological data.
     \item Transcriptional kinetics and chromatin dynamics.
     \item Connections between RNA polymerase behaviour and
           neurodegenerative disease (AD, PD).
     \item Open, reproducible tooling for nascent-RNA analysis.
   \end{itemize}
-  \medskip
-
-  {\color{KCream}\itshape\small Today's talk is a slice of that program ---
+  {\color{KCream}\itshape\footnotesize Today's talk is a slice of that program ---
   the positional elongation-kinetics thread.}
 \end{column}
 \begin{column}{0.42\textwidth}
-  \vspace{0.3em}
-  {\color{KGold}\bfseries\small What I will not assume.}
+  \vspace{0.2em}
+  {\color{KGold}\bfseries\footnotesize What I will not assume.}
   \begin{itemize}
-    \setlength{\itemsep}{0.2em}
+    \setlength{\itemsep}{0.15em}
     \item You know what GRO-seq is. (Slide 10.)
     \item You have read Danko 2013. (Slide 12 / 28.)
     \item You like hidden Markov models. (They're optional.)
   \end{itemize}
-  \medskip
-  {\color{KGold}\bfseries\small What I will assume.}
+  {\color{KGold}\bfseries\footnotesize What I will assume.}
   \begin{itemize}
-    \setlength{\itemsep}{0.2em}
+    \setlength{\itemsep}{0.15em}
     \item Comfort with linear regression.
     \item Willingness to think about a gene as a space-by-time matrix.
     \item Patience for one short detour through a quotient group.
@@ -269,8 +266,9 @@
 
 % ============================================================ 04 ROADMAP ==
 \begin{frame}{Today's roadmap}
-\vspace{0.3em}
+\vspace{0.1em}
 \begin{center}
+\resizebox{0.96\linewidth}{!}{%
 \begin{tikzpicture}[every node/.style={align=left}]
   \node[anchor=north west,text=KMuted,font=\scriptsize] at (0,0.6) {Prologue};
   \node[anchor=north west] at (0,0.2) {%
@@ -313,11 +311,11 @@
     {\color{KGold}\bfseries\small Contributions \& thanks}\\[0.3em]
     {\color{KWhite}\footnotesize Summary, acknowledgements, references,
      appendix of formulas.}}};
-\end{tikzpicture}
+\end{tikzpicture}}
 \end{center}
-\vspace{0.6em}
+\vspace{0.2em}
 \begin{center}
-  {\color{KCream}\itshape 45 slides.\ \ Interrupt any time.}
+  {\color{KCream}\itshape\footnotesize 45 slides.\ \ Interrupt any time.}
 \end{center}
 \end{frame}
 
@@ -529,20 +527,20 @@
 \begin{frame}{The classical assumption, and why it fails}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.50\textwidth}
-  \vspace{0.3em}
-  {\color{KGold}\bfseries\small Standard practice.}\\[0.2em]
-  {\color{KWhite}\small Most pipelines report a single gene-wide elongation
-  rate. The wave-front HMM of Danko 2013 is the gold standard in that
-  paradigm:}
+  \vspace{0.2em}
+  {\color{KGold}\bfseries\footnotesize Standard practice.}\\[0.15em]
+  {\color{KWhite}\footnotesize Most pipelines report a single gene-wide elongation
+  rate. The wave-front HMM of Danko 2013 is the gold standard:}
+  \vspace{-0.3em}
   \[
-    v_g \;=\; \frac{\text{wave-front}(t)}{t}.
+    \textstyle v_g \;=\; \text{wave-front}(t)\,/\,t.
   \]
-  {\color{KWhite}\small One number per gene per time point. Clean, but coarse.}
-  \medskip
+  \vspace{-0.6em}
+  {\color{KWhite}\footnotesize One number per gene per time point. Clean, but coarse.}
 
-  {\color{KGold}\bfseries\small Where it breaks.}
+  {\color{KGold}\bfseries\footnotesize Where it breaks.}
   \begin{itemize}
-    \setlength{\itemsep}{0.2em}
+    \setlength{\itemsep}{0.15em}
     \item Cannot localise pause sites.
     \item Cannot detect intron / exon differences.
     \item Cannot relate speed to position-resolved covariates (ChIP, methylation).
@@ -644,9 +642,9 @@
   {\color{KWhite}\small
   In a nascent-RNA snapshot at elapsed time $t$:}
   \[
-     \mathbb{E}\big[\,r(x,t)\,\big] \;\propto\; \frac{t}{v(x)}
-     \qquad\Longrightarrow\qquad
-     \widehat{v}(x) \;\propto\; \frac{t}{r(x,t)}.
+     \textstyle \mathbb{E}[r(x,t)] \,\propto\, t/v(x)
+     \;\Longrightarrow\;
+     \widehat{v}(x) \,\propto\, t/r(x,t).
   \]
   \medskip
 
@@ -775,23 +773,21 @@
 \begin{frame}{Binning, smoothing, quality control}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
-  \vspace{0.3em}
-  {\color{KGold}\bfseries\small Bin size.}\\[0.2em]
-  {\color{KWhite}\small 250 bp per bin is the sweet spot: fine enough to resolve
+  \vspace{0.2em}
+  {\color{KGold}\bfseries\footnotesize Bin size.}\\[0.15em]
+  {\color{KWhite}\footnotesize 250 bp per bin is the sweet spot: fine enough to resolve
   pause-to-elongation transitions, coarse enough to tame Poisson noise at
   typical GRO-seq depth ($\sim$30M reads / sample).}
-  \medskip
 
-  {\color{KGold}\bfseries\small Smoothing.}
+  {\color{KGold}\bfseries\footnotesize Smoothing.}
   \begin{itemize}
-    \setlength{\itemsep}{0.2em}
+    \setlength{\itemsep}{0.15em}
     \item Tri-cube kernel over a $\pm 5$-bin window.
     \item Preserves sharp pause signals without over-smoothing boundaries.
   \end{itemize}
-  \medskip
-  {\color{KGold}\bfseries\small Quality filters.}
+  {\color{KGold}\bfseries\footnotesize Quality filters.}
   \begin{itemize}
-    \setlength{\itemsep}{0.2em}
+    \setlength{\itemsep}{0.15em}
     \item Gene length $\geq$ 5 kb (wave-front must have room to move).
     \item $\geq$ 50 total reads at $t{=}40$ min.
     \item No overlap with another active gene on either strand.
@@ -908,24 +904,24 @@
 \begin{frame}{Robust regression matters}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.50\textwidth}
-  \vspace{0.3em}
-  {\color{KWhite}\small GRO-seq counts are heavy-tailed. A single PCR-duplicate
+  \vspace{0.2em}
+  {\color{KWhite}\footnotesize GRO-seq counts are heavy-tailed. A single PCR-duplicate
   spike at one time point can knock a slope off by 3$\sigma$.}
-  \medskip
 
-  {\color{KGold}\bfseries\small Huber loss:}
+  {\color{KGold}\bfseries\footnotesize Huber loss:}
+  \vspace{-0.3em}
   \[
-    L_c(u) = \begin{cases}
+    \textstyle L_c(u) = \begin{cases}
       \tfrac12 u^2, & |u|\le c \\
       c\,|u|-\tfrac12 c^2, & |u| > c
     \end{cases}
   \]
+  \vspace{-0.6em}
   {\color{KMuted}\scriptsize tuning $c = 1.345\sigma$ gives 95\% efficiency at Gaussian noise.}
-  \medskip
 
-  {\color{KGold}\bfseries\small Why it helps here.}
+  {\color{KGold}\bfseries\footnotesize Why it helps here.}
   \begin{itemize}
-    \setlength{\itemsep}{0.2em}
+    \setlength{\itemsep}{0.15em}
     \item Downweights the duplicate spike without zeroing it.
     \item Keeps the slope interpretable in read/minute units.
     \item No loss of power at clean positions.
@@ -1153,25 +1149,26 @@
 \begin{frame}{Why SVD? The intuition behind $\psi$}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.50\textwidth}
-  \vspace{0.3em}
-  {\color{KWhite}\small The position-by-time matrix $R_g$ has an SVD:}
+  \vspace{0.2em}
+  {\color{KWhite}\footnotesize The position-by-time matrix $R_g$ has an SVD:}
+  \vspace{-0.4em}
   \[
-    R_g \;=\; \sum_j \lambda_j\,\mathbf{u}_j\,\mathbf{w}_j^{\!\top}.
+    \textstyle R_g \;=\; \sum_j \lambda_j\,\mathbf{u}_j\,\mathbf{w}_j^{\!\top}.
   \]
-  {\color{KWhite}\small If transcription is a coherent wave, \creambf{one}
+  \vspace{-0.6em}
+  {\color{KWhite}\footnotesize If transcription is a coherent wave, \creambf{one}
   rank-one component dominates: $\mathbf{u}_1$ is the position profile,
   $\mathbf{w}_1$ is its growth in time.}
-  \medskip
 
+  \vspace{-0.2em}
   \[
     \psi(g) \;=\; \frac{\lambda_1^2}{\sum_j \lambda_j^2}
   \]
+  \vspace{-0.7em}
   {\color{KMuted}\scriptsize $\psi\!\to\!1$: a single clean wave.\ \ $\psi\!\to\!0$: diffuse, no coherent elongation.}
-  \medskip
 
-  {\color{KCream}\itshape\small $\psi$ is therefore a dimensionless
-  \goldbf{coherence score}, not a speed per se --- but it tracks wave-front
-  speed remarkably well.}
+  {\color{KCream}\itshape\footnotesize $\psi$ is a dimensionless
+  \goldbf{coherence score} --- but it tracks wave-front speed remarkably well.}
 \end{column}
 \begin{column}{0.46\textwidth}
   \centering
@@ -1337,10 +1334,10 @@
 \end{column}
 \begin{column}{0.46\textwidth}
   \centering
-  \vspace{0.3em}
-  \begin{tikzpicture}[node distance=0.55cm,every node/.style={align=center,font=\tiny}]
+  \vspace{0.1em}
+  \begin{tikzpicture}[node distance=0.30cm,every node/.style={align=center,font=\tiny}]
     \tikzset{stg/.style={rectangle,rounded corners=1pt,draw=KRule,line width=0.3pt,
-             fill=KNavyLight,text=KWhite,minimum width=2.6cm,minimum height=0.8cm,inner sep=3pt}}
+             fill=KNavyLight,text=KWhite,minimum width=2.6cm,minimum height=0.62cm,inner sep=2pt}}
     \tikzset{arr/.style={->,KGold,line width=0.6pt,shorten >=1pt}}
     \node[stg] (i) {\color{KGoldSoft}\bfseries I/O\\bedGraph, tensor};
     \node[stg,below=of i] (b) {\color{KGoldSoft}\bfseries BinModel\\NB emissions};
@@ -1394,13 +1391,14 @@
 
 % ============================================================ 29 THREE ESTIMATORS ==
 \begin{frame}{Three estimators, one truth}
-\vspace{0.4em}
+\vspace{0.2em}
 \begin{center}
-\renewcommand{\arraystretch}{1.25}
+\renewcommand{\arraystretch}{1.05}
+\footnotesize
 \begin{tabular}{@{}l c c c@{}}
 \toprule
-{\color{KGold}\bfseries Estimator} & {\color{KCream}\footnotesize Scale} &
-{\color{KCream}\footnotesize Spearman vs.\ DANKO} & {\color{KCream}\footnotesize Compute} \\
+{\color{KGold}\bfseries Estimator} & {\color{KCream}\scriptsize Scale} &
+{\color{KCream}\scriptsize Spearman vs.\ DANKO} & {\color{KCream}\scriptsize Compute} \\
 \midrule
 {\color{KWhite}DANKO HMM (R, groHMM)}     & {\color{KWhite}gene-wide}            & {\color{KMuted}--- (ground truth)} & {\color{KWhite}14\,min} \\
 {\color{KWhite}Python HMM port}           & {\color{KWhite}gene-wide}            & {\color{KWhite}$r = 0.96$}         & {\color{KWhite}7\,min} \\
@@ -1409,13 +1407,13 @@
 \bottomrule
 \end{tabular}
 \end{center}
-\vspace{0.8em}
+\vspace{0.2em}
 \begin{center}
-  {\color{KCream}\itshape The spectral estimator matches a wave-front HMM --- without running an HMM.}
+  {\color{KCream}\itshape\footnotesize The spectral estimator matches a wave-front HMM --- without running an HMM.}
 \end{center}
-\vspace{0.5em}
+\vspace{0.1em}
 \begin{center}
-  \includegraphics[width=0.78\linewidth]{final_comparison.png}
+  \includegraphics[width=0.62\linewidth]{final_comparison.png}
 \end{center}
 \end{frame}
 
@@ -1423,27 +1421,25 @@
 \begin{frame}{Where the estimators agree --- and where they disagree}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.50\textwidth}
-  \vspace{0.3em}
-  {\color{KGold}\bfseries\small Tight agreement.}
+  \vspace{0.2em}
+  {\color{KGold}\bfseries\footnotesize Tight agreement.}
   \begin{itemize}
-    \setlength{\itemsep}{0.2em}
+    \setlength{\itemsep}{0.15em}
     \item Long, uniformly expressed genes ($>$ 20 kb).
     \item Genes with a single dominant pause site.
     \item Housekeeping transcripts.
   \end{itemize}
-  \medskip
 
-  {\color{KGold}\bfseries\small Systematic disagreement.}
+  {\color{KGold}\bfseries\footnotesize Systematic disagreement.}
   \begin{itemize}
-    \setlength{\itemsep}{0.2em}
+    \setlength{\itemsep}{0.15em}
     \item Genes with \creambf{multiple pause peaks}: HMM collapses them, $\psi$ penalises them.
-    \item Genes with \creambf{mid-body slowdown}: HMM reports mean speed, KAIROS
+    \item Genes with \creambf{mid-body slowdown}: HMM reports mean, KAIROS
           reports the slow region.
     \item Short genes ($<$ 5 kb): both are noisy; $\psi$ is honestly less confident.
   \end{itemize}
-  \medskip
 
-  {\color{KCream}\itshape\small The disagreement is \goldbf{informative}:
+  {\color{KCream}\itshape\footnotesize The disagreement is \goldbf{informative}:
   it localises genes where a single gene-wide rate misrepresents the biology.}
 \end{column}
 \begin{column}{0.48\textwidth}
@@ -1453,7 +1449,7 @@
 
   \vspace{0.3em}
   {\color{KMuted}\scriptsize\itshape Residual structure: off-diagonal points flag
-  genes where KAIROS sees pause architecture the HMM averages away.}
+  genes where KAIROS sees pause architecture the HMM averages away.\par}
 \end{column}
 \end{columns}
 \end{frame}
@@ -1466,21 +1462,21 @@
   \vspace{0.4em}
   \includegraphics[width=\linewidth]{gene0_coverage_profile.png}
 
-  \vspace{0.5em}
+  \vspace{0.3em}
   {\color{KMuted}\scriptsize\itshape Top: GRO-seq coverage over time.\ \ Bottom: KAIROS positional rate $\widehat\beta(x)$.}
 \end{column}
 \begin{column}{0.42\textwidth}
-  \vspace{0.4em}
-  {\color{KGold}\bfseries\small Reading the figure.}
+  \vspace{0.2em}
+  {\color{KGold}\bfseries\footnotesize Reading the figure.}
   \begin{itemize}
-    \setlength{\itemsep}{0.25em}
+    \setlength{\itemsep}{0.15em}
     \item Coverage wave-front sweeps left-to-right as time advances.
     \item $\widehat\beta(x)$ peaks at pause / slow regions.
     \item Trough bands mark \skyit{fast-elongation} segments.
     \item Gene-wide $v_g$ (DANKO) $\approx$ mean of $\widehat\beta(x)^{-1}$.
   \end{itemize}
-  \vspace{0.8em}
-  {\color{KCream}\itshape\footnotesize
+  \vspace{0.4em}
+  {\color{KCream}\itshape\scriptsize
   The framework degrades gracefully: noisy individual positions do not
   corrupt the spectral summary.}
 \end{column}
@@ -1614,11 +1610,11 @@
 
 % ============================================================ 36 FOREST PLOT ==
 \begin{frame}{Standardised effects on $\log\widehat v(x)$}
-\vspace{0.3em}
+\vspace{0.1em}
 \begin{center}
 \begin{tikzpicture}
   \begin{axis}[
-    width=12.5cm,height=6cm,
+    width=12cm,height=5.4cm,
     axis lines=left,
     xlabel={\color{KMuted}\scriptsize effect on $\log\widehat v(x)$ (per $z$-unit)},
     axis line style={KRule,line width=0.4pt},
@@ -1654,9 +1650,9 @@
   \end{axis}
 \end{tikzpicture}
 \end{center}
-\vspace{0.3em}
+\vspace{0.1em}
 \begin{center}
-  {\color{KCream}\itshape Error bars are 95\% CIs.
+  {\color{KCream}\itshape\footnotesize Error bars are 95\% CIs.
   H3K36me3 is the strongest \goldbf{accelerator}; H3K27me3 the strongest \goldbf{stalling} mark.}
 \end{center}
 \end{frame}
@@ -1665,22 +1661,22 @@
 \begin{frame}{Detecting pause sites from covariates}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.50\textwidth}
-  \vspace{0.3em}
-  {\color{KGold}\bfseries\small Residual approach.}\\[0.2em]
-  {\color{KWhite}\small Positions whose observed $\widehat v(x)$ is much smaller
+  \vspace{0.2em}
+  {\color{KGold}\bfseries\footnotesize Residual approach.}\\[0.15em]
+  {\color{KWhite}\footnotesize Positions whose observed $\widehat v(x)$ is much smaller
   than the covariate-predicted velocity are candidate \creambf{pause sites}
   beyond what chromatin explains.}
-  \medskip
 
+  \vspace{-0.3em}
   \[
-    \rho_g(x) \;=\;
+    \textstyle \rho_g(x) \;=\;
       \log\widehat v_g(x) \;-\; \mathbf{z}_g(x)^{\!\top}\!\widehat{\boldsymbol\gamma}.
   \]
-  \medskip
+  \vspace{-0.6em}
 
-  {\color{KGold}\bfseries\small Results.}
+  {\color{KGold}\bfseries\footnotesize Results.}
   \begin{itemize}
-    \setlength{\itemsep}{0.2em}
+    \setlength{\itemsep}{0.15em}
     \item $\sim$3.2\% of intragenic bins flagged at FDR $<$ 0.05.
     \item Enriched near exon boundaries, near splice donors, and at GC-rich stretches.
     \item A handful cluster within hsa-miR host genes --- plausible regulatory hotspots.
@@ -1720,34 +1716,32 @@
 \begin{frame}{Why this matters for neurodegeneration}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
-  \vspace{0.3em}
-  {\color{KGold}\bfseries\small The hypothesis.}\\[0.2em]
-  {\color{KWhite}\small In Alzheimer's disease, Parkinson's, and ALS, long
+  \vspace{0.2em}
+  {\color{KGold}\bfseries\footnotesize The hypothesis.}\\[0.15em]
+  {\color{KWhite}\footnotesize In Alzheimer's disease, Parkinson's, and ALS, long
   neuronal genes (MAPT, APP, SNCA, C9orf72) are over-represented among
   transcriptionally altered loci.}
-  \medskip
 
-  {\color{KGold}\bfseries\small Why kinetics might be the right lens.}
+  {\color{KGold}\bfseries\footnotesize Why kinetics might be the right lens.}
   \begin{itemize}
-    \setlength{\itemsep}{0.2em}
+    \setlength{\itemsep}{0.15em}
     \item DNA damage accumulates in neurons --- it stalls Pol II.
     \item Stalled Pol II triggers R-loop formation and splicing defects.
     \item Very long genes are most sensitive: more places to stall.
     \item A gene-wide rate hides where the stalls actually are.
   \end{itemize}
-  \medskip
-  {\color{KCream}\itshape\small KAIROS provides the position-resolved
+  {\color{KCream}\itshape\footnotesize KAIROS provides the position-resolved
   measurement that the AD transcriptional-kinetics story needs.}
 \end{column}
 \begin{column}{0.44\textwidth}
-  \vspace{0.3em}
+  \vspace{0.2em}
   \kquote{In neurons, transcription is a long, slow journey across tens of
   kilobases. Every kairotic stumble becomes a potential site of
   neurodegenerative decline.}{Ongoing work, this group}
-  \vspace{0.6em}
+  \vspace{0.3em}
 
-  {\color{KGold}\bfseries\small Next steps.}\\[0.2em]
-  {\color{KWhite}\small Apply KAIROS to iPSC-derived neuron GRO-seq cohorts
+  {\color{KGold}\bfseries\footnotesize Next steps.}\\[0.15em]
+  {\color{KWhite}\footnotesize Apply KAIROS to iPSC-derived neuron GRO-seq cohorts
   with and without AD risk variants. Are long-gene pause landscapes
   genetically patterned?}
 \end{column}
