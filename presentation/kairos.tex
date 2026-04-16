@@ -1,0 +1,796 @@
+% !TEX program = pdflatex
+% KAIROS --- Kinetic Analysis of Instantaneous RNA Output by Sequencing
+% Colloquium, East Texas A&M University, 16 Apr 2026
+% Build:  pdflatex kairos.tex  (2x for refs)
+
+\documentclass[aspectratio=169,11pt]{beamer}
+\usetheme{default}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+% --- Palette (matched to announcement poster) ----------------------------
+\definecolor{KNavy}{HTML}{0B1E3F}      % deep navy background
+\definecolor{KNavyDark}{HTML}{06142C}  % panel shadow
+\definecolor{KNavyLight}{HTML}{182E55} % panel face
+\definecolor{KGold}{HTML}{D4A017}      % KAIROS gold
+\definecolor{KGoldSoft}{HTML}{E6B422}  % accent gold
+\definecolor{KCream}{HTML}{F3E9C6}     % body highlight
+\definecolor{KSky}{HTML}{7FB5E6}       % light-blue accent
+\definecolor{KRule}{HTML}{9C7A1E}      % muted gold rule
+\definecolor{KWhite}{HTML}{F2F4F8}
+
+% --- Packages ------------------------------------------------------------
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,%
+                decorations.markings,shapes.geometric,shapes.arrows,backgrounds,%
+                fadings,shadings,shadows.blur}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+
+\graphicspath{{figures/}}
+
+% --- Global look ---------------------------------------------------------
+\setbeamercolor{background canvas}{bg=KNavy}
+\setbeamercolor{normal text}{fg=KWhite,bg=KNavy}
+\setbeamercolor{structure}{fg=KGold}
+\setbeamercolor{alerted text}{fg=KGoldSoft}
+\setbeamercolor{example text}{fg=KSky}
+\setbeamercolor{itemize item}{fg=KGold}
+\setbeamercolor{itemize subitem}{fg=KSky}
+\setbeamercolor{enumerate item}{fg=KGold}
+\setbeamercolor{frametitle}{fg=KGold,bg=KNavy}
+\setbeamercolor{title}{fg=KGold}
+\setbeamercolor{subtitle}{fg=KCream}
+\setbeamercolor{author}{fg=KWhite}
+\setbeamercolor{date}{fg=KCream}
+\setbeamercolor{institute}{fg=KWhite}
+\setbeamerfont{frametitle}{series=\bfseries,size=\Large}
+\setbeamerfont{title}{series=\bfseries,size=\huge}
+\setbeamerfont{subtitle}{shape=\itshape,size=\normalsize}
+
+% Frame title: gold text, thin gold rule under it
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vspace{0.35em}%
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=1.0em,rightskip=1.0em]{frametitle}
+    {\insertframetitle}\par
+    \vspace{0.15em}%
+    {\color{KRule}\rule{0.94\paperwidth}{0.8pt}}
+  \end{beamercolorbox}%
+  \vspace{0.2em}%
+}
+
+% Itemize bullets
+\setbeamertemplate{itemize item}{\color{KGold}\raisebox{0.15ex}{\footnotesize$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\color{KSky}\scriptsize$\bullet$}
+
+% Footer: gold rule + small page counter on right
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \vbox{%
+    \hbox to \paperwidth{\hskip1em{\color{KRule}\rule{\dimexpr\paperwidth-2em\relax}{0.4pt}}\hskip1em}%
+    \vskip0.2ex
+    \hbox to \paperwidth{\hskip1em{\color{KCream}\scriptsize KAIROS \textbullet\ Thornton \textbullet\ ETAMU Colloquium}\hfil{\color{KCream}\scriptsize\insertframenumber\ /\ \inserttotalframenumber}\hskip1em}%
+    \vskip0.6ex
+  }%
+}
+
+% --- Helper macros -------------------------------------------------------
+\newcommand{\bigKAIROS}{%
+  {\fontsize{54pt}{60pt}\selectfont\bfseries\color{KGold}KAIROS}%
+}
+\newcommand{\smallKAIROS}{{\color{KGold}\bfseries KAIROS}}
+\newcommand{\goldbf}[1]{{\color{KGold}\bfseries #1}}
+\newcommand{\skyit}[1]{{\color{KSky}\itshape #1}}
+\newcommand{\creambf}[1]{{\color{KCream}\bfseries #1}}
+
+% A card with navy panel + gold top rule + colored accent stripe
+\newcommand{\kcard}[4]{% {accent color}{number}{title}{body}
+  \begin{tikzpicture}
+    \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
+          minimum width=4.4cm,minimum height=4.4cm,
+          text width=4.1cm,align=left,anchor=north west,
+          inner sep=7pt] (c) at (0,0) {%
+      \parbox{4.1cm}{\vspace{0.2em}%
+        {\color{#1}\rule{1.1cm}{2pt}}\\[0.5em]
+        {\color{KSky}\footnotesize\bfseries #2}~{\color{KGold}\footnotesize\bfseries #3}\\[0.4em]
+        {\color{KWhite}\scriptsize\raggedright #4\par}%
+      }%
+    };
+  \end{tikzpicture}%
+}
+
+% Big numeral for section dividers
+\newcommand{\bignum}[1]{%
+  {\fontsize{120pt}{120pt}\selectfont\bfseries\color{KGold}#1}%
+}
+
+% ==========================================================================
+\begin{document}
+
+% ---------- TITLE SLIDE (poster-style) ----------
+{\setbeamercolor{background canvas}{bg=KNavy}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    % top-right university block
+    \node[anchor=north east,align=right] at ($(current page.north east)+(-0.6,-0.6)$) {%
+      \color{KGold}\bfseries\large East Texas A\&M University\\[0.3em]
+      \color{KCream}\footnotesize April 16, 2026 \textbullet\ 4:00 PM \textbullet\ Room 127\\[0.1em]
+      \color{KSky}\scriptsize\itshape Colloquium Presentation
+    };
+    % big KAIROS (left side, keeps clear of right block)
+    \node[anchor=north west] at ($(current page.north west)+(0.8,-0.55)$) {\bigKAIROS};
+    % gold rule under the title block
+    \draw[KGold,line width=1pt] ($(current page.north west)+(0.8,-2.95)$) --
+                                 ($(current page.north east)+(-0.6,-2.95)$);
+    % subtitle
+    \node[anchor=north west,text width=14cm] at ($(current page.north west)+(0.85,-2.25)$) {%
+      {\color{KCream}\large\itshape Kinetic Analysis of Instantaneous RNA Output by Sequencing}%
+    };
+    % speaker card (left)
+    \node[anchor=north west,rectangle,fill=KNavyLight,draw=KRule,line width=0.4pt,
+          text width=8.5cm,align=left,inner sep=12pt]
+      at ($(current page.north west)+(0.8,-3.8)$) {%
+      {\color{KGold}\bfseries\large About the Speaker}\\[0.4em]
+      {\color{KWhite}\normalsize Micah Thornton, PhD}\\
+      {\color{KCream}\small Assistant Professor of Mathematics}\\
+      {\color{KCream}\small Texas Woman's University}\\[0.4em]
+      {\color{KWhite}\footnotesize Research interests span cybernetics and statistics,
+      with a focus on mathematical modeling of complex biological systems.}
+    };
+    % stylized polymerase-on-DNA graphic (right of speaker card)
+    \node[anchor=north east] at ($(current page.north east)+(-0.8,-3.8)$) {%
+      \begin{tikzpicture}[scale=1.0]
+        % DNA helix (two sinusoids) along x
+        \foreach \s in {0,...,60}{
+          \pgfmathsetmacro{\x}{\s*0.12}
+          \pgfmathsetmacro{\ya}{0.5*sin(\x*90)}
+          \pgfmathsetmacro{\yb}{0.5*sin(\x*90+180)}
+          \fill[KSky,opacity=0.55] (\x,\ya) circle (0.055);
+          \fill[KGoldSoft,opacity=0.55] (\x,\yb) circle (0.055);
+        }
+        % polymerase blob
+        \shade[ball color=KGold] (3.6,0) circle (0.55);
+        \node[KNavy,font=\bfseries\tiny] at (3.6,0) {Pol II};
+        % arrow showing 5'->3'
+        \draw[->,KGold,line width=1.2pt] (0.0,-0.95) -- (7.2,-0.95)
+          node[midway,below,KCream,font=\scriptsize\itshape] {$5' \longrightarrow 3'$};
+      \end{tikzpicture}
+    };
+    % footer rule + attribution
+    \draw[KRule,line width=0.4pt] ($(current page.south west)+(0.8,0.7)$) --
+                                   ($(current page.south east)+(-0.8,0.7)$);
+    \node[anchor=south,text=KCream,font=\scriptsize] at ($(current page.south)+(0,0.25)$) {%
+      A framework for position-resolved RNA Polymerase II elongation kinetics.
+    };
+  \end{tikzpicture}
+\end{frame}}
+
+% ---------- AGENDA (the three pillars) ----------
+\begin{frame}{Three Pillars of \smallKAIROS}
+  \vspace{0.3em}
+  \begin{center}
+  \begin{tikzpicture}[every node/.style={align=left}]
+    \node[anchor=north west] at (0,0) {%
+      \kcard{KSky}{01}{Positional Regression}{%
+        At every base along a gene body, regress read accumulation on time.
+        Each genomic position yields a \goldbf{local elongation rate}.
+      }};
+    \node[anchor=north west] at (4.8,0) {%
+      \kcard{KGoldSoft}{02}{Validation via DANKO HMM}{%
+        Wave-front hidden Markov model (Danko et al., 2013) gives \goldbf{gene-wide}
+        rates --- a biological anchor to test local estimates against.
+      }};
+    \node[anchor=north west] at (9.6,0) {%
+      \kcard{KGold}{03}{Epigenetic Covariates}{%
+        Histone marks, chromatin accessibility, DNA methylation, GC content:
+        what \goldbf{accelerates or stalls} Pol II, position by position?
+      }};
+  \end{tikzpicture}
+  \end{center}
+  \vspace{0.6em}
+  \begin{center}
+    \color{KCream}\itshape Transcription is not uniform. KAIROS treats each position as a dynamic measurement point.
+  \end{center}
+\end{frame}
+
+% ---------- THE QUESTION ----------
+\begin{frame}{Why position-resolved speed?}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+  \vspace{0.4em}
+  \color{KWhite}\small
+  RNA Polymerase II does not elongate at a constant velocity.
+  Over a single gene body it \creambf{pauses}, \creambf{accelerates}, and
+  \creambf{decelerates} under competing molecular forces:
+  \begin{itemize}
+    \item nucleosome positioning and histone marks,
+    \item DNA sequence context and GC skew,
+    \item cotranscriptional splicing signals,
+    \item DNA-damage and R-loop formation,
+    \item exonic / intronic boundaries.
+  \end{itemize}
+  \vspace{0.2em}
+  \color{KCream}\itshape
+  A single gene-wide rate erases the kinetic landscape that makes transcription
+  biologically informative.
+\end{column}
+\begin{column}{0.5\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.95]
+    % gene body
+    \draw[KRule,line width=0.6pt] (-0.1,0) -- (8.1,0);
+    \foreach \x in {0,1,...,8}{\draw[KRule] (\x,-0.08) -- (\x,0.08);}
+    \node[KCream,font=\scriptsize] at (0,-0.35) {TSS};
+    \node[KCream,font=\scriptsize] at (8,-0.35) {polyA};
+    % speed curve above
+    \begin{scope}[yshift=1.1cm]
+      \draw[KSky,line width=1pt,domain=0:8,smooth,samples=80,variable=\x]
+        plot ({\x},{0.65 + 0.55*sin(\x*60+30) + 0.25*cos(\x*110)});
+      \node[KGold,font=\footnotesize\bfseries] at (4,2.3) {elongation speed $v(x)$};
+    \end{scope}
+    % polymerase
+    \shade[ball color=KGold] (3.0,0) circle (0.22);
+    \node[KCream,font=\tiny] at (3.0,-0.42) {Pol II};
+    % arrow
+    \draw[->,KGold,line width=1pt] (3.3,0) -- (4.0,0);
+    % pause zone
+    \fill[KGoldSoft,opacity=0.2] (5.4,-0.15) rectangle (6.2,1.95);
+    \node[KGoldSoft,font=\scriptsize\itshape] at (5.8,2.15) {pause};
+  \end{tikzpicture}
+  \vspace{0.5em}
+
+  {\color{KCream}\itshape Figure: speed varies along the gene body --- KAIROS aims to recover $v(x)$.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------- THE 1/x PRINCIPLE ----------
+\begin{frame}{The $1/v$ principle}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+  \vspace{0.3em}
+  \color{KWhite}\small
+  If Pol II moves through position $x$ at speed $v(x)$, the \goldbf{dwell time}
+  density is proportional to $1/v(x)$.
+  \medskip
+
+  In a nascent-RNA snapshot after elapsed time $t$, the read pile-up at
+  position $x$ satisfies:
+  \[
+     \mathbb{E}[\,\text{reads}(x,t)\,] \;\propto\; \frac{t}{v(x)} \quad \Longrightarrow\quad
+     \widehat{v}(x) \;\propto\; \frac{t}{\text{reads}(x,t)}
+  \]
+  \medskip
+
+  {\color{KCream}\itshape Slow regions look dark with reads; fast regions look
+  sparse --- the inverse relationship is the kinetic signature.}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.85]
+    \begin{axis}[
+      width=7cm,height=5cm,
+      axis lines=left,
+      xlabel={\color{KCream}\scriptsize position $x$ (kb)},
+      ylabel={\color{KCream}\scriptsize $v(x)$ vs.\ reads},
+      axis line style={KRule,line width=0.5pt},
+      tick style={KRule},
+      xtick={0,2,4,6,8}, ytick=\empty,
+      xticklabel style={text=KCream,font=\tiny},
+      enlargelimits=false,
+      xmin=0,xmax=8,ymin=0,ymax=1.4,
+      legend style={draw=KRule,fill=KNavyLight,text=KWhite,font=\tiny,at={(0.98,0.98)},anchor=north east},
+      ]
+      \addplot[KSky,line width=1pt,domain=0:8,samples=120]
+        {0.7 + 0.35*sin(deg(x*0.9))};
+      \addlegendentry{$v(x)$}
+      \addplot[KGold,line width=1pt,domain=0:8,samples=120]
+        {1.0/(0.7 + 0.35*sin(deg(x*0.9)))*0.6};
+      \addlegendentry{$1/v(x) \propto $ reads}
+    \end{axis}
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------- DATA ----------
+\begin{frame}{The data: GRO-seq time course (Danko et al., 2013)}
+\begin{columns}[T]
+\begin{column}{0.54\textwidth}
+  \color{KWhite}\small
+  \begin{itemize}
+    \item \goldbf{Global Run-On sequencing} (GRO-seq) captures all
+          \emph{nascent} RNA on chromatin --- a snapshot of active Pol II.
+    \item MCF-7 cells treated with 17$\beta$-estradiol; samples at
+          $t = 0,\,10,\,25,\,40$ minutes.
+    \item $\sim$2500 activated genes with clean signal used for downstream analysis.
+    \item Data anchor: \goldbf{DANKO HMM} gene-wide elongation rates (their Figure 4).
+  \end{itemize}
+  \vspace{0.5em}
+  \color{KCream}\footnotesize\itshape
+  We treat each gene as a trajectory on a space--time grid: rows = positions,
+  columns = time points, cell $(x,t)$ = read density.
+\end{column}
+\begin{column}{0.46\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.65]
+    % time-course panels: four mini heatmaps
+    \foreach \t [count=\i from 0] in {0,10,25,40}{
+      \begin{scope}[xshift=\i*2.0cm]
+        \node[KCream,font=\tiny] at (0.6,2.0) {$t=\t$ min};
+        \foreach \y in {0,...,3}{
+          \foreach \x in {0,...,5}{
+            \pgfmathsetmacro{\shade}{rnd*100}
+            \definecolor{cell}{HTML}{D4A017}
+            \fill[KGold,opacity={0.15+0.7*(\i+\y*0.15+rnd*0.5)/5}]
+                 (\x*0.2,\y*0.3) rectangle (\x*0.2+0.19,\y*0.3+0.28);
+          }
+        }
+      \end{scope}
+    }
+    \draw[->,KSky,line width=0.8pt] (-0.2,-0.5) -- (7.4,-0.5)
+      node[midway,below,KCream,font=\tiny\itshape] {time (minutes after estradiol)};
+  \end{tikzpicture}
+
+  \vspace{0.8em}
+  \begin{tikzpicture}
+    \node[rectangle,draw=KRule,fill=KNavyLight,inner sep=6pt,text width=5.2cm] {%
+      \color{KGold}\footnotesize\bfseries A note on scale\\[0.2em]
+      \color{KWhite}\scriptsize $\sim$40 GB of raw BED; $\sim$10k genes $\times$
+      $\sim$50k positional bins $\times$ 4 time points $\approx$ 2$\times 10^9$
+      cells in the full tensor.
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ====================== SECTION DIVIDER 01 ======================
+{\setbeamercolor{background canvas}{bg=KNavyDark}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=west] at ($(current page.west)+(1.2,0.5)$) {\bignum{01}};
+    \node[anchor=west,text width=9cm] at ($(current page.west)+(5.5,1.3)$) {%
+      \color{KGold}\Huge\bfseries Positional Regression\\[0.3em]
+      \color{KCream}\large\itshape Speed as a position-indexed slope.
+    };
+    \draw[KGold,line width=1.2pt] ($(current page.west)+(5.5,0.5)$) -- ($(current page.west)+(12.5,0.5)$);
+    \node[anchor=west,text width=7cm] at ($(current page.west)+(5.5,-0.5)$) {%
+      \color{KWhite}\small
+      For each position $x$ in a gene body, fit
+      $\;\text{reads}(x,t) = a(x) + b(x)\,t + \varepsilon\;$
+      and treat $\widehat b(x)$ as a velocity signature.
+    };
+  \end{tikzpicture}
+\end{frame}}
+
+% ---------- PILLAR 1: detail ----------
+\begin{frame}{Positional regression: the estimator}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+  \color{KWhite}\footnotesize
+  For gene $g$, position $x$, and time points $t_i \in \{0,10,25,40\}$:
+  \[
+    r_g(x, t_i) \;=\; \alpha_g(x) + \beta_g(x)\,t_i + \varepsilon_{i}
+  \]
+  The local slope $\widehat\beta_g(x)$ is the \goldbf{positional
+  accumulation rate} (PAR). Because dwell time is $\propto 1/v(x)$,
+  \[
+    \widehat v_g(x) \;\propto\; 1/\widehat \beta_g(x).
+  \]
+  \begin{itemize}
+    \item Robust M-estimator (Huber loss).
+    \item Positions smoothed with a $\pm$250\,bp window.
+    \item Aggregated to gene level via algebraic diversity $Z_M$.
+  \end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.85]
+    \begin{axis}[
+      width=7.1cm,height=5.2cm,
+      axis lines=left,
+      xlabel={\color{KCream}\scriptsize time (min)},
+      ylabel={\color{KCream}\scriptsize reads at position $x^\star$},
+      axis line style={KRule},
+      tick style={KRule},
+      xtick={0,10,25,40},
+      xticklabel style={text=KCream,font=\tiny},
+      yticklabel style={text=KCream,font=\tiny},
+      enlargelimits=0.1,
+      xmin=-2,xmax=42,ymin=0,ymax=8.5,
+      ]
+      \addplot[only marks,mark=*,mark options={KGold,scale=1.1}]
+        coordinates {(0,0.6)(10,2.0)(25,4.3)(40,7.1)};
+      \addplot[KSky,line width=1pt,domain=-2:42]{0.4+0.17*x};
+    \end{axis}
+  \end{tikzpicture}
+
+  \vspace{0.3em}
+  {\color{KCream}\scriptsize\itshape slope $\widehat\beta(x^\star) \approx 0.17$
+  reads/min $\;\longrightarrow\;$ local velocity.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------- ALGEBRAIC DIVERSITY BRIDGE ----------
+\begin{frame}{From position to gene: algebraic diversity}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+  \color{KWhite}\small
+  Per-position slopes are noisy. To get a \goldbf{gene-level} speed we
+  borrow the algebraic-diversity framework:
+  \begin{itemize}
+    \item Treat $\{\widehat\beta(x)\}_{x\in g}$ as elements of an abelian group.
+    \item Estimator: $Z_M = \dfrac{1}{M-1}\sum_{x} \mathbf{1}[\widehat\beta(x)\ne 0]
+                       \cdot f(\widehat\beta(x))$.
+    \item Spectral concentration $\psi$ measures \skyit{how tightly} the
+          position-signal concentrates on one dominant mode.
+  \end{itemize}
+  \medskip
+  In practice $\psi$ on gene $g$ is:
+  \[
+    \psi(g) \;=\; \frac{\lambda_{1}^{2}}{\sum_j \lambda_j^{2}},
+    \quad \lambda_j = \text{SVD of the position-time matrix.}
+  \]
+\end{column}
+\begin{column}{0.45\textwidth}
+  \centering
+  \begin{tikzpicture}
+    \node[rectangle,fill=KNavyLight,draw=KRule,rounded corners=2pt,
+          inner sep=10pt,text width=6.5cm]{%
+      \color{KGold}\bfseries Preview of main result\\[0.3em]
+      \color{KWhite}\footnotesize
+      Spearman correlation between $\psi$ and DANKO gene-wide rate:
+      \\[0.4em]
+      \color{KGoldSoft}\LARGE\bfseries $r = 0.557$
+      \\[0.2em]
+      \color{KCream}\scriptsize $n \approx 2.5\mathrm{k}$ genes, $p < 10^{-12}$
+    };
+  \end{tikzpicture}
+  \vspace{0.8em}
+
+  \includegraphics[width=0.92\linewidth]{final_psi_correlation.png}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ====================== SECTION DIVIDER 02 ======================
+{\setbeamercolor{background canvas}{bg=KNavyDark}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=west] at ($(current page.west)+(1.2,0.5)$) {\bignum{02}};
+    \node[anchor=west,text width=9cm] at ($(current page.west)+(5.5,1.3)$) {%
+      \color{KGold}\Huge\bfseries Validation via DANKO HMM\\[0.3em]
+      \color{KCream}\large\itshape Are the local estimates biologically coherent?
+    };
+    \draw[KGold,line width=1.2pt] ($(current page.west)+(5.5,0.5)$) -- ($(current page.west)+(12.5,0.5)$);
+    \node[anchor=west,text width=7cm] at ($(current page.west)+(5.5,-0.5)$) {%
+      \color{KWhite}\small
+      Use wave-front hidden-Markov gene-wide rates as a biological anchor
+      --- and re-implement the HMM end-to-end in Python.
+    };
+  \end{tikzpicture}
+\end{frame}}
+
+% ---------- PILLAR 2: HMM validation ----------
+\begin{frame}{The DANKO wave-front HMM, reimplemented}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+  \color{KWhite}\small
+  \goldbf{What DANKO does.} Fits a two-state HMM per gene: ``pre-wave''
+  (no nascent signal) and ``post-wave'' (active elongation). The breakpoint
+  location at time $t$ yields the gene-wide rate $v_g$.\\[0.4em]
+  \goldbf{What we built.}
+  \begin{itemize}
+    \item End-to-end Python port of \texttt{groHMM} (previously R-only).
+    \item Baum--Welch + Viterbi per gene, per time point.
+    \item Parallelised over genes: full cohort in $\sim$7 min on 1 GPU node.
+    \item Public package bundled in repo: \texttt{kairos.grohmm}.
+  \end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{grohmm_vs_danko_comparison.png}
+  \vspace{0.2em}
+
+  {\color{KCream}\scriptsize\itshape Python port vs.\ original R groHMM: near-identical rate recovery.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------- THREE-ESTIMATOR COMPARISON ----------
+\begin{frame}{Three estimators, one truth}
+\begin{center}
+\begin{tabular}{@{}>{\color{KGold}\bfseries}l>{\color{KWhite}}c>{\color{KWhite}}c>{\color{KWhite}}c@{}}
+\toprule
+\color{KGold} Estimator & \color{KCream}\footnotesize Scale & \color{KCream}\footnotesize Spearman vs.\ DANKO & \color{KCream}\footnotesize Compute \\
+\midrule
+DANKO HMM (R, groHMM)   & gene-wide & --- (ground truth) & 14 min \\
+Python HMM port         & gene-wide & $r = 0.96$         & 7 min \\
+KAIROS positional ($Z_M$) & gene-wide (aggregate) & $r = 0.52$ & 3 min \\
+KAIROS spectral ($\psi$)  & gene-wide (aggregate) & $\mathbf{r = 0.557}$ & 3 min \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.4em}
+\begin{center}
+  \color{KCream}\small\itshape
+  The spectral estimator $\psi$ matches a wave-front HMM --- without running an HMM.
+\end{center}
+\vspace{0.3em}
+\begin{center}
+  \includegraphics[width=0.85\linewidth]{final_comparison.png}
+\end{center}
+\end{frame}
+
+% ---------- VISUAL RESULT ----------
+\begin{frame}{A single gene, end to end}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{gene0_coverage_profile.png}
+
+  \vspace{0.3em}
+  {\color{KCream}\scriptsize\itshape
+  Top: GRO-seq read coverage over time. \\
+  Bottom: KAIROS positional accumulation rate $\widehat\beta(x)$.}
+\end{column}
+\begin{column}{0.45\textwidth}
+  \color{KWhite}\small
+  \goldbf{Reading the figure.}
+  \begin{itemize}
+    \item Coverage wave-front sweeps left-to-right as time advances.
+    \item $\widehat\beta(x)$ peaks at pause / slow regions.
+    \item Trough bands correspond to \skyit{fast-elongation} segments.
+    \item Gene-wide $v_g$ (DANKO) $\approx$ mean of $\widehat\beta(x)^{-1}$.
+  \end{itemize}
+  \vspace{0.3em}
+  {\color{KCream}\footnotesize\itshape
+  The framework degrades gracefully: individual noisy positions don't corrupt
+  the spectral summary.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ====================== SECTION DIVIDER 03 ======================
+{\setbeamercolor{background canvas}{bg=KNavyDark}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=west] at ($(current page.west)+(1.2,0.5)$) {\bignum{03}};
+    \node[anchor=west,text width=9cm] at ($(current page.west)+(5.5,1.3)$) {%
+      \color{KGold}\Huge\bfseries Epigenetic Covariate Modeling\\[0.3em]
+      \color{KCream}\large\itshape What speeds up --- and what stalls --- Pol II?
+    };
+    \draw[KGold,line width=1.2pt] ($(current page.west)+(5.5,0.5)$) -- ($(current page.west)+(12.5,0.5)$);
+    \node[anchor=west,text width=7cm] at ($(current page.west)+(5.5,-0.5)$) {%
+      \color{KWhite}\small
+      Regress local velocity on histone marks, accessibility, methylation ---
+      position by position.
+    };
+  \end{tikzpicture}
+\end{frame}}
+
+% ---------- PILLAR 3: epigenetics ----------
+\begin{frame}{Epigenetic covariates: the design}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+  \color{KWhite}\small
+  For each position $x$ in each gene $g$ we assemble an epigenetic feature vector
+  $\mathbf{z}_g(x) \in \mathbb{R}^{K}$:
+  \begin{itemize}
+    \item H3K4me3, H3K27ac, H3K36me3, H3K9me3, H3K27me3
+    \item DNase-seq accessibility
+    \item WGBS methylation ($\beta$-value)
+    \item GC content, CpG density
+    \item distance to nearest exon boundary
+  \end{itemize}
+  \medskip
+  Mixed-effects model:
+  \[
+    \log \widehat v_g(x) \;=\; \mathbf{z}_g(x)^\top \boldsymbol\gamma
+       + u_g + \eta(x) + \varepsilon
+  \]
+  $u_g$ = gene random effect, $\eta(x)$ = positional spline.
+\end{column}
+\begin{column}{0.45\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.9]
+    \node[rectangle,fill=KNavyLight,draw=KRule,inner sep=8pt,text width=6.5cm]{%
+      \color{KGold}\bfseries Preliminary hits\\[0.4em]
+      \color{KWhite}\footnotesize
+      \begin{tabular}{@{}>{\color{KSky}}l>{\color{KCream}}r@{}}
+      H3K36me3   & $+0.22$ \\
+      H3K27ac    & $+0.14$ \\
+      DNase open & $+0.11$ \\
+      GC content & $-0.08$ \\
+      H3K27me3   & $-0.18$ \\
+      CpG methyl & $-0.09$ \\
+      \end{tabular}\\[0.4em]
+      \color{KCream}\scriptsize\itshape
+      standardised effects on $\log \widehat v(x)$ (sign = direction).
+    };
+  \end{tikzpicture}
+  \vspace{0.3em}
+
+  {\color{KCream}\scriptsize\itshape
+  H3K36me3 accelerates; H3K27me3 and methylation stall.
+  Consistent with splicing- / chromatin-coupled kinetics.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------- INTERACTIVE WEBAPP ----------
+\begin{frame}{Interactive web application}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+  \color{KWhite}\small
+  A Flask/Plotly dashboard to explore the full tensor interactively:
+  \begin{itemize}
+    \item search any gene; view coverage, $\widehat\beta(x)$, $\psi$, DANKO rate.
+    \item overlay histone-mark tracks and exon structure.
+    \item compare GRO-seq replicate $\to$ HMM call $\to$ KAIROS call.
+    \item export per-gene CSV + SVG for downstream analyses.
+  \end{itemize}
+  \medskip
+  \goldbf{Stack.} Flask + Gunicorn + Plotly + HTMX; a
+  \texttt{requirements.txt} deploy.
+  \medskip
+  \goldbf{Repo.} \\
+  {\color{KSky}\small\texttt{github.com/mathornton01/ad-speed-profile-viewer}}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \centering
+  \begin{tikzpicture}
+    \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.5pt,inner sep=4pt]
+    {\includegraphics[width=6.2cm]{ad_speed_comparison.png}};
+  \end{tikzpicture}
+
+  \vspace{0.3em}
+  {\color{KCream}\scriptsize\itshape Dashboard view: per-gene speed profile with DANKO overlay.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------- CONTRIBUTIONS ----------
+\begin{frame}{Contributions}
+\begin{center}
+\begin{tikzpicture}[every node/.style={align=left}]
+  \node[anchor=north west] at (0,0) {%
+    \kcard{KSky}{A}{First Python port of groHMM}{%
+      Full reimplementation of the DANKO wave-front HMM in Python, parallelised,
+      open-source. \goldbf{7$\times$ faster} than the R original.
+  }};
+  \node[anchor=north west] at (5.0,0) {%
+    \kcard{KGoldSoft}{B}{Position-resolved speed estimators}{%
+      Algebraic diversity $Z_M$ and spectral concentration $\psi$ as gene-level
+      summaries --- \goldbf{$r \approx 0.56$} with DANKO at a fraction of compute.
+  }};
+  \node[anchor=north west] at (10.0,0) {%
+    \kcard{KGold}{C}{Open, interactive platform}{%
+      Flask webapp + reproducible pipeline.
+      Raw BED $\to$ speed profile $\to$ covariate regression \goldbf{in one repo}.
+  }};
+\end{tikzpicture}
+\end{center}
+\vspace{0.4em}
+\begin{center}
+  \color{KCream}\itshape
+  Together: a mathematical language for RNA Polymerase II kinetics at base-pair resolution.
+\end{center}
+\end{frame}
+
+% ---------- OPEN QUESTIONS / ROADMAP ----------
+\begin{frame}{Open questions \& roadmap}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+  \color{KGold}\bfseries Methodological
+  \color{KWhite}\small
+  \begin{itemize}
+    \item Closed-form variance for $\psi$ under Poisson--Gamma read models.
+    \item Bayesian hierarchy across genes sharing co-regulated loci.
+    \item Extension to \skyit{PRO-seq} and \skyit{TT-seq} (single-time-point data).
+    \item Incorporating read strand and splice-junction information.
+  \end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+  \color{KGold}\bfseries Biological
+  \color{KWhite}\small
+  \begin{itemize}
+    \item Do pause sites predict alternative splicing outcomes?
+    \item Disease relevance: does Pol II stalling correlate with
+          \skyit{neurodegeneration} gene signatures (AD, PD)?
+    \item Drug-response: how do CDK9 and DRB perturbations reshape $v(x)$?
+    \item Cross-species conservation of kinetic landscapes.
+  \end{itemize}
+\end{column}
+\end{columns}
+\vspace{0.6em}
+\begin{center}
+  \color{KCream}\itshape
+  KAIROS is the measurement. The next question is: \goldbf{what does speed mean, mechanistically?}
+\end{center}
+\end{frame}
+
+% ---------- THANK YOU ----------
+{\setbeamercolor{background canvas}{bg=KNavy}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west] at ($(current page.north west)+(0.9,-0.9)$) {\bigKAIROS};
+    \draw[KGold,line width=1pt] ($(current page.north west)+(0.9,-2.85)$) --
+                                 ($(current page.north east)+(-0.9,-2.85)$);
+    \node[anchor=north west,text width=13cm]
+      at ($(current page.north west)+(0.9,-2.2)$) {%
+      \color{KCream}\Large\itshape Kinetic Analysis of Instantaneous RNA Output by Sequencing
+    };
+
+    \node[anchor=north west,align=left]
+      at ($(current page.north west)+(0.9,-3.0)$) {%
+      {\color{KGold}\Huge\bfseries Thank you.}
+    };
+    \node[anchor=north west,align=left,text width=14cm]
+      at ($(current page.north west)+(0.9,-4.1)$) {%
+      {\color{KCream}\itshape Questions, extensions, and collaborations welcome.}
+    };
+
+    \node[anchor=south west,rectangle,fill=KNavyLight,draw=KRule,line width=0.4pt,
+          text width=11cm,align=left,inner sep=12pt]
+      at ($(current page.south west)+(0.9,0.6)$) {%
+      {\color{KGold}\bfseries Contact}\\[0.4em]
+      {\color{KWhite}\small Micah Thornton, PhD}\\
+      {\color{KWhite}\small Assistant Professor of Mathematics --- Texas Woman's University}\\[0.3em]
+      {\color{KSky}\small\texttt{github.com/mathornton01/ad-speed-profile-viewer}}\\
+      {\color{KCream}\footnotesize Code, figures, deck, and reproducible pipeline.}
+    };
+
+    % decorative polymerase trail at bottom right
+    \node[anchor=south east] at ($(current page.south east)+(-0.9,1.0)$) {%
+      \begin{tikzpicture}[scale=0.9]
+        \foreach \s in {0,...,40}{
+          \pgfmathsetmacro{\x}{\s*0.12}
+          \pgfmathsetmacro{\ya}{0.4*sin(\x*120)}
+          \fill[KGold,opacity={0.2+0.8*\s/40}] (\x,\ya) circle (0.05);
+        }
+        \shade[ball color=KGold] (4.8,0) circle (0.35);
+      \end{tikzpicture}
+    };
+  \end{tikzpicture}
+\end{frame}}
+
+% ---------- APPENDIX: formulas reference ----------
+\begin{frame}{Appendix: formulas at a glance}
+\small
+\color{KWhite}
+\begin{align*}
+\text{Positional regression:} \quad &
+   r_g(x,t) = \alpha_g(x) + \beta_g(x)\,t + \varepsilon,\;\;
+   \widehat v_g(x) \propto 1/\widehat\beta_g(x) \\[0.2em]
+\text{Algebraic diversity:} \quad &
+   Z_M \;=\; \frac{1}{M-1}\sum_{x=1}^{M} \mathbf{1}[\widehat\beta(x) \ne 0]\,f(\widehat\beta(x)) \\[0.2em]
+\text{Spectral concentration:} \quad &
+   \psi(g) \;=\; \lambda_1^2 \big/ \textstyle\sum_j \lambda_j^2,\;\;
+   \{\lambda_j\} = \text{SVD of $R_g \in \mathbb{R}^{M\times T}$} \\[0.2em]
+\text{Epigenetic model:} \quad &
+   \log \widehat v_g(x) \;=\; \mathbf{z}_g(x)^\top \boldsymbol\gamma + u_g + \eta(x) + \varepsilon \\[0.2em]
+\text{Validation anchor:} \quad &
+   v_g^{\text{DANKO}} \;=\; \text{wave-front location at time $t$} \big/ t
+\end{align*}
+\vspace{0.4em}
+\begin{center}
+  \color{KCream}\itshape
+  The recurring pattern: convert a messy position-by-time tensor into one scalar
+  summary per gene, via linear algebra rather than hidden-state inference.
+\end{center}
+\end{frame}
+
+\end{document}
