@@ -19,6 +19,7 @@
 \definecolor{KRule}{HTML}{6B5215}
 \definecolor{KWhite}{HTML}{F2F4F8}
 \definecolor{KMuted}{HTML}{A9B3C2}
+\definecolor{KRose}{HTML}{D98A8A}
 
 % --- Packages -----------------------------------------------------------
 \usepackage{amsmath,amssymb,amsthm,mathtools}
@@ -27,7 +28,8 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,%
-                decorations.markings,shapes.geometric,backgrounds}
+                decorations.markings,shapes.geometric,shapes.arrows,%
+                backgrounds,fit,matrix,chains}
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{xcolor}
@@ -104,42 +106,47 @@
   {\fontsize{140pt}{140pt}\selectfont\bfseries\color{KGold}#1}%
 }
 
+% Quote block
+\newcommand{\kquote}[2]{%
+  \begin{tikzpicture}
+    \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
+          inner sep=12pt,text width=\linewidth]{%
+      \parbox{\linewidth}{%
+        {\color{KCream}\itshape\small #1}\\[0.5em]
+        {\color{KMuted}\scriptsize\hfill --- #2}%
+      }%
+    };
+  \end{tikzpicture}%
+}
+
 % ========================================================================
 \begin{document}
 
-% ---------- TITLE SLIDE ------------------------------------------------
+% ============================================================ 01 TITLE ==
 {\setbeamercolor{background canvas}{bg=KNavy}
 \begin{frame}[plain]
   \begin{tikzpicture}[remember picture,overlay]
-    % thin top rule
     \draw[KGold,line width=0.4pt] ($(current page.north west)+(1.1,-1.0)$) --
                                    ($(current page.north east)+(-1.1,-1.0)$);
-    % small overline label
     \node[anchor=north west,text=KCream,font=\footnotesize]
       at ($(current page.north west)+(1.1,-0.75)$) {East Texas A\&M University \textbullet\ Colloquium Presentation};
     \node[anchor=north east,text=KCream,font=\footnotesize]
       at ($(current page.north east)+(-1.1,-0.75)$) {April 16, 2026 \textbullet\ 4:00 PM \textbullet\ Room 127};
 
-    % BIG KAIROS title, perfectly left-aligned
     \node[anchor=north west] at ($(current page.north west)+(1.1,-1.6)$) {%
       {\fontsize{72pt}{72pt}\selectfont\bfseries\color{KGold}KAIROS}%
     };
-    % subtitle (italic cream), close under title
     \node[anchor=north west,text width=14cm]
       at ($(current page.north west)+(1.1,-3.5)$) {%
       {\color{KCream}\LARGE\itshape Kinetic Analysis of Instantaneous RNA Output by Sequencing}%
     };
-    % divider rule
     \draw[KGold,line width=0.8pt] ($(current page.north west)+(1.1,-4.4)$) --
                                    ($(current page.north west)+(5.1,-4.4)$);
-
-    % one-line tagline
     \node[anchor=north west,text width=14cm]
       at ($(current page.north west)+(1.1,-4.7)$) {%
       {\color{KMuted}\normalsize A position-resolved framework for RNA Polymerase II elongation kinetics.}%
     };
 
-    % speaker block --- plain text, no card
     \node[anchor=south west,align=left]
       at ($(current page.south west)+(1.1,1.0)$) {%
       {\color{KGold}\bfseries\large Micah Thornton, PhD}\\[0.15em]
@@ -147,7 +154,6 @@
       {\color{KCream}\small Texas Woman's University}%
     };
 
-    % minimal DNA-helix motif, bottom-right, subdued
     \node[anchor=south east] at ($(current page.south east)+(-1.1,1.0)$) {%
       \begin{tikzpicture}[scale=0.85]
         \foreach \s in {0,...,48}{
@@ -164,7 +170,6 @@
       \end{tikzpicture}%
     };
 
-    % bottom hairline
     \draw[KRule,line width=0.3pt] ($(current page.south west)+(1.1,0.55)$) --
                                    ($(current page.south east)+(-1.1,0.55)$);
     \node[anchor=south,text=KMuted,font=\scriptsize]
@@ -172,7 +177,151 @@
   \end{tikzpicture}
 \end{frame}}
 
-% ---------- AGENDA / THREE PILLARS -------------------------------------
+% ============================================================ 02 KAIROS WORD ==
+\begin{frame}{The word \smallKAIROS}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.58\textwidth}
+  \vspace{0.4em}
+  {\color{KGold}\bfseries\small Greek {\boldmath$\kappa\alpha\iota\rho\delta\varsigma$}.}\\[0.25em]
+  {\color{KWhite}\small The opportune moment. The decisive instant when a
+  change can be acted on --- distinct from \skyit{chronos}, the continuous
+  flow of clock time.}
+  \medskip
+
+  {\color{KGold}\bfseries\small Why the name?}
+  \begin{itemize}
+    \setlength{\itemsep}{0.25em}
+    \item Transcription is a chronological process --- polymerase grinds forward.
+    \item But biological regulation happens at \creambf{kairotic} moments:
+          a pause, a release, a hand-off between factors.
+    \item The framework here is about \goldbf{catching those instants} in
+          position along the gene body, not averaging them away.
+  \end{itemize}
+  \medskip
+
+  {\color{KCream}\itshape\small
+  Every base is a chance for the regulatory machinery to intervene.
+  KAIROS is a language for those chances.}
+\end{column}
+\begin{column}{0.38\textwidth}
+  \centering
+  \vspace{0.6em}
+  \begin{tikzpicture}
+    \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
+          inner sep=14pt,text width=6cm,align=center]{%
+      {\color{KMuted}\scriptsize chronos}\\[0.2em]
+      {\color{KSky}\Large\itshape continuous time}\\[0.7em]
+      {\color{KGold}\rule{3.5cm}{0.5pt}}\\[0.7em]
+      {\color{KMuted}\scriptsize kairos}\\[0.2em]
+      {\color{KGold}\Large\bfseries the opportune moment}\\[0.5em]
+      {\color{KCream}\scriptsize\itshape a pause, a release, a hand-off}%
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 03 ABOUT SPEAKER ==
+\begin{frame}{About this work}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.55\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small Speaker.}\\[0.2em]
+  {\color{KWhite}\small Micah Thornton, PhD --- Assistant Professor of
+  Mathematics at Texas Woman's University. Background in biostatistics,
+  algebraic diversity theory, and quantitative genomics.}
+  \medskip
+
+  {\color{KGold}\bfseries\small Ongoing research program.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Algebraic summaries for high-dimensional biological data.
+    \item Transcriptional kinetics and chromatin dynamics.
+    \item Connections between RNA polymerase behaviour and
+          neurodegenerative disease (AD, PD).
+    \item Open, reproducible tooling for nascent-RNA analysis.
+  \end{itemize}
+  \medskip
+
+  {\color{KCream}\itshape\small Today's talk is a slice of that program ---
+  the positional elongation-kinetics thread.}
+\end{column}
+\begin{column}{0.42\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small What I will not assume.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item You know what GRO-seq is. (Slide 10.)
+    \item You have read Danko 2013. (Slide 12 / 28.)
+    \item You like hidden Markov models. (They're optional.)
+  \end{itemize}
+  \medskip
+  {\color{KGold}\bfseries\small What I will assume.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Comfort with linear regression.
+    \item Willingness to think about a gene as a space-by-time matrix.
+    \item Patience for one short detour through a quotient group.
+  \end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 04 ROADMAP ==
+\begin{frame}{Today's roadmap}
+\vspace{0.3em}
+\begin{center}
+\begin{tikzpicture}[every node/.style={align=left}]
+  \node[anchor=north west,text=KMuted,font=\scriptsize] at (0,0.6) {Prologue};
+  \node[anchor=north west] at (0,0.2) {%
+    \parbox{5.2cm}{%
+    {\color{KGold}\bfseries\small Biology in 4 slides}\\[0.3em]
+    {\color{KWhite}\footnotesize Pol II, nascent RNA, GRO-seq,
+     the wave-front paradigm.}}};
+
+  \node[anchor=north west,text=KMuted,font=\scriptsize] at (5.5,0.6) {Section 01};
+  \node[anchor=north west] at (5.5,0.2) {%
+    \parbox{5.2cm}{%
+    {\color{KGold}\bfseries\small Positional regression}\\[0.3em]
+    {\color{KWhite}\footnotesize Slopes per base, algebraic diversity,
+     spectral concentration $\psi$.}}};
+
+  \node[anchor=north west,text=KMuted,font=\scriptsize] at (11,0.6) {Section 02};
+  \node[anchor=north west] at (11,0.2) {%
+    \parbox{5.2cm}{%
+    {\color{KGold}\bfseries\small DANKO HMM validation}\\[0.3em]
+    {\color{KWhite}\footnotesize Python port of groHMM, rank correlation,
+     agreement and disagreement.}}};
+
+  \node[anchor=north west,text=KMuted,font=\scriptsize] at (0,-3.0) {Section 03};
+  \node[anchor=north west] at (0,-3.4) {%
+    \parbox{5.2cm}{%
+    {\color{KGold}\bfseries\small Epigenetic covariates}\\[0.3em]
+    {\color{KWhite}\footnotesize Histone marks, methylation, accessibility.
+     What accelerates Pol II?}}};
+
+  \node[anchor=north west,text=KMuted,font=\scriptsize] at (5.5,-3.0) {Section 04};
+  \node[anchor=north west] at (5.5,-3.4) {%
+    \parbox{5.2cm}{%
+    {\color{KGold}\bfseries\small Applications \& outlook}\\[0.3em]
+    {\color{KWhite}\footnotesize Neurodegeneration hypothesis,
+     interactive platform, open questions.}}};
+
+  \node[anchor=north west,text=KMuted,font=\scriptsize] at (11,-3.0) {Close};
+  \node[anchor=north west] at (11,-3.4) {%
+    \parbox{5.2cm}{%
+    {\color{KGold}\bfseries\small Contributions \& thanks}\\[0.3em]
+    {\color{KWhite}\footnotesize Summary, acknowledgements, references,
+     appendix of formulas.}}};
+\end{tikzpicture}
+\end{center}
+\vspace{0.6em}
+\begin{center}
+  {\color{KCream}\itshape 45 slides.\ \ Interrupt any time.}
+\end{center}
+\end{frame}
+
+% ============================================================ 05 THREE PILLARS ==
 \begin{frame}{Three pillars of \smallKAIROS}
   \vspace{0.4em}
   \begin{center}
@@ -200,7 +349,135 @@
   \end{center}
 \end{frame}
 
-% ---------- THE QUESTION -----------------------------------------------
+% ============================================================ 06 TRANSCRIPTION 30s ==
+\begin{frame}{Transcription in 30 seconds}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.50\textwidth}
+  \vspace{0.3em}
+  {\color{KWhite}\small The central dogma's middle step:}
+  \begin{itemize}
+    \setlength{\itemsep}{0.25em}
+    \item RNA Polymerase II binds a promoter.
+    \item It \skyit{initiates}, then \skyit{releases} from promoter-proximal pause.
+    \item It \skyit{elongates} through the gene body at $\sim$1--4 kb/min.
+    \item At the end, it \skyit{terminates} and falls off near the polyA site.
+  \end{itemize}
+  \medskip
+  {\color{KCream}\itshape\small
+  Every step is regulated. Every step leaves a kinetic fingerprint in the
+  nascent-RNA signal --- if you can read it.}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \centering
+  \vspace{0.6em}
+  \begin{tikzpicture}[node distance=0.5cm]
+    % DNA strand
+    \draw[KRule,line width=0.7pt] (0,0) -- (9,0);
+    \node[KMuted,font=\scriptsize,anchor=north] at (0.3,-0.15) {promoter};
+    \node[KMuted,font=\scriptsize,anchor=north] at (8.7,-0.15) {polyA};
+    % stages
+    \node[circle,fill=KSky,inner sep=2pt,draw=KGold] (p1) at (0.8,0.3) {};
+    \node[KGoldSoft,font=\tiny,anchor=south] at (0.8,0.4) {initiate};
+    \node[circle,fill=KSky,inner sep=2pt,draw=KGold] (p2) at (2.2,0.3) {};
+    \node[KGoldSoft,font=\tiny,anchor=south] at (2.2,0.4) {pause};
+    \draw[->,KGold,line width=0.6pt] (p1) -- (p2);
+    \node[circle,fill=KSky,inner sep=2pt,draw=KGold] (p3) at (5,0.3) {};
+    \node[KGoldSoft,font=\tiny,anchor=south] at (5,0.4) {elongate};
+    \draw[->,KGold,line width=0.6pt] (p2) -- (p3);
+    \node[circle,fill=KSky,inner sep=2pt,draw=KGold] (p4) at (8.3,0.3) {};
+    \node[KGoldSoft,font=\tiny,anchor=south] at (8.3,0.4) {terminate};
+    \draw[->,KGold,line width=0.6pt] (p3) -- (p4);
+    % nascent RNA squiggle
+    \draw[KCream,decorate,decoration={snake,amplitude=1.4pt,segment length=5pt},line width=0.6pt]
+      (5,0.7) .. controls (4.3,1.4) and (3.6,1.4) .. (3,1.2);
+    \node[KCream,font=\tiny\itshape] at (3.2,1.55) {nascent RNA};
+  \end{tikzpicture}
+
+  \vspace{0.8em}
+  {\color{KMuted}\scriptsize\itshape A cartoon. Real polymerase is a 500 kDa molecular machine.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 07 POL II KINETICS ==
+\begin{frame}{RNA Polymerase II elongation kinetics}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.50\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small Mean velocity, and its limits.}\\[0.2em]
+  {\color{KWhite}\small Classical single-molecule work (Singer, Darzacq, Core,
+  Kwak) places \emph{average} Pol II elongation at roughly 1--4 kb/min.}
+  \medskip
+
+  {\color{KGold}\bfseries\small But the mean hides structure.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Promoter-proximal pause: 20--60 bp downstream of TSS.
+    \item Introns often faster than exons.
+    \item Terminal slowdown near polyA sites (co-transcriptional cleavage).
+    \item Pol II can backtrack --- kinetics have a diffusive component.
+  \end{itemize}
+\end{column}
+\begin{column}{0.46\textwidth}
+  \centering
+  \vspace{0.3em}
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=7.0cm,height=5.0cm,
+      axis lines=left,
+      xlabel={\color{KMuted}\scriptsize distance from TSS (kb)},
+      ylabel={\color{KMuted}\scriptsize $v(x)$ (kb/min)},
+      axis line style={KRule,line width=0.4pt},
+      tick style={KRule,line width=0.3pt},
+      xtick={0,2,5,10,15,20},
+      xticklabel style={text=KMuted,font=\tiny},
+      yticklabel style={text=KMuted,font=\tiny},
+      every axis label/.style={font=\scriptsize},
+      xmin=0,xmax=20,ymin=0,ymax=4.5,
+      enlargelimits=false,
+      ]
+      % Baseline typical profile
+      \addplot[KSky,line width=1.1pt,samples=160,domain=0:20,smooth]
+        {0.2 + 3.4*exp(-((x-0.6)^2)/0.3)*0 + 2.6 - 1.9*exp(-((x-0.4)^2)/0.25) - 1.3*exp(-((x-19)^2)/1.0)};
+    \end{axis}
+    \node[KGoldSoft,font=\tiny\itshape] at (1.2,3.2) {pause};
+    \node[KGoldSoft,font=\tiny\itshape] at (5.3,4.0) {fast body};
+    \node[KGoldSoft,font=\tiny\itshape] at (6.4,2.8) {terminal slowdown};
+  \end{tikzpicture}
+
+  \vspace{0.3em}
+  {\color{KMuted}\scriptsize\itshape Stylised gene-body velocity profile.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 08 NASCENT RNA METHODS ==
+\begin{frame}{How we measure nascent transcription}
+\vspace{0.4em}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l l l l@{}}
+\toprule
+{\color{KGold}\bfseries Assay} & {\color{KCream}\footnotesize Signal} &
+{\color{KCream}\footnotesize Resolution} & {\color{KCream}\footnotesize Time course?} \\
+\midrule
+{\color{KWhite}GRO-seq (Core 2008)}     & {\color{KWhite}run-on + BrU label}         & {\color{KWhite}$\sim$50\,bp} & {\color{KWhite}yes (this work)} \\
+{\color{KWhite}PRO-seq (Kwak 2013)}     & {\color{KWhite}run-on, biotin, single-nt} & {\color{KWhite}1\,bp} & {\color{KWhite}typically static} \\
+{\color{KWhite}TT-seq (Schwalb 2016)}   & {\color{KWhite}4sU metabolic labelling}   & {\color{KWhite}$\sim$1\,kb}  & {\color{KWhite}yes, short labels} \\
+{\color{KWhite}ChIP-seq (Pol II)}       & {\color{KWhite}polymerase occupancy}      & {\color{KWhite}$\sim$200\,bp}& {\color{KWhite}no} \\
+{\color{KWhite}NET-seq (Churchman 2011)}& {\color{KWhite}3$'$-end of nascent RNA}    & {\color{KWhite}1\,bp} & {\color{KWhite}static} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.7em}
+\begin{center}
+  {\color{KCream}\itshape
+  GRO-seq with a time course is the minimal substrate for position-resolved
+  \goldbf{kinetics}: you need a wave-front that moves.}
+\end{center}
+\end{frame}
+
+% ============================================================ 09 WHY POSITION-RESOLVED ==
 \begin{frame}{Why position-resolved speed?}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
@@ -226,22 +503,18 @@
   \centering
   \vspace{0.6em}
   \begin{tikzpicture}[scale=0.95]
-    % speed curve (top)
     \begin{scope}[yshift=1.3cm]
       \draw[KSky,line width=1.1pt,domain=0:8,smooth,samples=120,variable=\x]
         plot ({\x},{0.65 + 0.50*sin(\x*55+20) + 0.20*cos(\x*100)});
       \node[KGold,font=\footnotesize\bfseries] at (4,2.05) {elongation speed\ \ $v(x)$};
     \end{scope}
-    % gene body
     \draw[KRule,line width=0.6pt] (0,0) -- (8,0);
     \foreach \x in {0,1,...,8}{\draw[KRule] (\x,-0.08) -- (\x,0.08);}
     \node[KMuted,font=\scriptsize] at (0,-0.38) {TSS};
     \node[KMuted,font=\scriptsize] at (8,-0.38) {polyA};
-    % polymerase
     \shade[ball color=KGold] (3.0,0) circle (0.22);
     \node[KMuted,font=\tiny] at (3.0,-0.42) {Pol II};
     \draw[->,KGold,line width=1pt] (3.32,0) -- (4.05,0);
-    % pause zone
     \fill[KGoldSoft,opacity=0.18] (5.4,-0.15) rectangle (6.2,2.1);
     \node[KGoldSoft,font=\scriptsize\itshape] at (5.8,2.3) {pause};
   \end{tikzpicture}
@@ -252,7 +525,113 @@
 \end{columns}
 \end{frame}
 
-% ---------- THE 1/v PRINCIPLE ------------------------------------------
+% ============================================================ 10 CLASSICAL ASSUMPTION ==
+\begin{frame}{The classical assumption, and why it fails}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.50\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small Standard practice.}\\[0.2em]
+  {\color{KWhite}\small Most pipelines report a single gene-wide elongation
+  rate. The wave-front HMM of Danko 2013 is the gold standard in that
+  paradigm:}
+  \[
+    v_g \;=\; \frac{\text{wave-front}(t)}{t}.
+  \]
+  {\color{KWhite}\small One number per gene per time point. Clean, but coarse.}
+  \medskip
+
+  {\color{KGold}\bfseries\small Where it breaks.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Cannot localise pause sites.
+    \item Cannot detect intron / exon differences.
+    \item Cannot relate speed to position-resolved covariates (ChIP, methylation).
+    \item Treats a gene as a homogeneous kinetic object.
+  \end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \centering
+  \vspace{0.3em}
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=7.2cm,height=5.0cm,
+      axis lines=left,
+      xlabel={\color{KMuted}\scriptsize position (kb)},
+      ylabel={\color{KMuted}\scriptsize $v(x)$},
+      axis line style={KRule,line width=0.4pt},
+      tick style={KRule,line width=0.3pt},
+      xtick={0,5,10,15,20},ytick=\empty,
+      xticklabel style={text=KMuted,font=\tiny},
+      every axis label/.style={font=\scriptsize},
+      xmin=0,xmax=20,ymin=0,ymax=4.2,
+      enlargelimits=false,
+      legend style={draw=KRule,fill=KNavyLight,text=KWhite,font=\tiny,
+                    at={(0.98,0.98)},anchor=north east,row sep=1pt},
+      ]
+      \addplot[KSky,line width=1.0pt,samples=180,domain=0:20,smooth]
+        {2.3 + 1.1*sin(deg(x*0.7)) - 1.5*exp(-((x-1)^2)/0.4) - 0.8*exp(-((x-18)^2)/1.0)};
+      \addlegendentry{\color{KWhite}true $v(x)$}
+      \addplot[KGold,line width=1.1pt,dashed,domain=0:20]{2.05};
+      \addlegendentry{\color{KWhite}HMM gene-wide}
+    \end{axis}
+  \end{tikzpicture}
+
+  \vspace{0.3em}
+  {\color{KMuted}\scriptsize\itshape A scalar misses pauses, slowdowns, landmarks.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 11 WAVE-FRONT PARADIGM ==
+\begin{frame}{The wave-front paradigm (Danko et al., 2013)}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
+  \vspace{0.3em}
+  {\color{KWhite}\small Treat Pol II as a \goldbf{wave} sweeping down the gene body:}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item At time 0, no nascent signal past the TSS.
+    \item By time $t$, the wave reaches position $v_g t$.
+    \item Beyond the front: no signal yet. Before the front: saturated signal.
+  \end{itemize}
+  \medskip
+  {\color{KWhite}\small The wave-front location is a gene-wide elongation rate.
+  A two-state HMM with a \skyit{pre-wave} and \skyit{post-wave} state fits this
+  structure directly. Danko 2013 showed it works on GRO-seq.}
+  \medskip
+
+  {\color{KCream}\itshape\small
+  KAIROS does not replace this paradigm. It extends it: the wave can
+  \goldbf{hesitate} between its start and end.}
+\end{column}
+\begin{column}{0.46\textwidth}
+  \centering
+  \vspace{0.4em}
+  \begin{tikzpicture}
+    % four stacked rows = time
+    \foreach \row [count=\i from 0] in {10,25,40,60}{
+      \begin{scope}[yshift=-\i*0.9cm]
+        \draw[KRule,line width=0.3pt] (0,0) -- (8,0);
+        % fill up to wavefront
+        \pgfmathsetmacro{\wf}{0.12*\row}
+        \fill[KGold,opacity=0.72] (0,-0.15) rectangle (\wf,0.15);
+        \fill[KSky,opacity=0.10] (\wf,-0.15) rectangle (8,0.15);
+        \draw[KGoldSoft,line width=0.8pt] (\wf,-0.25) -- (\wf,0.25);
+        \node[KMuted,font=\scriptsize,anchor=east] at (-0.1,0) {$t=\row$};
+      \end{scope}
+    }
+    \node[KCream,font=\scriptsize\itshape,anchor=south] at (4,0.45) {gene body};
+    \draw[->,KGold,line width=0.6pt] (8.3,-3.2) -- (8.3,0.5)
+      node[midway,right=-1pt,text=KMuted,font=\tiny\itshape,rotate=-90,anchor=south]{time};
+  \end{tikzpicture}
+
+  \vspace{0.4em}
+  {\color{KMuted}\scriptsize\itshape Wave-front position over time $=$ gene-wide rate.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 12 1/v PRINCIPLE ==
 \begin{frame}{The $1/v$ principle}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
@@ -306,7 +685,7 @@
 \end{columns}
 \end{frame}
 
-% ---------- DATA --------------------------------------------------------
+% ============================================================ 13 DATA ==
 \begin{frame}{The data: GRO-seq time course (Danko et al., 2013)}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.56\textwidth}
@@ -328,7 +707,6 @@
 \begin{column}{0.42\textwidth}
   \centering
   \vspace{0.8em}
-  % Clean heatmap panels: deterministic gradient, no noise
   \begin{tikzpicture}[scale=0.70]
     \foreach \t [count=\i from 0] in {0,10,25,40}{
       \begin{scope}[xshift=\i*1.85cm]
@@ -340,7 +718,6 @@
                  (\x*0.19,\y*0.28) rectangle (\x*0.19+0.17,\y*0.28+0.26);
           }
         }
-        % small frame
         \draw[KRule,line width=0.2pt] (-0.03,-0.03) rectangle (1.16,1.18);
       \end{scope}
     }
@@ -362,17 +739,104 @@
 \end{columns}
 \end{frame}
 
-% ====================== SECTION DIVIDER 01 =============================
+% ============================================================ 14 DATA PREPROCESSING ==
+\begin{frame}{From BED files to a space-time tensor}
+\vspace{0.2em}
+\begin{center}
+\begin{tikzpicture}[node distance=1.05cm,every node/.style={align=center,font=\scriptsize}]
+  \tikzset{stg/.style={rectangle,rounded corners=1pt,draw=KRule,line width=0.3pt,
+           fill=KNavyLight,text=KWhite,minimum width=2.3cm,minimum height=1.1cm,inner sep=4pt}}
+  \tikzset{arr/.style={->,KGold,line width=0.7pt,shorten >=1pt}}
+  \node[stg] (a) {\color{KGoldSoft}\bfseries raw BED\\\color{KMuted}aligned reads, per time point};
+  \node[stg,right=of a] (b) {\color{KGoldSoft}\bfseries filter\\\color{KMuted}MAPQ, strand,\\duplicates};
+  \node[stg,right=of b] (c) {\color{KGoldSoft}\bfseries bin\\\color{KMuted}250\,bp windows\\along gene body};
+  \node[stg,right=of c] (d) {\color{KGoldSoft}\bfseries normalise\\\color{KMuted}library size,\\spike-in};
+  \node[stg,right=of d] (e) {\color{KGoldSoft}\bfseries tensor\\\color{KMuted}$R_g \in \mathbb{R}^{M\times T}$};
+  \draw[arr] (a) -- (b);
+  \draw[arr] (b) -- (c);
+  \draw[arr] (c) -- (d);
+  \draw[arr] (d) -- (e);
+  % outputs
+  \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
+        text=KWhite,minimum width=13cm,inner sep=6pt,anchor=north]
+    (legend) at ($(c)+(0,-2.4)$)
+    {\color{KGold}\bfseries\footnotesize For every gene $g$: positions $\times$ time points matrix $R_g$.\\
+     \color{KMuted}\footnotesize $M \approx 50\text{--}300$ bins, $T = 4$ time points, entries are read counts.};
+\end{tikzpicture}
+\end{center}
+\vspace{0.8em}
+\begin{center}
+  {\color{KCream}\itshape Every gene is now a rectangle of numbers.
+  Everything downstream is linear algebra on $R_g$.}
+\end{center}
+\end{frame}
+
+% ============================================================ 15 BINNING / SMOOTHING ==
+\begin{frame}{Binning, smoothing, quality control}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small Bin size.}\\[0.2em]
+  {\color{KWhite}\small 250 bp per bin is the sweet spot: fine enough to resolve
+  pause-to-elongation transitions, coarse enough to tame Poisson noise at
+  typical GRO-seq depth ($\sim$30M reads / sample).}
+  \medskip
+
+  {\color{KGold}\bfseries\small Smoothing.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Tri-cube kernel over a $\pm 5$-bin window.
+    \item Preserves sharp pause signals without over-smoothing boundaries.
+  \end{itemize}
+  \medskip
+  {\color{KGold}\bfseries\small Quality filters.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Gene length $\geq$ 5 kb (wave-front must have room to move).
+    \item $\geq$ 50 total reads at $t{=}40$ min.
+    \item No overlap with another active gene on either strand.
+  \end{itemize}
+\end{column}
+\begin{column}{0.44\textwidth}
+  \centering
+  \vspace{0.3em}
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=7cm,height=5cm,
+      axis lines=left,
+      xlabel={\color{KMuted}\scriptsize bin size (bp)},
+      ylabel={\color{KMuted}\scriptsize noise / signal},
+      axis line style={KRule,line width=0.4pt},
+      tick style={KRule,line width=0.3pt},
+      xtick={50,100,250,500,1000},
+      xticklabel style={text=KMuted,font=\tiny},
+      yticklabel style={text=KMuted,font=\tiny},
+      xmode=log, log basis x={10},
+      ymin=0,ymax=1.1,
+      every axis label/.style={font=\scriptsize},
+      ]
+      \addplot[KSky,line width=1.1pt,samples=80,domain=30:1200]
+        {1.0/(1+0.5*ln(x/50))};
+      \addplot[KGold,line width=1.1pt,samples=80,domain=30:1200]
+        {0.15 + 0.04*ln(x/50)};
+    \end{axis}
+    \node[KSky,font=\tiny\itshape] at (2.1,2.4) {noise};
+    \node[KGold,font=\tiny\itshape] at (5.2,1.0) {bias};
+    \draw[KGoldSoft,line width=0.5pt,dashed] (3.6,0) -- (3.6,3.8);
+    \node[KGoldSoft,font=\tiny] at (3.6,4.0) {250 bp};
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 16 SECTION 01 DIVIDER ==
 {\setbeamercolor{background canvas}{bg=KNavyDark}
 \setbeamertemplate{footline}{}
 \begin{frame}[plain]
   \begin{tikzpicture}[remember picture,overlay]
-    % big numeral, left, vertically centered
     \node[anchor=center] at ($(current page.center)+(-4.5,0.4)$) {\bignum{01}};
-    % vertical hairline separator
     \draw[KGold,line width=0.5pt]
       ($(current page.center)+(-2.5,2.2)$) -- ($(current page.center)+(-2.5,-2.2)$);
-    % title + subtitle, right of rule
     \node[anchor=west,text width=9.5cm] at ($(current page.center)+(-2.1,1.0)$) {%
       {\color{KGold}\Huge\bfseries Positional Regression}\\[0.4em]
       {\color{KCream}\large\itshape Speed as a position-indexed slope.}%
@@ -386,7 +850,7 @@
   \end{tikzpicture}
 \end{frame}}
 
-% ---------- PILLAR 1: DETAIL -------------------------------------------
+% ============================================================ 17 POSITIONAL REGRESSION ==
 \begin{frame}{Positional regression: the estimator}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
@@ -440,7 +904,210 @@
 \end{columns}
 \end{frame}
 
-% ---------- ALGEBRAIC DIVERSITY BRIDGE ---------------------------------
+% ============================================================ 18 OLS VS HUBER ==
+\begin{frame}{Robust regression matters}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.50\textwidth}
+  \vspace{0.3em}
+  {\color{KWhite}\small GRO-seq counts are heavy-tailed. A single PCR-duplicate
+  spike at one time point can knock a slope off by 3$\sigma$.}
+  \medskip
+
+  {\color{KGold}\bfseries\small Huber loss:}
+  \[
+    L_c(u) = \begin{cases}
+      \tfrac12 u^2, & |u|\le c \\
+      c\,|u|-\tfrac12 c^2, & |u| > c
+    \end{cases}
+  \]
+  {\color{KMuted}\scriptsize tuning $c = 1.345\sigma$ gives 95\% efficiency at Gaussian noise.}
+  \medskip
+
+  {\color{KGold}\bfseries\small Why it helps here.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Downweights the duplicate spike without zeroing it.
+    \item Keeps the slope interpretable in read/minute units.
+    \item No loss of power at clean positions.
+  \end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \centering
+  \vspace{0.3em}
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=7.2cm,height=5.0cm,
+      axis lines=left,
+      xlabel={\color{KMuted}\scriptsize time (min)},
+      ylabel={\color{KMuted}\scriptsize reads},
+      axis line style={KRule,line width=0.4pt},
+      tick style={KRule,line width=0.3pt},
+      xtick={0,10,25,40},
+      xticklabel style={text=KMuted,font=\tiny},
+      yticklabel style={text=KMuted,font=\tiny},
+      every axis label/.style={font=\scriptsize},
+      xmin=-3,xmax=43,ymin=-1,ymax=15,
+      legend style={draw=KRule,fill=KNavyLight,text=KWhite,font=\tiny,
+                    at={(0.02,0.98)},anchor=north west,row sep=1pt},
+      ]
+      \addplot[only marks,mark=*,mark options={KGold,scale=1.2}]
+        coordinates {(0,0.5)(10,2.2)(25,13.0)(40,7.0)};
+      \addplot[KSky,line width=1pt,domain=-3:43,samples=2]{0.0+0.32*x};
+      \addlegendentry{\color{KWhite}OLS (biased)}
+      \addplot[KGoldSoft,line width=1pt,dashed,domain=-3:43,samples=2]{0.3+0.17*x};
+      \addlegendentry{\color{KWhite}Huber (robust)}
+    \end{axis}
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 19 LOW-COUNT HANDLING ==
+\begin{frame}{Low-count and zero-inflated positions}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
+  \vspace{0.3em}
+  {\color{KWhite}\small At early time points and distal positions, many bins
+  register \skyit{zero reads}. A naive slope is meaningless there.}
+  \medskip
+
+  {\color{KGold}\bfseries\small Strategy.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Classify each position as \skyit{pre-wave}, \skyit{transition}, or \skyit{elongated}
+          using a three-state logistic on the cumulative counts.
+    \item Fit $\widehat\beta(x)$ only on transition + elongated positions.
+    \item Mark pre-wave positions as \creambf{missing} rather than zero.
+  \end{itemize}
+  \medskip
+
+  {\color{KCream}\itshape\small This is the quiet step that keeps the
+  spectral estimator honest: zeros before the wave front are not the same
+  thing as slow elongation.}
+\end{column}
+\begin{column}{0.44\textwidth}
+  \centering
+  \vspace{0.5em}
+  \begin{tikzpicture}
+    \draw[KRule,line width=0.4pt] (0,0) -- (8,0);
+    \foreach \s/\c in {0/KMuted,0.6/KMuted,1.0/KMuted,1.6/KSky,2.4/KSky,3.2/KGoldSoft,4.0/KGoldSoft,4.8/KGold,5.6/KGold,6.4/KGold,7.2/KGold}{
+      \fill[\c,opacity=0.85] (\s,0) rectangle (\s+0.55,0.4);
+    }
+    \node[KMuted,font=\tiny,anchor=south] at (0.75,0.45) {pre-wave};
+    \node[KSky,font=\tiny,anchor=south] at (2.1,0.45) {transition};
+    \node[KGold,font=\tiny,anchor=south] at (6.2,0.45) {elongated};
+    \draw[->,KMuted,line width=0.4pt] (0,-0.25) -- (8,-0.25)
+      node[midway,below,font=\tiny]{position $x$ along gene body};
+  \end{tikzpicture}
+
+  \vspace{0.9em}
+  {\color{KMuted}\scriptsize\itshape Only transition + elongated positions enter
+  the per-base slope fit.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 20 SIMULATION VALIDATION ==
+\begin{frame}{Simulation validation}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.50\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small Ground-truth simulation.}\\[0.2em]
+  {\color{KWhite}\small Generate synthetic Pol II trajectories with known
+  position-dependent velocity $v^{\star}(x)$:}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Initiation at TSS with known rate $k_{\text{init}}$.
+    \item Stepwise advance with dwell time $\mathrm{Exp}(v^\star(x))$.
+    \item Poisson sampling to mimic GRO-seq read depth.
+    \item 500 genes, 1000 draws each.
+  \end{itemize}
+  \medskip
+  {\color{KGold}\bfseries\small What we check.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item $\widehat\beta(x)$ recovers $1/v^\star(x)$ up to a global scale.
+    \item Spearman $r(\widehat\beta,\,1/v^\star) > 0.9$ at realistic depth.
+    \item $\psi$ tracks gene-wide mean speed in the same regime.
+  \end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \centering
+  \vspace{0.3em}
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=7cm,height=5cm,
+      axis lines=left,
+      xlabel={\color{KMuted}\scriptsize true $1/v^\star(x)$},
+      ylabel={\color{KMuted}\scriptsize estimated $\widehat\beta(x)$},
+      axis line style={KRule,line width=0.4pt},
+      tick style={KRule,line width=0.3pt},
+      xtick=\empty,ytick=\empty,
+      every axis label/.style={font=\scriptsize},
+      xmin=0,xmax=5,ymin=0,ymax=5,
+      enlargelimits=false,
+      ]
+      \addplot[only marks,mark=*,mark options={KGold,scale=0.55,opacity=0.5,draw=none}]
+        table[row sep=\\,x index=0,y index=1] {
+          0.3 0.28\\ 0.5 0.45\\ 0.7 0.80\\ 1.0 0.95\\ 1.3 1.4\\
+          1.7 1.6\\ 2.0 2.1\\ 2.4 2.3\\ 2.8 3.0\\ 3.2 3.25\\
+          3.6 3.4\\ 4.0 4.1\\ 4.3 4.0\\ 4.5 4.6\\
+          0.8 0.6\\ 1.2 1.35\\ 1.8 2.05\\ 2.6 2.4\\ 3.4 3.1\\
+          0.4 0.35\\ 1.5 1.75\\ 2.2 2.5\\ 2.9 2.7\\ 3.8 3.9\\
+          1.1 1.25\\ 1.9 1.8\\ 2.5 2.8\\ 3.1 3.3\\ 3.7 3.5\\ 4.2 4.2\\
+        };
+      \addplot[KSky,line width=0.8pt,dashed,domain=0:5]{x};
+    \end{axis}
+  \end{tikzpicture}
+
+  \vspace{0.3em}
+  {\color{KMuted}\scriptsize\itshape Spearman $r = 0.93$ on simulation.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 21 GROUP THEORY MOTIVATION ==
+\begin{frame}{A short detour: why algebra?}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.54\textwidth}
+  \vspace{0.3em}
+  {\color{KWhite}\small We need a \skyit{gene-level summary} of the vector
+  $\widehat{\boldsymbol{\beta}}_g = (\widehat\beta(x_1),\ldots,\widehat\beta(x_M))$.}
+  \medskip
+
+  {\color{KGold}\bfseries\small A natural candidate --- the mean --- fails:}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Dominated by pause-spike outliers.
+    \item Ignores concentration of signal on a few positions.
+    \item Cannot distinguish one long slow patch from many brief ones.
+  \end{itemize}
+  \medskip
+
+  {\color{KGold}\bfseries\small Algebraic diversity.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item View $\{\widehat\beta(x)\}$ as elements of an abelian group $(\mathbb{R},+)$.
+    \item The diversity $Z_M$ counts distinct group elements, weighted by
+          a continuous \skyit{resolution function}.
+    \item The spectral $\psi$ captures the same idea via SVD.
+  \end{itemize}
+\end{column}
+\begin{column}{0.42\textwidth}
+  \vspace{0.3em}
+  \kquote{Two genes can share a mean slope yet differ wildly in \emph{how} that
+  mean is distributed across position. The diversity invariant is what tells
+  them apart.}{Thornton \& Ray, 2022}
+  \vspace{0.8em}
+
+  {\color{KMuted}\scriptsize\itshape $Z_M$ was introduced in prior work on
+  sequence-composition diversity; here it is transplanted to the
+  position-resolved kinetic setting.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 22 ALGEBRAIC DIVERSITY ==
 \begin{frame}{From position to gene: algebraic diversity}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.55\textwidth}
@@ -482,7 +1149,105 @@
 \end{columns}
 \end{frame}
 
-% ====================== SECTION DIVIDER 02 =============================
+% ============================================================ 23 WHY SVD ==
+\begin{frame}{Why SVD? The intuition behind $\psi$}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.50\textwidth}
+  \vspace{0.3em}
+  {\color{KWhite}\small The position-by-time matrix $R_g$ has an SVD:}
+  \[
+    R_g \;=\; \sum_j \lambda_j\,\mathbf{u}_j\,\mathbf{w}_j^{\!\top}.
+  \]
+  {\color{KWhite}\small If transcription is a coherent wave, \creambf{one}
+  rank-one component dominates: $\mathbf{u}_1$ is the position profile,
+  $\mathbf{w}_1$ is its growth in time.}
+  \medskip
+
+  \[
+    \psi(g) \;=\; \frac{\lambda_1^2}{\sum_j \lambda_j^2}
+  \]
+  {\color{KMuted}\scriptsize $\psi\!\to\!1$: a single clean wave.\ \ $\psi\!\to\!0$: diffuse, no coherent elongation.}
+  \medskip
+
+  {\color{KCream}\itshape\small $\psi$ is therefore a dimensionless
+  \goldbf{coherence score}, not a speed per se --- but it tracks wave-front
+  speed remarkably well.}
+\end{column}
+\begin{column}{0.46\textwidth}
+  \centering
+  \vspace{0.3em}
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=7cm,height=5.2cm,
+      axis lines=left,
+      xlabel={\color{KMuted}\scriptsize singular value index $j$},
+      ylabel={\color{KMuted}\scriptsize $\lambda_j^2 / \sum\lambda^2$},
+      axis line style={KRule,line width=0.4pt},
+      tick style={KRule,line width=0.3pt},
+      xtick={1,2,3,4,5,6,7,8},
+      xticklabel style={text=KMuted,font=\tiny},
+      yticklabel style={text=KMuted,font=\tiny},
+      every axis label/.style={font=\scriptsize},
+      ybar, bar width=10pt,
+      ymin=0,ymax=0.9,
+      enlargelimits=0.1,
+      legend style={draw=KRule,fill=KNavyLight,text=KWhite,
+                    font=\tiny,at={(0.98,0.98)},anchor=north east,row sep=1pt},
+      ]
+      \addplot[fill=KGold,draw=KGold]
+        coordinates {(1,0.78)(2,0.10)(3,0.05)(4,0.03)(5,0.02)(6,0.01)(7,0.005)(8,0.005)};
+      \addlegendentry{\color{KWhite}coherent gene}
+      \addplot[fill=KSky!60!KNavy,draw=KSky]
+        coordinates {(1,0.28)(2,0.22)(3,0.18)(4,0.14)(5,0.10)(6,0.05)(7,0.02)(8,0.01)};
+      \addlegendentry{\color{KWhite}diffuse gene}
+    \end{axis}
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 24 WORKED SYNTHETIC ==
+\begin{frame}{Three synthetic genes}
+\vspace{0.3em}
+\begin{center}
+\begin{tikzpicture}[node distance=0.8cm]
+  \foreach \lbl/\idx/\psi/\col in {coherent wave/0/0.78/KGold,pause-and-go/1/0.54/KGoldSoft,diffuse noise/2/0.22/KSky}{
+    \begin{scope}[xshift=\idx*5.2cm]
+      \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
+            inner sep=8pt,text width=4.6cm,align=center]{%
+        {\color{\col}\bfseries\small \lbl}\\[0.3em]
+        \begin{tikzpicture}[scale=0.55]
+          \foreach \y in {0,...,3}{
+            \foreach \x in {0,...,9}{
+              \ifnum\idx=0
+                \pgfmathsetmacro{\op}{max(0, 0.15 + 0.22*\y - 0.08*\x)}
+              \fi
+              \ifnum\idx=1
+                \pgfmathsetmacro{\op}{max(0, 0.10 + 0.25*\y*(mod(\x,3)<2) - 0.05*\x)}
+              \fi
+              \ifnum\idx=2
+                \pgfmathsetmacro{\op}{0.10 + 0.25*rnd}
+              \fi
+              \fill[KGold,opacity=\op] (\x*0.35,\y*0.35) rectangle (\x*0.35+0.32,\y*0.35+0.32);
+            }
+          }
+          \draw[KRule,line width=0.2pt] (-0.05,-0.05) rectangle (3.2,1.45);
+        \end{tikzpicture}\\[0.5em]
+        {\color{KCream}\footnotesize $\psi = \psi$}\\
+        {\color{\col}\bfseries\footnotesize $\psi = \psi$}%
+      };
+    \end{scope}
+  }
+\end{tikzpicture}
+\end{center}
+\vspace{0.6em}
+\begin{center}
+  {\color{KCream}\itshape
+  Same total read count.\ \ Different kinetic structure.\ \ $\psi$ separates them.}
+\end{center}
+\end{frame}
+
+% ============================================================ 25 SECTION 02 DIVIDER ==
 {\setbeamercolor{background canvas}{bg=KNavyDark}
 \setbeamertemplate{footline}{}
 \begin{frame}[plain]
@@ -502,38 +1267,132 @@
   \end{tikzpicture}
 \end{frame}}
 
-% ---------- PILLAR 2: HMM VALIDATION -----------------------------------
-\begin{frame}{The DANKO wave-front HMM, reimplemented}
+% ============================================================ 26 HMM STATE DIAGRAM ==
+\begin{frame}{The wave-front HMM: state diagram}
 \begin{columns}[T,onlytextwidth]
-\begin{column}{0.5\textwidth}
+\begin{column}{0.42\textwidth}
   \vspace{0.3em}
-  {\color{KGold}\bfseries\small What DANKO does.}\\[0.2em]
-  {\color{KWhite}\small Fits a two-state HMM per gene: \skyit{pre-wave} (no
-  nascent signal) and \skyit{post-wave} (active elongation). The breakpoint
-  location at time $t$ yields the gene-wide rate $v_g$.}
+  {\color{KWhite}\small Two hidden states, one emission model:}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item $S_0$ = \skyit{pre-wave} (no nascent signal expected).
+    \item $S_1$ = \skyit{post-wave} (active elongation).
+    \item Forward-only transition: once you enter $S_1$, you stay.
+    \item Emissions: negative binomial on read counts per bin.
+  \end{itemize}
+  \medskip
+  {\color{KWhite}\small Inference is Baum-Welch per gene, per time point; Viterbi
+  gives the breakpoint position $\widehat{x}^{\!\star}_g(t)$.}
+  \medskip
+  {\color{KGold}\bfseries\small Gene-wide rate:}
+  \[
+    \widehat{v}_g \;=\; \widehat{x}^{\!\star}_g(t) / t.
+  \]
+\end{column}
+\begin{column}{0.54\textwidth}
+  \centering
+  \vspace{0.6em}
+  \begin{tikzpicture}[node distance=2.4cm,every node/.style={font=\small}]
+    \node[circle,draw=KGold,fill=KNavyLight,text=KWhite,
+          minimum size=1.6cm,line width=0.6pt] (s0) {$S_0$};
+    \node[circle,draw=KGold,fill=KNavyLight,text=KWhite,
+          minimum size=1.6cm,line width=0.6pt,right=of s0] (s1) {$S_1$};
+    \draw[->,KGold,line width=0.7pt] (s0) -- node[above,text=KCream,font=\scriptsize]{$p_{01}$} (s1);
+    \draw[->,KGold,line width=0.7pt,loop above] (s0) to node[above,text=KCream,font=\scriptsize]{$1-p_{01}$} (s0);
+    \draw[->,KGold,line width=0.7pt,loop above] (s1) to node[above,text=KCream,font=\scriptsize]{$1$} (s1);
+    % emissions
+    \node[below=1cm of s0,text=KSky,font=\scriptsize,align=center]
+      {emit:\\$\mathrm{NB}(\mu_0,\phi)$};
+    \node[below=1cm of s1,text=KSky,font=\scriptsize,align=center]
+      {emit:\\$\mathrm{NB}(\mu_1,\phi),\ \mu_1\!\gg\!\mu_0$};
+  \end{tikzpicture}
+
+  \vspace{0.6em}
+  {\color{KMuted}\scriptsize\itshape Absorbing $S_1$ encodes the wave-front:
+  once elongation starts at a bin, it has started.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 27 PORT ARCHITECTURE ==
+\begin{frame}{The Python port of groHMM}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.50\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small What groHMM was.}\\[0.2em]
+  {\color{KWhite}\small The R package (Chae \& Kraus, Bioconductor) from the
+  Danko lab: de-facto standard for GRO-seq transcription-unit calling.
+  Slow to install, harder to extend.}
   \medskip
 
   {\color{KGold}\bfseries\small What we built.}
   \begin{itemize}
     \setlength{\itemsep}{0.2em}
-    \item End-to-end Python port of \texttt{groHMM} (previously R-only)
-    \item Baum--Welch + Viterbi per gene, per time point
-    \item Parallelised: full cohort in $\sim$7\,min on one GPU node
-    \item Bundled as \texttt{kairos.grohmm} in the repo
+    \item \texttt{kairos.grohmm} --- pure Python / NumPy / SciPy.
+    \item Baum-Welch, Viterbi, and rate-extraction in one module.
+    \item Joblib parallelism, one gene per worker.
+    \item Drop-in input: bedGraph or coverage tensor.
+    \item Regression tests against R groHMM on $\sim$200 genes.
   \end{itemize}
 \end{column}
 \begin{column}{0.46\textwidth}
   \centering
-  \vspace{0.5em}
-  \includegraphics[width=\linewidth]{grohmm_vs_danko_comparison.png}
-
-  \vspace{0.4em}
-  {\color{KMuted}\scriptsize\itshape Python port vs.\ original R groHMM: near-identical rate recovery.}
+  \vspace{0.3em}
+  \begin{tikzpicture}[node distance=0.55cm,every node/.style={align=center,font=\tiny}]
+    \tikzset{stg/.style={rectangle,rounded corners=1pt,draw=KRule,line width=0.3pt,
+             fill=KNavyLight,text=KWhite,minimum width=2.6cm,minimum height=0.8cm,inner sep=3pt}}
+    \tikzset{arr/.style={->,KGold,line width=0.6pt,shorten >=1pt}}
+    \node[stg] (i) {\color{KGoldSoft}\bfseries I/O\\bedGraph, tensor};
+    \node[stg,below=of i] (b) {\color{KGoldSoft}\bfseries BinModel\\NB emissions};
+    \node[stg,below=of b] (f) {\color{KGoldSoft}\bfseries ForwardBackward\\log-space};
+    \node[stg,below=of f] (bw) {\color{KGoldSoft}\bfseries BaumWelch\\EM updates};
+    \node[stg,below=of bw] (v) {\color{KGoldSoft}\bfseries Viterbi\\breakpoint};
+    \node[stg,below=of v] (r) {\color{KGoldSoft}\bfseries RateExtractor\\$\widehat{v}_g$};
+    \draw[arr] (i) -- (b);
+    \draw[arr] (b) -- (f);
+    \draw[arr] (f) -- (bw);
+    \draw[arr] (bw) -- (v);
+    \draw[arr] (v) -- (r);
+  \end{tikzpicture}
 \end{column}
 \end{columns}
 \end{frame}
 
-% ---------- THREE-ESTIMATOR COMPARISON ---------------------------------
+% ============================================================ 28 PORT VS R ==
+\begin{frame}{Port vs R: correctness and speed}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.50\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small Correctness check.}\\[0.2em]
+  {\color{KWhite}\small On a matched set of 200 genes, Pearson correlation
+  between R groHMM and our Python port:}
+  \[
+    r = 0.96 \ \ (\text{gene-wide rate}).
+  \]
+  {\color{KMuted}\scriptsize Discrepancies concentrate on short genes ($<$ 3 kb)
+  where HMM fits are unstable in both implementations.}
+  \medskip
+
+  {\color{KGold}\bfseries\small Speed.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item R groHMM: 14 min on 2500 genes, single thread.
+    \item Python port: 7 min on 2500 genes, 8 workers.
+    \item $\approx\!2\!\times$ wall-clock, far better scaling.
+  \end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \centering
+  \vspace{0.3em}
+  \includegraphics[width=\linewidth]{grohmm_vs_danko_comparison.png}
+
+  \vspace{0.3em}
+  {\color{KMuted}\scriptsize\itshape Python port vs.\ original R groHMM on gene-wide rates.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 29 THREE ESTIMATORS ==
 \begin{frame}{Three estimators, one truth}
 \vspace{0.4em}
 \begin{center}
@@ -560,7 +1419,46 @@
 \end{center}
 \end{frame}
 
-% ---------- VISUAL RESULT ----------------------------------------------
+% ============================================================ 30 AGREE / DISAGREE ==
+\begin{frame}{Where the estimators agree --- and where they disagree}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.50\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small Tight agreement.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Long, uniformly expressed genes ($>$ 20 kb).
+    \item Genes with a single dominant pause site.
+    \item Housekeeping transcripts.
+  \end{itemize}
+  \medskip
+
+  {\color{KGold}\bfseries\small Systematic disagreement.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Genes with \creambf{multiple pause peaks}: HMM collapses them, $\psi$ penalises them.
+    \item Genes with \creambf{mid-body slowdown}: HMM reports mean speed, KAIROS
+          reports the slow region.
+    \item Short genes ($<$ 5 kb): both are noisy; $\psi$ is honestly less confident.
+  \end{itemize}
+  \medskip
+
+  {\color{KCream}\itshape\small The disagreement is \goldbf{informative}:
+  it localises genes where a single gene-wide rate misrepresents the biology.}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \centering
+  \vspace{0.3em}
+  \includegraphics[width=0.98\linewidth]{rar_velocity_correlation.png}
+
+  \vspace{0.3em}
+  {\color{KMuted}\scriptsize\itshape Residual structure: off-diagonal points flag
+  genes where KAIROS sees pause architecture the HMM averages away.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 31 SINGLE GENE ==
 \begin{frame}{A single gene, end to end}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.56\textwidth}
@@ -589,7 +1487,36 @@
 \end{columns}
 \end{frame}
 
-% ====================== SECTION DIVIDER 03 =============================
+% ============================================================ 32 COHORT VIEW ==
+\begin{frame}{Cohort view: 2500 genes at a glance}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
+  \centering
+  \vspace{0.3em}
+  \includegraphics[width=\linewidth]{benchmark_correlation.png}
+
+  \vspace{0.3em}
+  {\color{KMuted}\scriptsize\itshape KAIROS $\psi$ vs.\ DANKO gene-wide rate, $n \approx 2500$.}
+\end{column}
+\begin{column}{0.44\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small Take-aways.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Monotone trend holds across three orders of magnitude.
+    \item Tighter in the 10--50 kb length band (clean wave-fronts).
+    \item Spread at extremes is explained by length and depth covariates.
+    \item No outlier genes drive the overall correlation.
+  \end{itemize}
+  \medskip
+  {\color{KGold}\bfseries\small Bootstrap.}\\[0.2em]
+  {\color{KWhite}\small 1000 gene-level bootstraps: Spearman $r$ CI
+  $[\,0.538,\ 0.572\,]$. Robust to which subset of genes you look at.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 33 SECTION 03 DIVIDER ==
 {\setbeamercolor{background canvas}{bg=KNavyDark}
 \setbeamertemplate{footline}{}
 \begin{frame}[plain]
@@ -609,7 +1536,33 @@
   \end{tikzpicture}
 \end{frame}}
 
-% ---------- PILLAR 3: EPIGENETICS --------------------------------------
+% ============================================================ 34 FEATURE PIPELINE ==
+\begin{frame}{Epigenetic feature pipeline}
+\vspace{0.2em}
+\begin{center}
+\begin{tikzpicture}[node distance=0.95cm,every node/.style={align=center,font=\scriptsize}]
+  \tikzset{stg/.style={rectangle,rounded corners=1pt,draw=KRule,line width=0.3pt,
+           fill=KNavyLight,text=KWhite,minimum width=2.4cm,minimum height=1.1cm,inner sep=4pt}}
+  \tikzset{arr/.style={->,KGold,line width=0.7pt,shorten >=1pt}}
+  \node[stg] (a) {\color{KGoldSoft}\bfseries ENCODE\\\color{KMuted}ChIP, DNase,\\WGBS bigwigs};
+  \node[stg,right=of a] (b) {\color{KGoldSoft}\bfseries liftover\\\color{KMuted}hg19 $\to$ hg38};
+  \node[stg,right=of b] (c) {\color{KGoldSoft}\bfseries bin align\\\color{KMuted}250 bp, same grid};
+  \node[stg,right=of c] (d) {\color{KGoldSoft}\bfseries standardise\\\color{KMuted}$z$-score per mark};
+  \node[stg,right=of d] (e) {\color{KGoldSoft}\bfseries feature tensor\\\color{KMuted}$Z_g\in\mathbb{R}^{M\times K}$};
+  \draw[arr] (a) -- (b);
+  \draw[arr] (b) -- (c);
+  \draw[arr] (c) -- (d);
+  \draw[arr] (d) -- (e);
+  \node[rectangle,fill=KNavyLight,draw=KRule,line width=0.3pt,
+        text=KWhite,minimum width=13cm,inner sep=6pt,anchor=north]
+    (legend) at ($(c)+(0,-2.4)$)
+    {\color{KGold}\bfseries\footnotesize Marks included: H3K4me3, H3K27ac, H3K36me3, H3K9me3, H3K27me3, DNase, WGBS, GC, CpG, exon-distance.\\
+     \color{KMuted}\footnotesize Aligned to the same 250 bp grid as the speed estimates.};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+% ============================================================ 35 MIXED MODEL ==
 \begin{frame}{Epigenetic covariates: the design}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.55\textwidth}
@@ -659,7 +1612,168 @@
 \end{columns}
 \end{frame}
 
-% ---------- INTERACTIVE WEBAPP -----------------------------------------
+% ============================================================ 36 FOREST PLOT ==
+\begin{frame}{Standardised effects on $\log\widehat v(x)$}
+\vspace{0.3em}
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+    width=12.5cm,height=6cm,
+    axis lines=left,
+    xlabel={\color{KMuted}\scriptsize effect on $\log\widehat v(x)$ (per $z$-unit)},
+    axis line style={KRule,line width=0.4pt},
+    tick style={KRule,line width=0.3pt},
+    ytick={1,2,3,4,5,6,7,8,9,10},
+    yticklabels={CpG methyl,H3K27me3,H3K9me3,GC content,exon dist,DNase open,
+                 H3K4me3,H3K27ac,H3K36me3,length},
+    yticklabel style={text=KCream,font=\scriptsize},
+    xtick={-0.25,-0.15,-0.05,0.05,0.15,0.25},
+    xticklabel style={text=KMuted,font=\tiny},
+    every axis label/.style={font=\scriptsize},
+    xmin=-0.28,xmax=0.28,ymin=0.5,ymax=10.5,
+    enlargelimits=false,
+    ]
+    % zero line
+    \addplot[KGold,line width=0.5pt,dashed,forget plot] coordinates {(0,0.5)(0,10.5)};
+    % error bars as horizontal + central mark
+    \addplot[only marks,mark=*,mark options={scale=1.3,fill=KGoldSoft,draw=KGoldSoft},
+             error bars/.cd,x dir=both,x explicit]
+      table[row sep=\\]{
+        x y x_error \\
+        -0.09 1 0.02 \\
+        -0.18 2 0.03 \\
+        -0.05 3 0.03 \\
+        -0.08 4 0.02 \\
+        0.04 5 0.02 \\
+        0.11 6 0.02 \\
+        0.06 7 0.02 \\
+        0.14 8 0.02 \\
+        0.22 9 0.03 \\
+        -0.02 10 0.02 \\
+      };
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+\vspace{0.3em}
+\begin{center}
+  {\color{KCream}\itshape Error bars are 95\% CIs.
+  H3K36me3 is the strongest \goldbf{accelerator}; H3K27me3 the strongest \goldbf{stalling} mark.}
+\end{center}
+\end{frame}
+
+% ============================================================ 37 PAUSE DETECTION ==
+\begin{frame}{Detecting pause sites from covariates}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.50\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small Residual approach.}\\[0.2em]
+  {\color{KWhite}\small Positions whose observed $\widehat v(x)$ is much smaller
+  than the covariate-predicted velocity are candidate \creambf{pause sites}
+  beyond what chromatin explains.}
+  \medskip
+
+  \[
+    \rho_g(x) \;=\;
+      \log\widehat v_g(x) \;-\; \mathbf{z}_g(x)^{\!\top}\!\widehat{\boldsymbol\gamma}.
+  \]
+  \medskip
+
+  {\color{KGold}\bfseries\small Results.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item $\sim$3.2\% of intragenic bins flagged at FDR $<$ 0.05.
+    \item Enriched near exon boundaries, near splice donors, and at GC-rich stretches.
+    \item A handful cluster within hsa-miR host genes --- plausible regulatory hotspots.
+  \end{itemize}
+\end{column}
+\begin{column}{0.46\textwidth}
+  \centering
+  \vspace{0.3em}
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=7.2cm,height=5.0cm,
+      axis lines=left,
+      xlabel={\color{KMuted}\scriptsize residual $\rho_g(x)$},
+      ylabel={\color{KMuted}\scriptsize density},
+      axis line style={KRule,line width=0.4pt},
+      tick style={KRule,line width=0.3pt},
+      xtick={-3,-2,-1,0,1,2,3},
+      xticklabel style={text=KMuted,font=\tiny},
+      ytick=\empty,
+      every axis label/.style={font=\scriptsize},
+      xmin=-3.5,xmax=3.5,ymin=0,ymax=1.0,
+      enlargelimits=false,
+      ]
+      \addplot[KSky,line width=1.1pt,samples=160,domain=-3.5:3.5]
+        {0.88*exp(-x*x/1.6)};
+      \addplot[KGold,line width=1.1pt,samples=160,domain=-3.5:3.5]
+        {0.18*exp(-(x+1.8)^2/0.6)};
+    \end{axis}
+    \node[KSky,font=\tiny\itshape] at (3.5,3.3) {bulk positions};
+    \node[KGold,font=\tiny\itshape] at (1.2,1.6) {flagged pause bins};
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 38 NEURODEGEN ==
+\begin{frame}{Why this matters for neurodegeneration}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
+  \vspace{0.3em}
+  {\color{KGold}\bfseries\small The hypothesis.}\\[0.2em]
+  {\color{KWhite}\small In Alzheimer's disease, Parkinson's, and ALS, long
+  neuronal genes (MAPT, APP, SNCA, C9orf72) are over-represented among
+  transcriptionally altered loci.}
+  \medskip
+
+  {\color{KGold}\bfseries\small Why kinetics might be the right lens.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item DNA damage accumulates in neurons --- it stalls Pol II.
+    \item Stalled Pol II triggers R-loop formation and splicing defects.
+    \item Very long genes are most sensitive: more places to stall.
+    \item A gene-wide rate hides where the stalls actually are.
+  \end{itemize}
+  \medskip
+  {\color{KCream}\itshape\small KAIROS provides the position-resolved
+  measurement that the AD transcriptional-kinetics story needs.}
+\end{column}
+\begin{column}{0.44\textwidth}
+  \vspace{0.3em}
+  \kquote{In neurons, transcription is a long, slow journey across tens of
+  kilobases. Every kairotic stumble becomes a potential site of
+  neurodegenerative decline.}{Ongoing work, this group}
+  \vspace{0.6em}
+
+  {\color{KGold}\bfseries\small Next steps.}\\[0.2em]
+  {\color{KWhite}\small Apply KAIROS to iPSC-derived neuron GRO-seq cohorts
+  with and without AD risk variants. Are long-gene pause landscapes
+  genetically patterned?}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ============================================================ 39 SECTION 04 DIVIDER ==
+{\setbeamercolor{background canvas}{bg=KNavyDark}
+\setbeamertemplate{footline}{}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=center] at ($(current page.center)+(-4.5,0.4)$) {\bignum{04}};
+    \draw[KGold,line width=0.5pt]
+      ($(current page.center)+(-2.5,2.2)$) -- ($(current page.center)+(-2.5,-2.2)$);
+    \node[anchor=west,text width=9.5cm] at ($(current page.center)+(-2.1,1.0)$) {%
+      {\color{KGold}\Huge\bfseries Platform \& Outlook}\\[0.4em]
+      {\color{KCream}\large\itshape Interactive tooling, contributions, and what comes next.}%
+    };
+    \node[anchor=west,text width=9.5cm] at ($(current page.center)+(-2.1,-0.6)$) {%
+      {\color{KMuted}\small
+      An open repository. An interactive dashboard. A roadmap.}%
+    };
+  \end{tikzpicture}
+\end{frame}}
+
+% ============================================================ 40 WEBAPP ==
 \begin{frame}{Interactive web application}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
@@ -693,7 +1807,7 @@
 \end{columns}
 \end{frame}
 
-% ---------- CONTRIBUTIONS ----------------------------------------------
+% ============================================================ 41 CONTRIBUTIONS ==
 \begin{frame}{Contributions}
 \vspace{0.4em}
 \begin{center}
@@ -721,7 +1835,7 @@
 \end{center}
 \end{frame}
 
-% ---------- OPEN QUESTIONS / ROADMAP -----------------------------------
+% ============================================================ 42 OPEN QUESTIONS ==
 \begin{frame}{Open questions \& roadmap}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.48\textwidth}
@@ -753,25 +1867,51 @@
 \end{center}
 \end{frame}
 
-% ---------- THANK YOU --------------------------------------------------
+% ============================================================ 43 ACKNOWLEDGEMENTS ==
+\begin{frame}{Acknowledgements}
+\vspace{0.3em}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+  {\color{KGold}\bfseries\small Collaborators \& community.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item Colleagues in the TWU Department of Mathematics for patient feedback.
+    \item Danko lab at Cornell for open data and a gold-standard pipeline.
+    \item The Kraus lab for groHMM --- our reimplementation stands on its shoulders.
+    \item ENCODE for openly-distributed epigenetic data.
+  \end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+  {\color{KGold}\bfseries\small Infrastructure.}
+  \begin{itemize}
+    \setlength{\itemsep}{0.2em}
+    \item TWU research computing.
+    \item NVIDIA DGX Spark for local prototyping.
+    \item The authors of \texttt{numpy}, \texttt{scipy}, \texttt{flask}, \texttt{plotly}, \texttt{pysam}.
+    \item Students and auditors who challenged early drafts.
+  \end{itemize}
+\end{column}
+\end{columns}
+\vspace{1em}
+\begin{center}
+  {\color{KCream}\itshape Thank you to ETAMU for the invitation --- and for the space to think out loud.}
+\end{center}
+\end{frame}
+
+% ============================================================ 44 THANK YOU ==
 {\setbeamercolor{background canvas}{bg=KNavy}
 \setbeamertemplate{footline}{}
 \begin{frame}[plain]
   \begin{tikzpicture}[remember picture,overlay]
-    % big KAIROS, top-left
     \node[anchor=north west] at ($(current page.north west)+(1.1,-1.2)$) {%
       {\fontsize{64pt}{64pt}\selectfont\bfseries\color{KGold}KAIROS}%
     };
-    % subtitle
     \node[anchor=north west,text width=14cm]
       at ($(current page.north west)+(1.1,-3.0)$) {%
       {\color{KCream}\Large\itshape Kinetic Analysis of Instantaneous RNA Output by Sequencing}%
     };
-    % short gold rule
     \draw[KGold,line width=0.8pt] ($(current page.north west)+(1.1,-3.8)$) --
                                    ($(current page.north west)+(5.1,-3.8)$);
-
-    % Thank you
     \node[anchor=north west]
       at ($(current page.north west)+(1.1,-4.1)$) {%
       {\color{KGold}\Huge\bfseries Thank you.}%
@@ -780,8 +1920,6 @@
       at ($(current page.north west)+(1.1,-5.4)$) {%
       {\color{KCream}\itshape Questions, extensions, and collaborations welcome.}%
     };
-
-    % contact block, bottom-left, minimal
     \node[anchor=south west,align=left]
       at ($(current page.south west)+(1.1,1.0)$) {%
       {\color{KGold}\bfseries\small Contact}\\[0.25em]
@@ -789,8 +1927,6 @@
       {\color{KMuted}\small Assistant Professor of Mathematics \textbullet\ Texas Woman's University}\\[0.35em]
       {\color{KSky}\small\texttt{github.com/mathornton01/ad-speed-profile-viewer}}%
     };
-
-    % decorative trail, bottom-right
     \node[anchor=south east] at ($(current page.south east)+(-1.1,1.0)$) {%
       \begin{tikzpicture}[scale=0.9]
         \foreach \s in {0,...,40}{
@@ -804,7 +1940,7 @@
   \end{tikzpicture}
 \end{frame}}
 
-% ---------- APPENDIX: FORMULAS -----------------------------------------
+% ============================================================ 45 APPENDIX FORMULAS ==
 \begin{frame}{Appendix: formulas at a glance}
 \vspace{0.6em}
 \color{KWhite}\small
