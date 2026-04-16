@@ -1,0 +1,20 @@
+Loading gene index from /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/results/speed_profiles/_gene_index.json
+  81 genes.
+  5 marks: ['CTCF', 'H3K27ac', 'H3K27me3', 'H3K36me3', 'H3K4me3']
+Computing cross-spectra:   0%|          | 0/81 [00:00<?, ?gene/s]Computing cross-spectra: 100%|██████████| 81/81 [00:00<00:00, 1695.12gene/s]
+
+Cross-spectrum summary:
+Mark                             N genes   Dom lag (min)        Interp    AD gain dB
+------------------------------------------------------------------------------
+CTCF                                  79          -19.56  speed precedes mark         45.97
+H3K27ac                               79          +17.96  mark precedes speed         45.97
+H3K27me3                              79          -12.67  speed precedes mark         45.97
+H3K36me3                              79           -0.96  speed precedes mark         45.97
+H3K4me3                               79           -4.09  speed precedes mark         45.97
+------------------------------------------------------------------------------
+
+Overall AD gain estimate: 52.96 dB
+  (based on 395 gene-mark pairs × 500 time points)
+
+Summary written to /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/results/cross_spectra/summary.json
+Done.

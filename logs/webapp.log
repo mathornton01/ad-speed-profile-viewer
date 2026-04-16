@@ -1,0 +1,41 @@
+
+  AD Speed Profile Viewer v2
+  Base dir:     /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments
+  Profiles dir: /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/results/speed_profiles
+  Strategy log: /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/STRATEGY_LOG.md (found)
+  Epigenomics:  /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/results/epigenomics (found)
+  Temporal:     /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/results/temporal_profiles (found)
+  Open: http://localhost:5050
+
+ * Serving Flask app 'app'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.1.127:5050
+Press CTRL+C to quit
+/home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/webapp/app.py:251: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "as_of":                    datetime.utcnow().isoformat() + "Z",
+127.0.0.1 - - [04/Apr/2026 15:54:38] "GET /api/status HTTP/1.1" 200 -
+100.113.204.52 - - [04/Apr/2026 15:55:00] "GET /api/status HTTP/1.1" 200 -
+100.113.204.52 - - [04/Apr/2026 15:55:25] "GET /api/status HTTP/1.1" 200 -
+100.113.204.52 - - [04/Apr/2026 15:55:25] "GET /api/todos HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 15:56:25] "GET / HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 15:56:26] "GET /api/genes HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 15:56:26] "GET /api/correlations HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 15:56:26] "GET /api/todos HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 15:56:26] "GET /api/status HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 15:56:26] "GET /api/strategy HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 15:57:42] "GET /api/gene/chr14_92473011_92652016_-.json HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 15:57:42] "GET /api/epigenomics/chr14_92473011_92652016_-.json HTTP/1.1" 404 -
+100.103.199.114 - - [04/Apr/2026 15:57:42] "GET /api/temporal/chr14_92473011_92652016_-.json HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 16:05:35] "GET /api/epigenomics/chr14_92473011_92652016_-.json HTTP/1.1" 404 -
+100.103.199.114 - - [04/Apr/2026 16:05:37] "GET /api/gene/chr14_92473011_92652016_-.json HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 16:05:38] "GET /api/epigenomics/chr14_92473011_92652016_-.json HTTP/1.1" 404 -
+100.103.199.114 - - [04/Apr/2026 16:05:38] "GET /api/temporal/chr14_92473011_92652016_-.json HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 16:05:39] "GET /api/gene/chr1_160306204_160606437_+.json HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 16:05:39] "GET /api/epigenomics/chr1_160306204_160606437_+.json HTTP/1.1" 404 -
+100.103.199.114 - - [04/Apr/2026 16:05:39] "GET /api/temporal/chr1_160306204_160606437_+.json HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 16:05:40] "GET /api/gene/chr8_17545583_17702706_-.json HTTP/1.1" 200 -
+100.103.199.114 - - [04/Apr/2026 16:05:40] "GET /api/epigenomics/chr8_17545583_17702706_-.json HTTP/1.1" 404 -
+100.103.199.114 - - [04/Apr/2026 16:05:40] "GET /api/temporal/chr8_17545583_17702706_-.json HTTP/1.1" 200 -

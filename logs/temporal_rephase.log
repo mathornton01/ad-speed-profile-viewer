@@ -1,0 +1,9 @@
+Loading gene index from /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/results/speed_profiles/_gene_index.json
+  81 genes loaded.
+  5 epigenomic marks: ['CTCF', 'H3K27ac', 'H3K27me3', 'H3K36me3', 'H3K4me3']
+Rephasing genes:   0%|          | 0/81 [00:00<?, ?gene/s]Rephasing genes:   6%|▌         | 5/81 [00:00<00:01, 44.96gene/s]Rephasing genes:  12%|█▏        | 10/81 [00:00<00:01, 45.40gene/s]Rephasing genes:  19%|█▊        | 15/81 [00:00<00:01, 45.99gene/s]Rephasing genes:  26%|██▌       | 21/81 [00:00<00:01, 47.85gene/s]Rephasing genes:  32%|███▏      | 26/81 [00:00<00:01, 47.70gene/s]Rephasing genes:  38%|███▊      | 31/81 [00:00<00:01, 47.76gene/s]Rephasing genes:  44%|████▍     | 36/81 [00:00<00:00, 45.26gene/s]Rephasing genes:  51%|█████     | 41/81 [00:00<00:00, 46.05gene/s]Rephasing genes:  57%|█████▋    | 46/81 [00:00<00:00, 46.18gene/s]Rephasing genes:  63%|██████▎   | 51/81 [00:01<00:00, 46.97gene/s]Rephasing genes:  69%|██████▉   | 56/81 [00:01<00:00, 44.69gene/s]Rephasing genes:  75%|███████▌  | 61/81 [00:01<00:00, 45.23gene/s]Rephasing genes:  83%|████████▎ | 67/81 [00:01<00:00, 47.43gene/s]Rephasing genes:  89%|████████▉ | 72/81 [00:01<00:00, 46.09gene/s]/home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/scripts/11_temporal_rephase.py:88: UserWarning: Profile key 'A_raw40m' not in chr7_150884133_151205249_-. Available: ['C_tp25m', 'coverage_0m', 'coverage_40m'].  Skipping.
+  warnings.warn(
+Rephasing genes:  96%|█████████▋| 78/81 [00:01<00:00, 49.00gene/s]Rephasing genes: 100%|██████████| 81/81 [00:01<00:00, 47.25gene/s]
+
+Done.  Wrote 80 temporal profiles, skipped 1.
+Output directory: /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/results/temporal_profiles

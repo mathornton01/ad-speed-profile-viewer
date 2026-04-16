@@ -1,0 +1,89 @@
+# =========================================================================
+# AD Speed Profile Viewer - .gitignore
+# =========================================================================
+# The raw GRO-Seq BED files (9+ GB) and bulk .npy caches are excluded.
+# Anyone cloning this repo can regenerate them via scripts/01_download_data.sh,
+# 09_download_epigenomic.sh, and the pipeline steps. Only strategic outputs,
+# code, notebooks, and lightweight CSV/PNG summaries are tracked.
+# =========================================================================
+
+# ---- Heavy raw data (9+ GB GRO-Seq, bigWigs, pickled coverage) ----
+data/raw/
+data/epigenomics/*/
+data/processed/*.pkl
+data/processed/*.npy
+data/processed/*.h5
+data/danko_rates/*.bw
+data/danko_rates/*.bigWig
+
+# ---- Heavy results caches ----
+results/epigenomics/*.npy
+results/speed_profiles/*.npy
+results/speed_profiles/*.pkl
+results/cross_spectra/*.npy
+results/temporal_profiles/*.npy
+
+# ---- Keep small summary artifacts (CSVs, PNGs, logs of reasonable size) ----
+!results/**/*.csv
+!results/**/*.png
+!results/**/*.tsv
+!results/**/*.json
+
+# ---- Logs (kept small, but drop the heavy ones) ----
+logs/encode_download.log
+logs/*.bigwig.log
+*.stdout
+*.stderr
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ---- OS/IDE ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- Flask / webapp runtime ----
+webapp/instance/
+webapp/*.sqlite
+webapp/*.db
+*.pid
+
+# ---- Temp ----
+tmp/
+temp/
+*.tmp
+*.bak

@@ -1,0 +1,20 @@
+# Core scientific stack
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.11.0
+matplotlib>=3.7.0
+
+# Genomics / bigWig / BED handling
+pybigwig>=0.3.22
+pyBigWig>=0.3.22
+pysam>=0.22.0
+
+# RNA folding (optional, only needed for script 13)
+ViennaRNA>=2.5.0 ; python_version >= "3.8"
+
+# Web app
+Flask>=2.3.0
+
+# Notebooks
+jupyter>=1.0.0
+ipykernel>=6.25.0

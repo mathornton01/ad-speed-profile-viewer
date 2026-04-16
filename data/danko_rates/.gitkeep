@@ -1,0 +1,4 @@
+# Reference elongation rates from Danko 2013 go here
+# - Either extracted from paper supplemental Table S1/S2
+# - Or recomputed from wave-front analysis via 03_wave_front.py
+# Format: gene_id, rate_kb_per_min, r_squared, n_timepoints

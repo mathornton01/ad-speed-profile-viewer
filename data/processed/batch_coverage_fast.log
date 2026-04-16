@@ -1,0 +1,20 @@
+Genes: 81
+  Loading 0m_R1 ... 13.5s
+  Loading 0m_R2 ... 10.0s
+  Loading 0m_R3 ... 4.6s
+  Loading 10m_R1 ... 16.3s
+  Loading 10m_R2 ... 8.9s
+  Loading 10m_R3 ... 3.7s
+  Loading 25m_R1 ... 6.5s
+  Loading 25m_R3 ... 8.8s
+  Loading 40m_R1 ... 4.8s
+  Loading 40m_R2 ... 8.2s
+  Loading 40m_R3 ... 12.8s
+
+Saved 81 genes to gene_coverages.pkl
+
+Sanity check (chr3_57969166_58133022_+):
+  0m: mean=0.00159 RPM/bp, n_nonzero=7,237
+  10m: mean=0.00208 RPM/bp, n_nonzero=13,835
+  25m: mean=0.00246 RPM/bp, n_nonzero=8,473
+  40m: mean=0.00348 RPM/bp, n_nonzero=13,341

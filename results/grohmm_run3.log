@@ -1,0 +1,44 @@
+Loading gene coverages...
+  81 genes loaded
+  Mean library sizes: 0m=18.1M, 10m=18.4M, 25m=15.2M, 40m=16.8M
+Loading Danko reference rates...
+  81 genes, columns: ['chrom', 'chromStart', 'chromEnd', 'uniqueID', 'rate', 'strand', 'medianDist10', 'medianDist25', 'medianDist40']
+
+Gene matching: 81 matched, 0 unmatched
+
+--- Running HMM on 81 genes ---
+Window: 50 bp | Max iter: 10 | Emission: gamma
+  [1/81] chr1_17719200_17902750_+ rate=2.40 kb/min  r²=0.975
+  [10/81] chr10_12431737_12908148_+ rate=-11.83 kb/min  r²=0.615
+  [20/81] chr11_85829797_86061075_- rate=-7.57 kb/min  r²=0.748
+  [30/81] chr15_55671405_55797045_+ rate=1.93 kb/min  r²=0.319
+  [40/81] chr18_9698227_9852553_+ rate=1.94 kb/min  r²=0.986
+  [50/81] chr20_24397834_24595167_+ rate=-5.16 kb/min  r²=0.750
+  [60/81] chr3_191157211_191322920_- rate=3.02 kb/min  r²=0.757
+  [70/81] chr6_20190850_20325900_- rate=1.98 kb/min  r²=0.756
+  [80/81] chrX_149282208_149433106_+ rate=2.45 kb/min  r²=0.722
+
+Finished: 81 OK | 0 failed
+
+Saved: results/grohmm_wave_rates.csv (81 rows)
+
+--- Rate distribution ---
+  n:      81
+  median: 1.94 kb/min
+  mean:   1.13 kb/min
+  std:    2.50 kb/min
+  range:  -11.83 – 3.92 kb/min
+
+--- Wave position benchmark vs Danko medianDist ---
+  10m: r=-0.080, ρ=0.151  (n=81)
+  25m: r=-0.086, ρ=0.400  (n=79)
+  40m: r=0.315, ρ=0.659  (n=81)
+
+--- Rate benchmark vs Danko published rate ---
+  Pearson  r = 0.514  (p=9.17e-07)
+  Spearman ρ = 0.601  (p=2.91e-09)
+  n = 81
+
+Saved: results/grohmm_benchmark.png
+
+Done.

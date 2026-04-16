@@ -1,0 +1,86 @@
+{
+  "n_genes_total": 81,
+  "n_time_points": 500,
+  "time_max_min": 40.0,
+  "dt_min": 0.08016032064128256,
+  "fs_per_min": 12.475,
+  "ad_gain_dB": 52.95567099962479,
+  "marks": {
+    "CTCF": {
+      "n_genes": 79,
+      "dominant_lag_min": -19.559118236472944,
+      "lag_direction": "speed precedes mark",
+      "ad_gain_dB": 45.965970956264606,
+      "peak_coherence_freq_cpm": 0.0,
+      "peak_coherence_value": 0.08259772400022894,
+      "per_gene_lag_median_min": -0.24048096192384769,
+      "per_gene_lag_std_min": 11.007962754066728,
+      "files": {
+        "cross_spectrum": "results/cross_spectra/CTCF_cross_spectrum.npy",
+        "coherence": "results/cross_spectra/CTCF_coherence.npy",
+        "xcorr": "results/cross_spectra/CTCF_xcorr.npy"
+      }
+    },
+    "H3K27ac": {
+      "n_genes": 79,
+      "dominant_lag_min": 17.955911823647295,
+      "lag_direction": "mark precedes speed",
+      "ad_gain_dB": 45.965970956264606,
+      "peak_coherence_freq_cpm": 2.8942,
+      "peak_coherence_value": 0.07606607060086072,
+      "per_gene_lag_median_min": 0.08016032064128256,
+      "per_gene_lag_std_min": 10.824418645964908,
+      "files": {
+        "cross_spectrum": "results/cross_spectra/H3K27ac_cross_spectrum.npy",
+        "coherence": "results/cross_spectra/H3K27ac_coherence.npy",
+        "xcorr": "results/cross_spectra/H3K27ac_xcorr.npy"
+      }
+    },
+    "H3K27me3": {
+      "n_genes": 79,
+      "dominant_lag_min": -12.665330661322646,
+      "lag_direction": "speed precedes mark",
+      "ad_gain_dB": 45.965970956264606,
+      "peak_coherence_freq_cpm": 0.6986,
+      "peak_coherence_value": 0.042361491676915615,
+      "per_gene_lag_median_min": -2.0841683366733466,
+      "per_gene_lag_std_min": 10.872269284481336,
+      "files": {
+        "cross_spectrum": "results/cross_spectra/H3K27me3_cross_spectrum.npy",
+        "coherence": "results/cross_spectra/H3K27me3_coherence.npy",
+        "xcorr": "results/cross_spectra/H3K27me3_xcorr.npy"
+      }
+    },
+    "H3K36me3": {
+      "n_genes": 79,
+      "dominant_lag_min": -0.9619238476953907,
+      "lag_direction": "speed precedes mark",
+      "ad_gain_dB": 45.965970956264606,
+      "peak_coherence_freq_cpm": 0.0,
+      "peak_coherence_value": 0.11976884245108033,
+      "per_gene_lag_median_min": 0.0,
+      "per_gene_lag_std_min": 10.66819412575995,
+      "files": {
+        "cross_spectrum": "results/cross_spectra/H3K36me3_cross_spectrum.npy",
+        "coherence": "results/cross_spectra/H3K36me3_coherence.npy",
+        "xcorr": "results/cross_spectra/H3K36me3_xcorr.npy"
+      }
+    },
+    "H3K4me3": {
+      "n_genes": 79,
+      "dominant_lag_min": -4.0881763527054105,
+      "lag_direction": "speed precedes mark",
+      "ad_gain_dB": 45.965970956264606,
+      "peak_coherence_freq_cpm": 0.52395,
+      "peak_coherence_value": 0.07007713058541976,
+      "per_gene_lag_median_min": -1.7635270541082164,
+      "per_gene_lag_std_min": 11.516114687965352,
+      "files": {
+        "cross_spectrum": "results/cross_spectra/H3K4me3_cross_spectrum.npy",
+        "coherence": "results/cross_spectra/H3K4me3_coherence.npy",
+        "xcorr": "results/cross_spectra/H3K4me3_xcorr.npy"
+      }
+    }
+  },
+  "freq_axis_file": "results/cross_spectra/frequencies_cpm.npy"
+}

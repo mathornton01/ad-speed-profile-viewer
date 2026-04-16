@@ -1,0 +1,34 @@
+Loading gene coverages (RPM, AD-averaged across replicates)...
+  81 genes
+Loading groHMM wave positions...
+  81 genes in groHMM results
+Loading Danko reference rates...
+  81 genes in Danko reference
+
+--- Computing AD speed profiles for all genes ---
+  Output: /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/results/speed_profiles/
+  [1/81] chr1_17719200_17902750_+  vA=2.43kb/min  ψA=0.092  Danko=0.00kb/min
+  [10/81] chr10_12431737_12908148_+  vA=1.74kb/min  ψA=0.684  Danko=0.00kb/min
+  [20/81] chr11_85829797_86061075_-  vA=0.10kb/min  ψA=0.371  Danko=0.00kb/min
+  [30/81] chr15_55671405_55797045_+  vA=1.51kb/min  ψA=0.194  Danko=0.00kb/min
+  [40/81] chr18_9698227_9852553_+  vA=1.47kb/min  ψA=0.070  Danko=0.00kb/min
+  [50/81] chr20_24397834_24595167_+  vA=0.80kb/min  ψA=0.662  Danko=0.00kb/min
+  [60/81] chr3_191157211_191322920_-  vA=2.43kb/min  ψA=0.768  Danko=0.00kb/min
+  [70/81] chr6_20190850_20325900_-  vA=2.12kb/min  ψA=0.136  Danko=0.00kb/min
+  [80/81] chrX_149282208_149433106_+  vA=1.91kb/min  ψA=0.620  Danko=0.00kb/min
+
+81 gene profiles saved to results/speed_profiles/
+Saved: results/ad_speed_rates.csv (81 rows)
+
+--- Correlation with Danko rates ---
+  n (with Danko rate): 81
+  A: C/rho_40m             : Pearson r=0.288 (p=9.71e-03), Spearman ρ=0.603  n=80
+  B: C/diff_40m            : Pearson r=0.288 (p=9.71e-03), Spearman ρ=0.602  n=80
+  C: multi-tp mean         : Pearson r=-0.153 (p=1.76e-01), Spearman ρ=-0.252  n=80
+  groHMM                   : Pearson r=0.514 (p=9.17e-07), Spearman ρ=0.601  n=81
+Saved: results/speed_profiles/_gene_index.json (81 entries)
+
+Generating comparison figure...
+Saved: results/ad_speed_comparison.png
+
+Done. All outputs in results/speed_profiles/ and results/ad_speed_rates.csv

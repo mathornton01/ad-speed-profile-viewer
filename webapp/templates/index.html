@@ -1,0 +1,3873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AD RNAPII Speed Profiles</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    /* ============================================================
+       Reset & Base
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0f1117;
+      --surface:    #1a1d27;
+      --surface2:   #1e2130;
+      --border:     #2d3144;
+      --border2:    #3a3f55;
+      --text:       #e0e0e0;
+      --text-muted: #6b7280;
+      --text-dim:   #9ba3bf;
+      --accent:     #5b7cf6;
+      --accent-lt:  #a8c7fa;
+      --col-A:      #5b9cf6;
+      --col-B:      #4caf50;
+      --col-C:      #ba68c8;
+      --col-cov0:   #607d8b;
+      --col-cov40:  #ff9800;
+      --col-wave:   #f44336;
+      --green:      #22c55e;
+      --yellow:     #f59e0b;
+      --purple:     #a78bfa;
+      --red:        #ef4444;
+      --orange:     #f97316;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       Scrollbar
+    ============================================================ */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* ============================================================
+       Layout: fixed header + sidebar + main
+    ============================================================ */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    header h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-lt);
+      white-space: nowrap;
+    }
+    header .sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      flex-shrink: 0;
+    }
+    #header-status {
+      margin-left: auto;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .body-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      height: calc(100vh - 52px);
+      margin-top: 52px;
+    }
+
+    /* ============================================================
+       Sidebar
+    ============================================================ */
+    .sidebar {
+      background: #13161f;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar-header {
+      padding: 10px 12px 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-header input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      padding: 6px 10px;
+      color: var(--text);
+      font-size: 0.8rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .sidebar-header input:focus { border-color: var(--accent); }
+
+    .sort-bar {
+      padding: 5px 12px;
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+    }
+    .sort-bar label { font-size: 0.7rem; color: var(--text-muted); }
+    .sort-btn {
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sort-btn.active, .sort-btn:hover {
+      background: #2d3566;
+      border-color: var(--accent);
+      color: var(--accent-lt);
+    }
+
+    #gene-list { overflow-y: auto; flex: 1; padding: 4px 0; }
+
+    .gene-item {
+      padding: 7px 12px;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: all 0.12s;
+    }
+    .gene-item:hover { background: var(--surface2); }
+    .gene-item.selected { background: var(--surface2); border-left-color: var(--accent); }
+    .gene-id {
+      font-size: 0.77rem;
+      font-family: 'Courier New', monospace;
+      color: #c8d6f0;
+    }
+    .gene-meta { font-size: 0.67rem; color: var(--text-muted); margin-top: 2px; }
+    .rate-pill {
+      display: inline-block;
+      font-size: 0.63rem;
+      padding: 1px 5px;
+      border-radius: 3px;
+      margin-right: 3px;
+    }
+    .pill-grohmm { background: #1c2a4a; color: #7ab4ff; }
+    .pill-danko  { background: #2a1c1c; color: #ff9898; }
+
+    /* ============================================================
+       Main panel
+    ============================================================ */
+    .main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ---- Tabs ---- */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: #13161f;
+      padding: 0 16px;
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .tab-btn.active { color: var(--accent-lt); border-bottom-color: var(--accent); }
+    .tab-btn:hover { color: #c8d6f0; }
+
+    /* ---- Panels ---- */
+    .panel {
+      display: none;
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 18px;
+    }
+    .panel.active { display: flex; flex-direction: column; gap: 14px; }
+
+    /* ============================================================
+       Cards
+    ============================================================ */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .card-title {
+      padding: 9px 14px;
+      font-size: 0.77rem;
+      color: var(--accent-lt);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+      font-weight: 600;
+    }
+    .card-body { padding: 12px 14px; }
+
+    /* ============================================================
+       Dashboard metric cards
+    ============================================================ */
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .metric-card.green::before  { background: var(--green); }
+    .metric-card.blue::before   { background: var(--col-A); }
+    .metric-card.yellow::before { background: var(--yellow); }
+    .metric-card.purple::before { background: var(--purple); }
+    .metric-label { font-size: 0.72rem; color: var(--text-muted); }
+    .metric-value { font-size: 1.6rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .metric-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-weight: 500;
+      width: fit-content;
+    }
+    .badge-green  { background: #14532d55; color: var(--green); border: 1px solid #14532d; }
+    .badge-blue   { background: #1e3a5f55; color: var(--col-A); border: 1px solid #1e3a5f; }
+    .badge-yellow { background: #7c2d1255; color: var(--yellow); border: 1px solid #7c2d12; }
+    .badge-purple { background: #3b0764aa; color: var(--purple); border: 1px solid #3b0764; }
+
+    /* ============================================================
+       Two-column layout helper
+    ============================================================ */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* ============================================================
+       TODO list
+    ============================================================ */
+    .todo-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+    .todo-item:last-child { border-bottom: none; }
+    .todo-checkbox {
+      width: 14px; height: 14px;
+      border-radius: 3px;
+      border: 1px solid var(--border2);
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .todo-checkbox.done { background: var(--green); border-color: var(--green); }
+    .priority-high   { border-left: 3px solid var(--red); padding-left: 6px; }
+    .priority-medium { border-left: 3px solid var(--orange); padding-left: 6px; }
+
+    /* ============================================================
+       Strategy log entry
+    ============================================================ */
+    .session-entry {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .session-entry:last-child { border-bottom: none; }
+    .session-num {
+      font-size: 0.67rem;
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .session-title { font-size: 0.83rem; color: var(--text); font-weight: 600; margin: 2px 0; }
+    .session-date  { font-size: 0.68rem; color: var(--text-muted); }
+    .session-summary { font-size: 0.75rem; color: var(--text-dim); margin-top: 5px; line-height: 1.5; }
+
+    /* ============================================================
+       Pipeline status row
+    ============================================================ */
+    .status-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .status-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 12px;
+      font-size: 0.77rem;
+    }
+    .status-icon { font-size: 1rem; }
+    .status-name { color: var(--text-dim); }
+    .status-ok   { color: var(--green); }
+    .status-wait { color: var(--yellow); }
+
+    /* ============================================================
+       Results table
+    ============================================================ */
+    .corr-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+    .corr-table th {
+      text-align: left;
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .corr-table td { padding: 7px 10px; border-bottom: 1px solid var(--surface2); }
+    .corr-table tr:hover td { background: var(--surface2); }
+    .r-bar {
+      display: inline-block;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--accent);
+      opacity: 0.7;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* ============================================================
+       Plot containers
+    ============================================================ */
+    .plot-sm  { height: 240px; width: 100%; }
+    .plot-md  { height: 300px; width: 100%; }
+    .plot-lg  { height: 380px; width: 100%; }
+    .plot-xl  { height: 440px; width: 100%; }
+
+    /* ============================================================
+       Empty / awaiting state
+    ============================================================ */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      gap: 12px;
+      text-align: center;
+    }
+    .empty-icon  { font-size: 2.5rem; opacity: 0.5; }
+    .empty-title { font-size: 0.95rem; color: var(--text-dim); font-weight: 600; }
+    .empty-desc  { font-size: 0.8rem; color: var(--text-muted); max-width: 400px; line-height: 1.6; }
+    .empty-cmd {
+      background: #111318;
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.77rem;
+      color: var(--col-A);
+    }
+
+    /* ============================================================
+       Loading spinner
+    ============================================================ */
+    .spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid var(--border2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ============================================================
+       Approach legend bar
+    ============================================================ */
+    .legend {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 7px 14px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+    .legend-dot { width: 9px; height: 9px; border-radius: 50%; }
+
+    /* ============================================================
+       Stats grid
+    ============================================================ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 9px;
+    }
+    .stat-item {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 9px 11px;
+    }
+    .stat-label { font-size: 0.67rem; color: var(--text-muted); margin-bottom: 3px; }
+    .stat-value { font-size: 0.88rem; color: var(--text); font-weight: 500; }
+    .stat-value.hi { color: var(--accent-lt); }
+
+    /* ============================================================
+       How It Works — explainer sections
+    ============================================================ */
+    .explainer-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .explainer-section h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-lt);
+    }
+    .explainer-section h3 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .explainer-section p {
+      font-size: 0.83rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      max-width: 700px;
+    }
+    .explainer-section .math-box {
+      background: #111318;
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      color: var(--col-A);
+      width: fit-content;
+    }
+    .phase-list { display: flex; flex-direction: column; gap: 10px; }
+    .phase-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .phase-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .phase-done { background: #14532d; color: var(--green); }
+    .phase-wait { background: #1c1700; color: var(--yellow); }
+    .phase-title { font-size: 0.83rem; font-weight: 600; color: var(--text); }
+    .phase-desc  { font-size: 0.76rem; color: var(--text-dim); margin-top: 2px; }
+
+    /* ============================================================
+       Coordinate toggle (speed profiles)
+    ============================================================ */
+    .coord-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+    .coord-toggle label { font-size: 0.77rem; color: var(--text-dim); }
+    .toggle-group {
+      display: flex;
+      border: 1px solid var(--border2);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .toggle-opt {
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      background: var(--surface2);
+      color: var(--text-muted);
+      border: none;
+      transition: all 0.15s;
+    }
+    .toggle-opt.active { background: var(--accent); color: #fff; }
+    .toggle-opt:disabled { opacity: 0.4; cursor: not-allowed; }
+    .toggle-tip {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       Epigenomics mark pills
+    ============================================================ */
+    .mark-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      padding: 10px 0;
+    }
+    .mark-pill {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      border: 1px solid;
+    }
+    .mark-methyl  { background: #1a0a2e; color: #c77dff; border-color: #6a0dad; }
+    .mark-k36     { background: #0a2e0a; color: #4caf50; border-color: #1a5c1a; }
+    .mark-k27ac   { background: #2e1a00; color: #ff9800; border-color: #7a4200; }
+    .mark-k4me3   { background: #0a1a2e; color: #5b9cf6; border-color: #1a3f7a; }
+    .mark-k27me3  { background: #2e0a0a; color: #f44336; border-color: #7a1a1a; }
+    .mark-ctcf    { background: #2e2a0a; color: #ffeb3b; border-color: #7a6a0a; }
+
+    /* ============================================================
+       Overview scatter description
+    ============================================================ */
+    .scatter-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding: 6px 14px 8px;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     Fixed header
+============================================================ -->
+<header>
+  <span>🧬</span>
+  <h1>AD RNAPII Speed Profiles</h1>
+  <span class="sub">MCF-7 · E2 time course · GSE41324 · Danko et al. 2013</span>
+  <div id="header-status">
+    <span class="status-dot" id="status-dot"></span>
+    <span id="gene-count">Loading…</span>
+  </div>
+</header>
+
+<!-- ============================================================
+     Body grid: sidebar + main
+============================================================ -->
+<div class="body-grid">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <input type="text" id="search" placeholder="Search gene or chromosome…" oninput="filterGenes()"/>
+    </div>
+    <div class="sort-bar">
+      <label>Sort:</label>
+      <button class="sort-btn active" id="sort-danko"  onclick="sortGenes('danko')">Danko</button>
+      <button class="sort-btn"        id="sort-grohmm" onclick="sortGenes('grohmm')">groHMM</button>
+      <button class="sort-btn"        id="sort-psiA"   onclick="sortGenes('psiA')">ψ-A</button>
+      <button class="sort-btn"        id="sort-chrom"  onclick="sortGenes('chrom')">Chrom</button>
+    </div>
+    <div id="gene-list"></div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('dashboard')">🏠 Dashboard</button>
+      <button class="tab-btn"        onclick="showTab('howitworks')">🔬 How It Works</button>
+      <button class="tab-btn"        onclick="showTab('speed')">⚡ Speed Profiles</button>
+      <button class="tab-btn"        onclick="showTab('epigenomics')">🧬 Epigenomics</button>
+      <button class="tab-btn"        onclick="showTab('coverage')">📈 Coverage</button>
+      <button class="tab-btn"        onclick="showTab('overview')">📊 Overview</button>
+      <button class="tab-btn"        onclick="showTab('animation')">🎬 Animation</button>
+      <button class="tab-btn"        onclick="showTab('temporal')">⏱ Temporal</button>
+    </div>
+
+    <!-- ===========================================================
+         TAB 1: Dashboard
+    =========================================================== -->
+    <div class="panel active" id="tab-dashboard">
+
+      <!-- Metric cards row -->
+      <div class="metric-row">
+        <div class="metric-card green">
+          <div class="metric-label">Best Pearson r</div>
+          <div class="metric-value">0.557</div>
+          <div class="metric-badge badge-green">AD spectral ψ</div>
+        </div>
+        <div class="metric-card blue">
+          <div class="metric-label">Best Spearman ρ</div>
+          <div class="metric-value">0.603</div>
+          <div class="metric-badge badge-blue">Method A / groHMM</div>
+        </div>
+        <div class="metric-card yellow">
+          <div class="metric-label">Genes analyzed</div>
+          <div class="metric-value" id="dash-n-genes">81</div>
+          <div class="metric-badge badge-yellow">hg19 · MCF-7 · E2</div>
+        </div>
+        <div class="metric-card purple">
+          <div class="metric-label">AD Processing Gain</div>
+          <div class="metric-value">≤ 50 dB</div>
+          <div class="metric-badge badge-purple">10·log₁₀(M) per gene</div>
+        </div>
+      </div>
+
+      <!-- Two-column: TODOs + Strategy log -->
+      <div class="two-col">
+
+        <!-- Active TODOs -->
+        <div class="card">
+          <div class="card-title">Active TODOs
+            <span id="todo-count" style="float:right;font-weight:400;color:var(--text-muted);font-size:0.7rem;"></span>
+          </div>
+          <div class="card-body" id="todos-body" style="max-height:280px;overflow-y:auto;padding:0 14px;">
+            <div style="color:var(--text-muted);padding:16px 0;font-size:0.8rem;">
+              <span class="spinner"></span> Loading…
+            </div>
+          </div>
+        </div>
+
+        <!-- Strategy log -->
+        <div class="card">
+          <div class="card-title">Strategy Log — Recent Sessions</div>
+          <div id="strategy-body">
+            <div style="color:var(--text-muted);padding:16px 14px;font-size:0.8rem;">
+              <span class="spinner"></span> Loading…
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Current results -->
+      <div class="card">
+        <div class="card-title">Current Benchmark Results — vs Danko et al. 2013</div>
+        <div class="card-body">
+          <table class="corr-table" id="dash-results-table">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Pearson r</th>
+                <th>Spearman ρ</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="dash-results-body">
+              <tr><td colspan="4" style="color:var(--text-muted);padding:16px 10px;">
+                <span class="spinner"></span> Loading…
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pipeline status -->
+      <div class="card">
+        <div class="card-title">Pipeline Status</div>
+        <div class="card-body">
+          <div class="status-row" id="pipeline-status-row">
+            <span style="color:var(--text-muted);font-size:0.8rem;"><span class="spinner"></span> Checking…</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-dashboard -->
+
+    <!-- ===========================================================
+         TAB 2: How It Works
+    =========================================================== -->
+    <div class="panel" id="tab-howitworks">
+
+      <!-- Section 1: Baby example -->
+      <div class="explainer-section">
+        <h2>The Big Idea: It's Like Highway Traffic</h2>
+        <p>
+          Imagine a long highway. Helicopters hover above and count cars at every mile marker.
+          If there are <strong style="color:var(--col-wave)">many cars per mile</strong>, that stretch
+          is congested — cars are moving <strong style="color:var(--col-wave)">slowly</strong>.
+          If there are <strong style="color:var(--green)">few cars per mile</strong>, the road is clear
+          and cars are moving <strong style="color:var(--green)">fast</strong>.
+        </p>
+
+        <!-- SVG: highway traffic analogy -->
+        <svg viewBox="0 0 700 120" xmlns="http://www.w3.org/2000/svg"
+             style="width:100%;max-width:700px;border-radius:8px;background:#111318;border:1px solid #2d3144;">
+          <!-- Road -->
+          <rect x="0" y="48" width="700" height="24" fill="#1e2130"/>
+          <line x1="0" y1="60" x2="700" y2="60" stroke="#3a3f55" stroke-width="2" stroke-dasharray="20 10"/>
+          <!-- Slow zone: dense cars, red tint -->
+          <rect x="0" y="0" width="280" height="120" fill="#f4433611" rx="0"/>
+          <text x="140" y="16" text-anchor="middle" fill="#f44336" font-size="10" font-family="sans-serif">SLOW ZONE — dense</text>
+          <!-- Cars in slow zone (bunched up) -->
+          <rect x="10"  y="52" width="22" height="16" fill="#f44336" rx="3"/>
+          <rect x="44"  y="52" width="22" height="16" fill="#f44336" rx="3"/>
+          <rect x="78"  y="52" width="22" height="16" fill="#f44336" rx="3"/>
+          <rect x="112" y="52" width="22" height="16" fill="#f44336" rx="3"/>
+          <rect x="146" y="52" width="22" height="16" fill="#f44336" rx="3"/>
+          <rect x="180" y="52" width="22" height="16" fill="#f44336" rx="3"/>
+          <rect x="214" y="52" width="22" height="16" fill="#ef4444" rx="3"/>
+          <rect x="248" y="52" width="22" height="16" fill="#ef4444" rx="3"/>
+          <!-- Speed arrows slow -->
+          <text x="140" y="106" text-anchor="middle" fill="#f44336" font-size="11" font-family="sans-serif" font-weight="bold">v = slow</text>
+          <!-- Fast zone: sparse cars, green tint -->
+          <rect x="280" y="0" width="420" height="120" fill="#22c55e11" rx="0"/>
+          <text x="490" y="16" text-anchor="middle" fill="#22c55e" font-size="10" font-family="sans-serif">FAST ZONE — sparse</text>
+          <!-- Cars in fast zone (spread out) -->
+          <rect x="300" y="52" width="22" height="16" fill="#22c55e" rx="3"/>
+          <rect x="390" y="52" width="22" height="16" fill="#22c55e" rx="3"/>
+          <rect x="480" y="52" width="22" height="16" fill="#22c55e" rx="3"/>
+          <rect x="570" y="52" width="22" height="16" fill="#22c55e" rx="3"/>
+          <rect x="660" y="52" width="22" height="16" fill="#22c55e" rx="3"/>
+          <!-- Speed arrows fast -->
+          <text x="490" y="106" text-anchor="middle" fill="#22c55e" font-size="11" font-family="sans-serif" font-weight="bold">v = fast</text>
+          <!-- Divider -->
+          <line x1="280" y1="0" x2="280" y2="120" stroke="#2d3144" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <!-- Density label -->
+          <text x="140" y="38" text-anchor="middle" fill="#f44336aa" font-size="9" font-family="sans-serif">density = HIGH</text>
+          <text x="490" y="38" text-anchor="middle" fill="#22c55eaa" font-size="9" font-family="sans-serif">density = LOW</text>
+        </svg>
+
+        <div class="math-box">Speed ∝ 1 / density</div>
+        <p>
+          This simple relationship is the core of our analysis. More entities per unit length means
+          each entity is moving slower (they spend more time there). This is true for highway cars
+          and it's true for RNA Polymerases on DNA.
+        </p>
+      </div>
+
+      <!-- Section 2: GRO-Seq analogy -->
+      <div class="explainer-section">
+        <h2>In Our Lab: RNA Polymerases on DNA</h2>
+        <p>
+          In our experiment, instead of cars on a highway, we have
+          <strong style="color:var(--accent-lt)">RNA Polymerases (RNAPs)</strong>
+          moving along a <strong style="color:var(--col-B)">gene</strong> (a stretch of DNA).
+          GRO-Seq (Genomic Run-On Sequencing) is our "helicopter" — it counts how many polymerases
+          are at each base-pair position at a snapshot in time.
+        </p>
+
+        <!-- SVG: DNA + polymerase analogy -->
+        <svg viewBox="0 0 700 140" xmlns="http://www.w3.org/2000/svg"
+             style="width:100%;max-width:700px;border-radius:8px;background:#111318;border:1px solid #2d3144;">
+          <!-- DNA backbone -->
+          <rect x="20" y="65" width="660" height="10" fill="#2d3144" rx="5"/>
+          <!-- TSS label -->
+          <text x="20" y="58" fill="#9ba3bf" font-size="9" font-family="sans-serif">TSS</text>
+          <line x1="20" y1="60" x2="20" y2="80" stroke="#5b7cf6" stroke-width="2"/>
+          <!-- Gene end label -->
+          <text x="630" y="58" fill="#9ba3bf" font-size="9" font-family="sans-serif">3' end</text>
+          <!-- Dense region (near TSS) label -->
+          <text x="140" y="18" text-anchor="middle" fill="#f44336" font-size="9" font-family="sans-serif">Pause peak / slow zone</text>
+          <text x="140" y="30" text-anchor="middle" fill="#f44336aa" font-size="8" font-family="sans-serif">(high reads = slow)</text>
+          <!-- Sparse region label -->
+          <text x="500" y="18" text-anchor="middle" fill="#22c55e" font-size="9" font-family="sans-serif">Gene body / fast zone</text>
+          <text x="500" y="30" text-anchor="middle" fill="#22c55eaa" font-size="8" font-family="sans-serif">(low reads = fast)</text>
+          <!-- Polymerase dots, dense near start -->
+          <!-- Dense cluster -->
+          <circle cx="40"  cy="70" r="6" fill="#5b7cf6" opacity="0.9"/>
+          <circle cx="58"  cy="70" r="6" fill="#5b7cf6" opacity="0.9"/>
+          <circle cx="76"  cy="70" r="6" fill="#5b7cf6" opacity="0.9"/>
+          <circle cx="95"  cy="70" r="6" fill="#5b7cf6" opacity="0.85"/>
+          <circle cx="114" cy="70" r="6" fill="#5b7cf6" opacity="0.85"/>
+          <circle cx="133" cy="70" r="6" fill="#5b7cf6" opacity="0.8"/>
+          <circle cx="152" cy="70" r="6" fill="#5b7cf6" opacity="0.8"/>
+          <circle cx="171" cy="70" r="6" fill="#5b7cf6" opacity="0.75"/>
+          <circle cx="190" cy="70" r="6" fill="#5b7cf6" opacity="0.7"/>
+          <circle cx="210" cy="70" r="6" fill="#5b7cf6" opacity="0.65"/>
+          <!-- Thinning out -->
+          <circle cx="240" cy="70" r="6" fill="#5b7cf6" opacity="0.55"/>
+          <circle cx="280" cy="70" r="6" fill="#5b7cf6" opacity="0.45"/>
+          <circle cx="330" cy="70" r="6" fill="#22c55e" opacity="0.5"/>
+          <circle cx="390" cy="70" r="6" fill="#22c55e" opacity="0.5"/>
+          <circle cx="460" cy="70" r="6" fill="#22c55e" opacity="0.55"/>
+          <circle cx="540" cy="70" r="6" fill="#22c55e" opacity="0.5"/>
+          <circle cx="630" cy="70" r="6" fill="#22c55e" opacity="0.45"/>
+          <!-- GRO-seq reads bar chart representation at bottom -->
+          <text x="20" y="105" fill="#6b7280" font-size="8" font-family="sans-serif">GRO-Seq reads:</text>
+          <!-- Bar heights proportional to density -->
+          <rect x="40"  y="116" width="8" height="22" fill="#5b7cf6" opacity="0.7"/>
+          <rect x="58"  y="118" width="8" height="20" fill="#5b7cf6" opacity="0.7"/>
+          <rect x="76"  y="115" width="8" height="23" fill="#5b7cf6" opacity="0.7"/>
+          <rect x="95"  y="117" width="8" height="21" fill="#5b7cf6" opacity="0.65"/>
+          <rect x="114" y="119" width="8" height="19" fill="#5b7cf6" opacity="0.65"/>
+          <rect x="133" y="120" width="8" height="18" fill="#5b7cf6" opacity="0.6"/>
+          <rect x="152" y="121" width="8" height="17" fill="#5b7cf6" opacity="0.6"/>
+          <rect x="171" y="122" width="8" height="16" fill="#5b7cf6" opacity="0.55"/>
+          <rect x="190" y="124" width="8" height="14" fill="#5b7cf6" opacity="0.5"/>
+          <rect x="210" y="126" width="8" height="12" fill="#5b7cf6" opacity="0.45"/>
+          <rect x="240" y="128" width="8" height="10" fill="#22c55e" opacity="0.4"/>
+          <rect x="280" y="130" width="8" height="8"  fill="#22c55e" opacity="0.5"/>
+          <rect x="330" y="131" width="8" height="7"  fill="#22c55e" opacity="0.5"/>
+          <rect x="390" y="131" width="8" height="7"  fill="#22c55e" opacity="0.5"/>
+          <rect x="460" y="130" width="8" height="8"  fill="#22c55e" opacity="0.5"/>
+          <rect x="540" y="131" width="8" height="7"  fill="#22c55e" opacity="0.45"/>
+          <rect x="630" y="132" width="8" height="6"  fill="#22c55e" opacity="0.4"/>
+          <!-- baseline -->
+          <line x1="20" y1="138" x2="680" y2="138" stroke="#2d3144" stroke-width="1"/>
+        </svg>
+
+        <div class="math-box">v(p) = C / ρ(p)   where ρ(p) = read density at position p</div>
+        <p>
+          More reads at position <em>p</em> means polymerases spend more time there,
+          which means they are moving <em>slower</em>. By computing 1/density at every
+          position along the gene, we get a <strong>1 bp resolution speed profile</strong>.
+          The constant C is calibrated so that the mean speed matches the expected ~2 kb/min.
+        </p>
+      </div>
+
+      <!-- Section 3: Why 47 dB -->
+      <div class="explainer-section">
+        <h2>Why 47 dB? The Algebraic Diversity Processing Gain</h2>
+        <p>
+          Each individual position p gives us one noisy measurement of speed.
+          Noise from sequencing, mapping, and biological variability limits accuracy.
+          <br><br>
+          <strong>Key insight:</strong> A gene 50,000 bp long gives us
+          <strong style="color:var(--accent-lt)">50,000 measurements</strong> simultaneously.
+          Averaging N independent noisy measurements reduces noise variance by a factor of N
+          (noise amplitude by √N). In decibels: 10·log₁₀(N).
+        </p>
+
+        <!-- SVG: noise reduction bar chart -->
+        <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg"
+             style="width:100%;max-width:500px;border-radius:8px;background:#111318;border:1px solid #2d3144;">
+          <text x="250" y="18" text-anchor="middle" fill="#9ba3bf" font-size="11" font-family="sans-serif" font-weight="bold">SNR Improvement from Averaging</text>
+          <!-- Axes -->
+          <line x1="70" y1="30" x2="70" y2="155" stroke="#3a3f55" stroke-width="1.5"/>
+          <line x1="70" y1="155" x2="490" y2="155" stroke="#3a3f55" stroke-width="1.5"/>
+          <!-- Y axis label -->
+          <text x="14" y="100" fill="#6b7280" font-size="9" font-family="sans-serif" transform="rotate(-90,14,100)">Noise level (dB)</text>
+          <!-- Bars: N=1, 100, 1000, 50000 -->
+          <!-- N=1 -->
+          <rect x="90"  y="55" width="60" height="100" fill="#f44336" opacity="0.7" rx="3"/>
+          <text x="120" y="48" text-anchor="middle" fill="#f44336" font-size="8" font-family="sans-serif">0 dB</text>
+          <text x="120" y="170" text-anchor="middle" fill="#9ba3bf" font-size="8" font-family="sans-serif">N = 1</text>
+          <!-- N=100 -->
+          <rect x="200" y="95" width="60" height="60" fill="#ff9800" opacity="0.7" rx="3"/>
+          <text x="230" y="88" text-anchor="middle" fill="#ff9800" font-size="8" font-family="sans-serif">−20 dB</text>
+          <text x="230" y="170" text-anchor="middle" fill="#9ba3bf" font-size="8" font-family="sans-serif">N = 100</text>
+          <!-- N=1000 -->
+          <rect x="310" y="115" width="60" height="40" fill="#f59e0b" opacity="0.7" rx="3"/>
+          <text x="340" y="108" text-anchor="middle" fill="#f59e0b" font-size="8" font-family="sans-serif">−30 dB</text>
+          <text x="340" y="170" text-anchor="middle" fill="#9ba3bf" font-size="8" font-family="sans-serif">N = 1,000</text>
+          <!-- N=50000 -->
+          <rect x="420" y="138" width="60" height="17" fill="#22c55e" opacity="0.8" rx="3"/>
+          <text x="450" y="130" text-anchor="middle" fill="#22c55e" font-size="8" font-family="sans-serif">−47 dB</text>
+          <text x="450" y="170" text-anchor="middle" fill="#9ba3bf" font-size="8" font-family="sans-serif">N = 50,000</text>
+          <!-- 0 dB reference line -->
+          <line x1="70" y1="55" x2="490" y2="55" stroke="#f4433644" stroke-width="1" stroke-dasharray="4 4"/>
+        </svg>
+
+        <div class="math-box">AD gain = 10 · log₁₀(M) dB   (M = gene length in bp)</div>
+        <p>
+          For a 50 kb gene: 10 · log₁₀(50,000) ≈ <strong style="color:var(--purple)">47 dB</strong>.
+          This is a <strong>50,000× improvement</strong> in signal quality compared to measuring
+          at just one position. This is the <em>Algebraic Diversity (AD) processing gain</em> —
+          the mathematical benefit of using all M positions simultaneously via the cyclic group Z_M.
+        </p>
+      </div>
+
+      <!-- Section 4: Z_M group average -->
+      <div class="explainer-section">
+        <h2>The Z_M Group Average — What It Actually Computes</h2>
+        <p>
+          The cyclic group Z_M consists of M cyclic shifts of our coverage vector. Applying it gives
+          a group-averaged covariance matrix whose eigenvalues are exactly the DFT power spectrum.
+        </p>
+
+        <!-- SVG: circular Z_M illustration -->
+        <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg"
+             style="width:100%;max-width:400px;border-radius:8px;background:#111318;border:1px solid #2d3144;">
+          <!-- Circle -->
+          <circle cx="200" cy="105" r="75" fill="none" stroke="#2d3144" stroke-width="1.5"/>
+          <!-- M elements as dots on circle -->
+          <circle cx="200" cy="30"  r="5" fill="#5b7cf6"/>
+          <circle cx="257" cy="47"  r="5" fill="#5b9cf6"/>
+          <circle cx="275" cy="105" r="5" fill="#4caf50"/>
+          <circle cx="257" cy="163" r="5" fill="#ba68c8"/>
+          <circle cx="200" cy="180" r="5" fill="#ff9800"/>
+          <circle cx="143" cy="163" r="5" fill="#f44336"/>
+          <circle cx="125" cy="105" r="5" fill="#5b7cf6"/>
+          <circle cx="143" cy="47"  r="5" fill="#5b9cf6"/>
+          <!-- Rotation arrows -->
+          <path d="M205,33 A75,75 0 0,1 268,53" fill="none" stroke="#5b7cf633" stroke-width="1.5" marker-end="url(#arr)"/>
+          <!-- Arrow marker -->
+          <defs>
+            <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#5b7cf6"/>
+            </marker>
+          </defs>
+          <!-- Labels -->
+          <text x="200" y="105" text-anchor="middle" fill="#9ba3bf" font-size="10" font-family="sans-serif">x₀, x₁,…, x_{M-1}</text>
+          <text x="200" y="120" text-anchor="middle" fill="#6b7280" font-size="8" font-family="sans-serif">coverage vector</text>
+          <text x="60"  y="25"  fill="#9ba3bf" font-size="9" font-family="sans-serif">P⁰x</text>
+          <text x="285" y="50"  fill="#9ba3bf" font-size="9" font-family="sans-serif">P¹x</text>
+          <text x="295" y="110" fill="#9ba3bf" font-size="9" font-family="sans-serif">P²x</text>
+          <text x="285" y="170" fill="#9ba3bf" font-size="9" font-family="sans-serif">P³x</text>
+          <text x="70"  y="170" fill="#9ba3bf" font-size="9" font-family="sans-serif">…</text>
+          <text x="35"  y="110" fill="#9ba3bf" font-size="9" font-family="sans-serif">P^{M-1}x</text>
+          <!-- Formula -->
+          <text x="200" y="198" text-anchor="middle" fill="#5b7cf6" font-size="9" font-family="monospace">R̂ = (1/M)·Σ (Pᵏx)(Pᵏx)ᵀ</text>
+        </svg>
+
+        <div class="math-box">FFT(x)[0] = DC component = group average = mean coverage</div>
+        <p>
+          Each shift P^k x represents "what would the coverage profile look like if we could
+          observe the gene starting from position k?" Averaging all M shifts gives an unbiased
+          estimate with variance reduced by M. The DFT computes all of this in O(M log M) time
+          via the Fast Fourier Transform — effectively "for free."
+          The spectral concentration ψ = max(|X[f]|²) / Σ|X[f]|² measures how coherent the
+          coverage wave is, and correlates with elongation rate (Pearson r = 0.557).
+        </p>
+      </div>
+
+      <!-- Section 5: What we're building -->
+      <div class="explainer-section">
+        <h2>Research Roadmap — Four Phases</h2>
+
+        <!-- SVG timeline -->
+        <svg viewBox="0 0 680 60" xmlns="http://www.w3.org/2000/svg"
+             style="width:100%;max-width:680px;border-radius:8px;background:#111318;border:1px solid #2d3144;padding:4px;">
+          <!-- Timeline bar -->
+          <line x1="40" y1="30" x2="640" y2="30" stroke="#2d3144" stroke-width="3"/>
+          <!-- Phase 1: done -->
+          <circle cx="80"  cy="30" r="12" fill="#14532d" stroke="#22c55e" stroke-width="2"/>
+          <text x="80"  cy="30" text-anchor="middle" fill="#22c55e" font-size="10" font-family="sans-serif" dominant-baseline="central">1</text>
+          <text x="80"  y="52" text-anchor="middle" fill="#22c55e" font-size="8" font-family="sans-serif">Speed ✓</text>
+          <!-- Phase 2 -->
+          <circle cx="240" cy="30" r="12" fill="#1c1700" stroke="#f59e0b" stroke-width="2"/>
+          <text x="240" cy="30" text-anchor="middle" fill="#f59e0b" font-size="10" font-family="sans-serif" dominant-baseline="central">2</text>
+          <text x="240" y="52" text-anchor="middle" fill="#f59e0b" font-size="8" font-family="sans-serif">Rephase ⏳</text>
+          <!-- Phase 3 -->
+          <circle cx="440" cy="30" r="12" fill="#0a0a1a" stroke="#3a3f55" stroke-width="2"/>
+          <text x="440" cy="30" text-anchor="middle" fill="#6b7280" font-size="10" font-family="sans-serif" dominant-baseline="central">3</text>
+          <text x="440" y="52" text-anchor="middle" fill="#6b7280" font-size="8" font-family="sans-serif">Epigenomics ⏳</text>
+          <!-- Phase 4 -->
+          <circle cx="620" cy="30" r="12" fill="#0a0a1a" stroke="#3a3f55" stroke-width="2"/>
+          <text x="620" cy="30" text-anchor="middle" fill="#6b7280" font-size="10" font-family="sans-serif" dominant-baseline="central">4</text>
+          <text x="620" y="52" text-anchor="middle" fill="#6b7280" font-size="8" font-family="sans-serif">RNA Folding ⏳</text>
+          <!-- Connection lines -->
+          <line x1="92"  y1="30" x2="228" y2="30" stroke="#22c55e44" stroke-width="2"/>
+          <line x1="252" y1="30" x2="428" y2="30" stroke="#f59e0b33" stroke-width="2"/>
+          <line x1="452" y1="30" x2="608" y2="30" stroke="#3a3f5544" stroke-width="2"/>
+        </svg>
+
+        <div class="phase-list">
+          <div class="phase-item">
+            <div class="phase-num phase-done">1</div>
+            <div>
+              <div class="phase-title">Estimate v(p) at every base pair — DONE ✓</div>
+              <div class="phase-desc">
+                Three methods: A (C/ρ₄₀ₘ), B (C/(ρ₄₀ₘ−ρ₀ₘ)), groHMM wave-front.
+                Best Pearson r = 0.557 (ψ), best Spearman ρ = 0.603 (Method A).
+              </div>
+            </div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-num phase-wait">2</div>
+            <div>
+              <div class="phase-title">Temporal rephasing: genomic position → transcription time</div>
+              <div class="phase-desc">
+                Convert t(p) = ∫₀ᵖ dp'/v(p') — maps genomic coordinate axis to time coordinate axis.
+                Enables direct comparison of dynamics across genes of different lengths/speeds.
+                Run: <code style="color:var(--col-A);font-size:0.75rem;">scripts/11_temporal_rephase.py</code>
+              </div>
+            </div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-num phase-wait">3</div>
+            <div>
+              <div class="phase-title">Epigenomic overlay: methylation, H3K36me3, CTCF, …</div>
+              <div class="phase-desc">
+                Download ENCODE ChIP-seq/WGBS data for MCF-7. Correlate each mark with v(p) profile.
+                Do slow regions have more H3K27me3? Do CTCF sites cause speed bumps?
+                Run: <code style="color:var(--col-A);font-size:0.75rem;">scripts/10_download_epigenomics.py</code>
+              </div>
+            </div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-num phase-wait">4</div>
+            <div>
+              <div class="phase-title">RNA folding: does slow speed give more co-transcriptional folding time?</div>
+              <div class="phase-desc">
+                Slower elongation at a given position means the nascent RNA has more time to fold
+                before the next nucleotide is added. Test whether known RNA structure elements
+                co-locate with slow-speed regions.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-howitworks -->
+
+    <!-- ===========================================================
+         TAB 3: Speed Profiles
+    =========================================================== -->
+    <div class="panel" id="tab-speed">
+
+      <!-- Empty state -->
+      <div id="speed-empty" class="empty-state">
+        <div class="empty-icon">⚡</div>
+        <div class="empty-title">Select a gene from the sidebar</div>
+        <div class="empty-desc">
+          Choose any gene to view its instantaneous RNAPII speed profile
+          at 1 bp resolution, computed by three independent methods.
+        </div>
+      </div>
+
+      <!-- Speed content -->
+      <div id="speed-content" style="display:none;flex-direction:column;gap:14px;">
+
+        <!-- Gene header card -->
+        <div class="card">
+          <div class="card-body" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+            <div>
+              <div style="font-size:0.9rem;font-family:monospace;color:var(--accent-lt);" id="gene-title">—</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;" id="gene-coords">—</div>
+            </div>
+            <div class="stats-grid" style="flex:1;min-width:280px;">
+              <div class="stat-item">
+                <div class="stat-label">Danko rate</div>
+                <div class="stat-value hi" id="stat-danko">—</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">groHMM rate</div>
+                <div class="stat-value" id="stat-grohmm">—</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Wave end (40m)</div>
+                <div class="stat-value" id="stat-wave40">—</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Gene length</div>
+                <div class="stat-value" id="stat-genelen">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coordinate system toggle -->
+        <div class="card">
+          <div class="coord-toggle">
+            <label>Coordinate system:</label>
+            <div class="toggle-group">
+              <button class="toggle-opt active" id="coord-genomic" onclick="setCoord('genomic')">Genomic position</button>
+              <button class="toggle-opt" id="coord-temporal" onclick="setCoord('temporal')" disabled title="Run 11_temporal_rephase.py to enable">Transcription time ⏳</button>
+            </div>
+            <span class="toggle-tip" id="coord-tip">Temporal axis disabled — run scripts/11_temporal_rephase.py</span>
+          </div>
+
+          <!-- Combined speed plot -->
+          <div class="card-title" style="border-top:1px solid var(--border);">Instantaneous Speed — All Methods (within wave region)</div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--col-A)"></div>A: C/ρ₄₀ₘ</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--col-B)"></div>B: C/(ρ₄₀ₘ−ρ₀ₘ)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--col-C)"></div>C: multi-tp mean</div>
+          </div>
+          <div class="plot-lg" id="plot-combined"></div>
+        </div>
+
+        <!-- Three individual approach plots -->
+        <div class="three-col">
+          <div class="card">
+            <div class="card-title" style="color:var(--col-A)">A: Raw 40m · ψ=<span id="psi-A">?</span></div>
+            <div class="plot-sm" id="plot-A"></div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--col-B)">B: Differential · ψ=<span id="psi-B">?</span></div>
+            <div class="plot-sm" id="plot-B"></div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--col-C)">C: Multi-timepoint · ψ=<span id="psi-C">?</span></div>
+            <div class="plot-sm" id="plot-C"></div>
+          </div>
+        </div>
+
+        <!-- AD stats -->
+        <div class="card">
+          <div class="card-title">AD Processing Gain &amp; Spectral Concentration</div>
+          <div class="card-body">
+            <div class="stats-grid" id="ad-stats"></div>
+          </div>
+        </div>
+
+        <!-- Temporal profile (shown if data available) -->
+        <div class="card" id="temporal-card" style="display:none;">
+          <div class="card-title">Speed Profile — Transcription Time Axis</div>
+          <div class="plot-lg" id="plot-temporal"></div>
+        </div>
+
+      </div>
+    </div><!-- /tab-speed -->
+
+    <!-- ===========================================================
+         TAB 4: Epigenomics
+    =========================================================== -->
+    <div class="panel" id="tab-epigenomics">
+
+      <!-- Awaiting state (shown by default, hidden if data loads) -->
+      <div id="epigenomics-waiting" class="card">
+        <div class="card-title">🧬 Epigenomic Marks — Awaiting Data</div>
+        <div class="card-body">
+          <div class="empty-state" style="padding:30px 0;">
+            <div class="empty-icon">⏳</div>
+            <div class="empty-title">Epigenomic data not yet downloaded</div>
+            <div class="empty-desc">
+              Six histone and chromatin marks will be overlaid with speed profiles
+              once downloaded. These marks can reveal whether slow RNAPII speed
+              correlates with repressive marks or CTCF binding.
+            </div>
+            <div class="empty-cmd">python3 scripts/10_download_epigenomics.py</div>
+            <div class="mark-pills">
+              <span class="mark-pill mark-methyl">DNA methylation</span>
+              <span class="mark-pill mark-k36">H3K36me3</span>
+              <span class="mark-pill mark-k27ac">H3K27ac</span>
+              <span class="mark-pill mark-k4me3">H3K4me3</span>
+              <span class="mark-pill mark-k27me3">H3K27me3</span>
+              <span class="mark-pill mark-ctcf">CTCF</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Epigenomics content (hidden until data available) -->
+      <div id="epigenomics-content" style="display:none;flex-direction:column;gap:14px;">
+
+        <div class="card">
+          <div class="card-title">Epigenomic Marks — <span id="epi-gene-name">Select a gene</span></div>
+          <div class="scatter-subtitle">
+            Each row shows one chromatin mark overlaid with the speed profile on the same genomic x-axis.
+            Marks from ENCODE / Roadmap Epigenomics for MCF-7.
+          </div>
+          <div id="epi-plots" style="display:flex;flex-direction:column;gap:0;"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Mark × Speed Correlations — All Genes</div>
+          <div class="card-body">
+            <div id="epi-corr-table" style="color:var(--text-muted);font-size:0.8rem;">
+              Select a gene above to populate mark data.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /tab-epigenomics -->
+
+    <!-- ===========================================================
+         TAB 5: Coverage
+    =========================================================== -->
+    <div class="panel" id="tab-coverage">
+
+      <div id="cov-empty" class="empty-state">
+        <div class="empty-icon">📈</div>
+        <div class="empty-title">Select a gene from the sidebar</div>
+        <div class="empty-desc">View raw GRO-Seq coverage at 0m and 40m time points,
+          plus per-timepoint speed curves from Method C.</div>
+      </div>
+
+      <div id="cov-content" style="display:none;flex-direction:column;gap:14px;">
+        <div class="card">
+          <div class="card-title">GRO-Seq Coverage — 0m (vehicle) vs 40m (E2) — RPM, wave region</div>
+          <div class="plot-lg" id="plot-coverage"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Per-timepoint Speed — Method C: 10m, 25m, 40m</div>
+          <div class="plot-lg" id="plot-C-per-tp"></div>
+        </div>
+      </div>
+
+    </div><!-- /tab-coverage -->
+
+    <!-- ===========================================================
+         TAB 6: Overview
+    =========================================================== -->
+    <div class="panel" id="tab-overview">
+
+      <!-- Correlation table -->
+      <div class="card">
+        <div class="card-title">Method Comparison — Pearson r &amp; Spearman ρ vs Danko et al. 2013</div>
+        <div class="card-body">
+          <table class="corr-table">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Pearson r</th>
+                <th>p-value</th>
+                <th>Spearman ρ</th>
+                <th>n</th>
+              </tr>
+            </thead>
+            <tbody id="corr-body">
+              <tr><td colspan="5" style="color:var(--text-muted);padding:20px 10px;">
+                <span class="spinner"></span> Loading…
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Scatter 1: groHMM vs Danko -->
+      <div class="card">
+        <div class="card-title">All Genes — groHMM rate vs Danko et al. (colored by ψ-A)</div>
+        <div class="scatter-subtitle">
+          Pearson r = 0.514 · Spearman ρ = 0.601 · n = 81 genes
+          | Points colored by AD spectral concentration ψ (Method A)
+        </div>
+        <div class="plot-xl" id="plot-overview-scatter"></div>
+      </div>
+
+      <!-- Scatter 2: Method A vs Method B -->
+      <div class="card">
+        <div class="card-title">All Genes — Method A vs Method B speed (colored by ψ-A)</div>
+        <div class="scatter-subtitle">
+          Shows that A and B are nearly identical, confirming E2 uniformly amplifies coverage
+          (ρ₀ₘ ≈ const · ρ₄₀ₘ within wave). Both achieve Pearson r = 0.288 vs Danko.
+        </div>
+        <div class="plot-xl" id="plot-ab-scatter"></div>
+      </div>
+
+    </div><!-- /tab-overview -->
+
+    <!-- ===========================================================
+         TAB 7: Animation
+    =========================================================== -->
+    <div class="panel" id="tab-animation">
+
+      <!-- Controls bar -->
+      <div class="card" style="flex-shrink:0;">
+        <div class="card-title">🎬 RNAPII Traversal Simulator — elongation at estimated v(p) with co-transcriptional RNA folding</div>
+        <div class="card-body" style="padding:8px 14px;">
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+            <button id="anim-play-btn" onclick="animToggle()"
+                    style="padding:6px 18px;background:#1e3a8a;border:1px solid #5b7cf6;border-radius:6px;color:#a8c7fa;cursor:pointer;font-size:0.82rem;min-width:90px;">
+              ▶ Play
+            </button>
+            <button onclick="animRestart()"
+                    style="padding:6px 12px;background:#13161f;border:1px solid #2d3144;border-radius:6px;color:#9ba3bf;cursor:pointer;font-size:0.82rem;">
+              ↩ Restart
+            </button>
+            <label style="font-size:0.78rem;color:#9ba3bf;display:flex;align-items:center;gap:6px;">
+              Speed:
+              <input id="anim-speed-slider" type="range" min="0" max="7" step="0.02" value="4.7"
+                     oninput="animSetSpeed(+this.value)"
+                     style="width:140px;accent-color:#5b7cf6;">
+              <span id="anim-speed-label" style="color:#a8c7fa;font-family:monospace;min-width:48px;">50k×</span>
+            </label>
+            <label style="font-size:0.78rem;color:#9ba3bf;display:flex;align-items:center;gap:6px;"
+                   title="Smooth the raw GRO-seq speed profile — window=1 is raw data; higher values average out measurement noise while preserving real pausing">
+              Smooth:
+              <input id="anim-smooth-slider" type="range" min="1" max="120" step="1" value="1"
+                     oninput="ANIM.smoothWindow=+this.value; animBuildSmoothed(); document.getElementById('anim-smooth-label').textContent=(+this.value===1?'raw':+this.value+'bp')"
+                     style="width:100px;accent-color:#f59e0b;">
+              <span id="anim-smooth-label" style="color:#fcd34d;font-family:monospace;min-width:36px;">raw</span>
+            </label>
+            <label style="font-size:0.78rem;color:#9ba3bf;display:flex;align-items:center;gap:5px;">
+              <input type="checkbox" id="anim-show-epi" checked style="accent-color:#5b7cf6;"> Epi marks
+            </label>
+            <label style="font-size:0.78rem;color:#9ba3bf;display:flex;align-items:center;gap:5px;">
+              <input type="checkbox" id="anim-show-loops" checked style="accent-color:#5b7cf6;"> Stem-loops
+            </label>
+            <label style="font-size:0.78rem;color:#9ba3bf;display:flex;align-items:center;gap:5px;">
+              <input type="checkbox" id="anim-show-fold" checked style="accent-color:#a78bfa;"
+                     onchange="const fp=document.getElementById('fold-panel');fp.style.display=this.checked?'flex':'none';"> Fold panel
+            </label>
+            <span style="font-size:0.71rem;color:#374151;margin-left:auto;font-family:monospace;">
+              Select gene in sidebar → click ▶ Play
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canvas area: main animation (left) + fold panel (right) -->
+      <div class="card" style="flex:1;min-height:480px;overflow:hidden;padding:0;">
+        <div style="display:flex;height:100%;min-height:480px;">
+          <!-- Main animation canvas -->
+          <div style="flex:1;min-height:480px;overflow:hidden;">
+            <canvas id="anim-canvas"
+                    style="width:100%;height:100%;min-height:480px;display:block;background:#0f1117;"></canvas>
+          </div>
+          <!-- Fold view panel -->
+          <div id="fold-panel" style="width:320px;flex-shrink:0;border-left:2px solid #7c3aed;display:flex;flex-direction:column;min-height:480px;background:#080a10;">
+            <div style="padding:7px 12px;background:#12103a;border-bottom:2px solid #7c3aed;display:flex;gap:8px;align-items:center;flex-shrink:0;">
+              <span style="color:#c4b5fd;font-size:0.78rem;font-family:monospace;font-weight:700;letter-spacing:0.05em;">🔬 RNA FOLD VIEW</span>
+              <label style="font-size:0.68rem;color:#6b7280;display:flex;align-items:center;gap:4px;margin-left:auto;">
+                Zoom:
+                <input id="fold-zoom" type="range" min="0.5" max="4" step="0.1" value="1.0"
+                       oninput="FOLD.zoom=+this.value;document.getElementById('fold-zoom-label').textContent=(+this.value).toFixed(1)+'×'"
+                       style="width:64px;accent-color:#a78bfa;">
+                <span id="fold-zoom-label" style="color:#a78bfa;font-family:monospace;min-width:30px;">1.0×</span>
+              </label>
+            </div>
+            <canvas id="fold-canvas" style="width:100%;flex:1;min-height:400px;display:block;"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Explainer -->
+      <div class="card" style="flex-shrink:0;">
+        <div class="card-title">How to read this animation</div>
+        <div class="card-body" style="font-size:0.76rem;color:#9ba3bf;line-height:1.75;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <strong style="color:#93c5fd;">🔵 Blue circle = RNA Pol II</strong><br>
+            Moves along the gene body at the instantaneous speed v(p) = C / ρ₄₀ₘ(p) estimated from GRO-seq read coverage.
+            Faster where coverage is low (polymerase zipped through), slower where coverage piled up (it dwelled there).
+          </div>
+          <div>
+            <strong style="color:#a78bfa;">🟣 Wavy purple line = Nascent RNA transcript</strong><br>
+            The RNA chain being synthesised behind the polymerase. Hairpin stem-loops (double lines + circle)
+            appear at positions where v(p) was lowest — the polymerase lingered there, giving the RNA time to fold
+            before being pulled into the exit channel.
+          </div>
+          <div>
+            <strong style="color:#f59e0b;">🟠 Gene body colour = speed heatmap</strong><br>
+            Blue = slow elongation, orange/warm = fast. Derived directly from v(p). Epigenomic peaks
+            (H3K36me3, H3K27ac, CTCF…) float above the bar if ENCODE data is loaded for this gene.
+          </div>
+          <div>
+            <strong style="color:#22c55e;">📊 Speed chart (bottom panel)</strong><br>
+            Full v(p) curve across the gene. The amber cursor tracks the polymerase in real time.
+            Use the speed slider to compress 40 min of transcription into seconds.
+            Stem-loop count and position stats shown in the stats box.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-animation -->
+
+    <!-- =========================================================
+         TAB: Temporal Rephasing
+    =========================================================== -->
+    <div class="panel" id="tab-temporal">
+      <div class="panel-header">
+        <div class="panel-title">⏱ Temporal Rephasing — RNAPII Speed in Transcription Time</div>
+        <div class="panel-sub">Coordinate transform t(p) = ∫₀ᵖ dp′/v(p′). All genes aligned to [0, 40 min].</div>
+      </div>
+      <div class="panel-body">
+
+        <!-- Multi-gene speed vs time -->
+        <div class="card">
+          <div class="card-title">Multi-Gene Speed Profiles — Transcription Time Axis</div>
+          <div style="font-size:0.72rem;color:var(--text-muted);padding:4px 14px 8px;">
+            Each trace = one gene. Speed normalized within gene (0–1). Selected gene highlighted in amber.
+            Colour gradient: blue = slow gene, red = fast gene (by Danko rate).
+          </div>
+          <div id="temporal-loading" style="color:var(--text-muted);font-size:0.8rem;padding:20px 18px;">
+            Loading temporal profiles…
+          </div>
+          <div class="plot-lg" id="plot-temporal-multi" style="height:340px;display:none;"></div>
+        </div>
+
+        <!-- Selected-gene marks vs time -->
+        <div class="card" id="temporal-marks-card" style="display:none;">
+          <div class="card-title" id="temporal-marks-title">Epigenomic Marks — Transcription Time</div>
+          <div class="plot-lg" id="plot-temporal-marks" style="height:280px;"></div>
+        </div>
+
+        <!-- Info panel -->
+        <div class="card" style="background:var(--surface2);">
+          <div class="card-title">About Temporal Rephasing</div>
+          <div style="font-size:0.78rem;color:var(--text-dim);padding:6px 14px 14px;line-height:1.8;">
+            <b style="color:var(--accent-lt);">Why rephase?</b> Genomic position is not time —
+            a fast gene covers 100 kb in 40 min while a slow gene covers 60 kb.
+            Aligning by transcription time t(p) = ∫dp/v(p) removes this compression artifact
+            and enables direct comparison of molecular events (nucleosome encounters,
+            co-transcriptional folding onset, pause sites) across genes of different speeds.
+            <br><br>
+            <b style="color:var(--accent-lt);">Method:</b> v(p) from Method A (C/ρ₄₀ₘ), sparse grid
+            integrated via trapezoidal rule, normalised so t(wave_40m) = 40 min.
+            Epigenomic marks interpolated onto uniform 500-point time grid [0, 40] min.
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /tab-temporal -->
+
+  </div><!-- /main -->
+</div><!-- /body-grid -->
+
+<script>
+/* ============================================================
+   Global state
+============================================================ */
+let allGenes      = [];
+let filteredGenes = [];
+let selectedGene  = null;
+let currentSort   = 'danko';
+let activeTab     = 'dashboard';
+let correlations  = null;
+let overviewLoaded   = false;
+let dashboardLoaded  = false;
+let currentCoord     = 'genomic';  // 'genomic' | 'temporal'
+let temporalAvailable = false;
+let currentGeneData  = null;       // Full profile data for selected gene (used by animation)
+
+/* ============================================================
+   Plotly base layout (dark theme)
+============================================================ */
+const LAYOUT_BASE = {
+  paper_bgcolor: '#1a1d27',
+  plot_bgcolor:  '#13161f',
+  font:   { color: '#9ba3bf', size: 10 },
+  margin: { t: 10, b: 45, l: 58, r: 18 },
+  xaxis: { gridcolor: '#2d3144', zerolinecolor: '#3a3f55', tickfont: { size: 9 } },
+  yaxis: { gridcolor: '#2d3144', zerolinecolor: '#3a3f55', tickfont: { size: 9 } },
+  hovermode: 'x unified',
+  legend: { bgcolor: '#1a1d2700', font: { size: 9 }, orientation: 'h', y: -0.22 },
+};
+const CONFIG = { displayModeBar: false, responsive: true };
+
+/* ============================================================
+   Boot — fetch genes + status + dashboard data
+============================================================ */
+(async function init() {
+  try {
+    const resp = await fetch('/api/genes');
+    if (!resp.ok) throw new Error(await resp.text());
+    allGenes = await resp.json();
+    document.getElementById('gene-count').textContent =
+      `${allGenes.length} genes`;
+    document.getElementById('dash-n-genes').textContent = allGenes.length;
+    sortGenes('danko', false);
+    renderGeneList();
+    loadCorrelations();
+    loadDashboard();
+    checkStatus();
+  } catch(e) {
+    document.getElementById('gene-count').textContent = 'Error: ' + e.message;
+    document.getElementById('status-dot').style.background = '#f44336';
+  }
+})();
+
+/* ============================================================
+   Dashboard loaders
+============================================================ */
+async function loadDashboard() {
+  if (dashboardLoaded) return;
+  dashboardLoaded = true;
+
+  // Load TODOs
+  try {
+    const resp = await fetch('/api/todos');
+    if (resp.ok) {
+      const todos = await resp.json();
+      renderTodos(todos);
+    } else {
+      document.getElementById('todos-body').innerHTML =
+        '<div style="color:var(--text-muted);padding:12px 0;font-size:0.78rem;">TODO data unavailable.</div>';
+    }
+  } catch(e) {
+    document.getElementById('todos-body').innerHTML =
+      '<div style="color:var(--text-muted);padding:12px 0;font-size:0.78rem;">Could not load todos.</div>';
+  }
+
+  // Load strategy log
+  try {
+    const resp = await fetch('/api/strategy');
+    if (resp.ok) {
+      const strategy = await resp.json();
+      renderStrategy(strategy);
+      renderDashResults(strategy.current_results);
+    } else {
+      document.getElementById('strategy-body').innerHTML =
+        '<div style="color:var(--text-muted);padding:14px;font-size:0.78rem;">Strategy log unavailable.</div>';
+    }
+  } catch(e) {
+    document.getElementById('strategy-body').innerHTML =
+      '<div style="color:var(--text-muted);padding:14px;font-size:0.78rem;">Could not load strategy log.</div>';
+  }
+}
+
+function renderTodos(todos) {
+  const { active, completed, total } = todos;
+  document.getElementById('todo-count').textContent = `${active.length} active / ${total} total`;
+
+  const priorityKeywords = {
+    high:   ['fix', 'bug', 'error', 'critical', 'negative rate', 'pearson r deficit', 'option c'],
+    medium: ['test', 'investigate', 'extend', 'validate', 'metagene'],
+  };
+
+  function getPriority(text) {
+    const lower = text.toLowerCase();
+    for (const kw of priorityKeywords.high)   if (lower.includes(kw)) return 'high';
+    for (const kw of priorityKeywords.medium) if (lower.includes(kw)) return 'medium';
+    return 'low';
+  }
+
+  // Show first 12 active items
+  const shownActive = active.slice(0, 12);
+  const html = shownActive.map(item => {
+    const p = getPriority(item);
+    const pClass = p === 'high' ? 'priority-high' : p === 'medium' ? 'priority-medium' : '';
+    return `<div class="todo-item ${pClass}">
+      <div class="todo-checkbox"></div>
+      <span>${escapeHtml(item)}</span>
+    </div>`;
+  }).join('');
+
+  let completedHtml = '';
+  if (completed.length) {
+    completedHtml = completed.slice(0, 5).map(item => `
+      <div class="todo-item" style="opacity:0.5;">
+        <div class="todo-checkbox done">✓</div>
+        <span style="text-decoration:line-through;color:var(--text-muted);">${escapeHtml(item)}</span>
+      </div>`).join('');
+  }
+
+  document.getElementById('todos-body').innerHTML = html + completedHtml +
+    (active.length > 12
+      ? `<div style="font-size:0.72rem;color:var(--text-muted);padding:6px 0;">… and ${active.length-12} more active todos</div>`
+      : '');
+}
+
+function renderStrategy(strategy) {
+  const sessions = (strategy.sessions || []).slice(-2).reverse();
+  if (!sessions.length) {
+    document.getElementById('strategy-body').innerHTML =
+      '<div style="color:var(--text-muted);padding:14px;font-size:0.78rem;">No sessions found in STRATEGY_LOG.md.</div>';
+    return;
+  }
+  const html = sessions.map(s => `
+    <div class="session-entry">
+      <div class="session-num">Session ${s.number}</div>
+      <div class="session-title">${escapeHtml(s.title)}</div>
+      <div class="session-date">${s.date}</div>
+      <div class="session-summary">${escapeHtml(s.summary)}</div>
+    </div>`).join('');
+  document.getElementById('strategy-body').innerHTML = html;
+}
+
+function renderDashResults(results) {
+  if (!results) return;
+  const methodLabels = {
+    groHMM:   'groHMM (wave-front HMM)',
+    method_A: 'Method A: C / ρ₄₀ₘ',
+    method_B: 'Method B: C / (ρ₄₀ₘ − ρ₀ₘ)',
+    psi_ad:   'AD spectral concentration ψ',
+  };
+  const methodNotes = {
+    groHMM:   'Best Spearman ρ',
+    method_A: 'Matches groHMM rank ordering',
+    method_B: 'Nearly identical to A',
+    psi_ad:   'Best Pearson r — novel AD result',
+  };
+
+  const rows = Object.entries(results).map(([key, v]) => {
+    const rBar = `<span class="r-bar" style="width:${Math.abs(v.pearson_r)*60}px"></span>`;
+    return `<tr>
+      <td style="color:#c8d6f0">${methodLabels[key] || (v.label||key)}</td>
+      <td style="color:var(--accent-lt);font-weight:600">${v.pearson_r.toFixed(3)}${rBar}</td>
+      <td style="color:var(--text-dim)">${v.spearman_rho.toFixed(3)}</td>
+      <td style="color:var(--text-muted);font-size:0.73rem">${methodNotes[key] || ''}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('dash-results-body').innerHTML = rows || '<tr><td colspan="4">No results.</td></tr>';
+}
+
+async function checkStatus() {
+  try {
+    const resp = await fetch('/api/status');
+    if (!resp.ok) return;
+    const status = await resp.json();
+    renderPipelineStatus(status);
+
+    // Update temporal availability
+    temporalAvailable = status.temporal_profiles;
+    if (temporalAvailable) {
+      const btn = document.getElementById('coord-temporal');
+      btn.disabled = false;
+      btn.title = 'Switch to transcription time axis';
+      document.getElementById('coord-tip').textContent = 'Temporal rephasing available — click to switch axes.';
+    }
+
+    // Update epigenomics tab
+    if (status.epigenomics_downloaded) {
+      document.getElementById('epigenomics-waiting').style.display = 'none';
+      document.getElementById('epigenomics-content').style.display = 'flex';
+    }
+  } catch(e) { /* ignore */ }
+}
+
+function renderPipelineStatus(status) {
+  const items = [
+    { key: 'gene_profiles',           label: 'Speed Profiles',    icon: '⚡' },
+    { key: 'epigenomics_downloaded',  label: 'Epigenomics',       icon: '🧬' },
+    { key: 'temporal_profiles',       label: 'Temporal Rephase',  icon: '⏱️' },
+    { key: 'folding_data',            label: 'RNA Folding',        icon: '🔗' },
+  ];
+
+  const chips = items.map(item => {
+    const ok = status[item.key];
+    const cls = ok ? 'status-ok' : 'status-wait';
+    const sym = ok ? '✅' : '⏳';
+    return `<div class="status-chip">
+      <span class="status-icon">${item.icon}</span>
+      <span class="status-name">${item.label}</span>
+      <span class="${cls}">${sym}</span>
+    </div>`;
+  }).join('');
+
+  // Add gene count chip
+  const nChip = `<div class="status-chip">
+    <span class="status-icon">🧬</span>
+    <span class="status-name">Genes</span>
+    <span class="status-ok" style="font-weight:600;">${status.n_genes}</span>
+  </div>`;
+
+  document.getElementById('pipeline-status-row').innerHTML = chips + nChip;
+}
+
+/* ============================================================
+   Gene list: filter + sort + render
+============================================================ */
+function filterGenes() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  filteredGenes = q
+    ? allGenes.filter(g =>
+        g.gene_id.toLowerCase().includes(q) ||
+        (g.chrom && g.chrom.toLowerCase().includes(q)))
+    : [...allGenes];
+  renderGeneList();
+}
+
+function sortGenes(by, render=true) {
+  currentSort = by;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('sort-' + by);
+  if (btn) btn.classList.add('active');
+
+  const keyFns = {
+    danko:  g => -(g.danko_rate_kb_min  ?? -Infinity),
+    grohmm: g => -(g.grohmm_rate_kb_min ?? -Infinity),
+    psiA:   g => -(g.psi_A              ?? -Infinity),
+    chrom:  g => (g.chrom || '') + ':' + (g.start || 0),
+  };
+  const keyFn = keyFns[by] || (g => g.gene_id);
+
+  allGenes.sort((a, b) => {
+    const va = keyFn(a), vb = keyFn(b);
+    return va < vb ? -1 : va > vb ? 1 : 0;
+  });
+  filteredGenes = [...allGenes];
+  if (render) renderGeneList();
+}
+
+function renderGeneList() {
+  const list   = document.getElementById('gene-list');
+  const genes  = filteredGenes.length ? filteredGenes : allGenes;
+  list.innerHTML = genes.map((g, i) => {
+    const danko  = g.danko_rate_kb_min  != null ? g.danko_rate_kb_min.toFixed(2)  : '—';
+    const grohmm = g.grohmm_rate_kb_min != null ? g.grohmm_rate_kb_min.toFixed(2) : '—';
+    const sel    = selectedGene && selectedGene.gene_id === g.gene_id ? 'selected' : '';
+    const mb     = (x => x != null ? (x/1e6).toFixed(2) : '?');
+    const loc    = `${g.chrom || '?'}:${mb(g.start)}–${mb(g.end)}Mb ${g.strand || ''}`;
+    return `<div class="gene-item ${sel}" onclick="selectGene(${i})">
+      <div class="gene-id">${escapeHtml(g.gene_id.replace(/_/g,' '))}</div>
+      <div class="gene-meta">
+        ${escapeHtml(loc)}<br>
+        <span class="rate-pill pill-danko">Danko ${danko}</span>
+        <span class="rate-pill pill-grohmm">HMM ${grohmm}</span>
+        kb/min
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ============================================================
+   Gene selection
+============================================================ */
+async function selectGene(idx) {
+  const gene = filteredGenes[idx] || allGenes[idx];
+  if (!gene) return;
+  selectedGene = gene;
+  renderGeneList();
+
+  // Fill header stats immediately
+  document.getElementById('gene-title').textContent  = gene.gene_id;
+  document.getElementById('gene-coords').textContent =
+    `${gene.chrom}:${(gene.start||0).toLocaleString()}–${(gene.end||0).toLocaleString()} (${gene.strand||'?'})`;
+  document.getElementById('stat-danko').textContent  =
+    gene.danko_rate_kb_min  != null ? gene.danko_rate_kb_min.toFixed(3)  + ' kb/min' : '—';
+  document.getElementById('stat-grohmm').textContent =
+    gene.grohmm_rate_kb_min != null ? gene.grohmm_rate_kb_min.toFixed(3) + ' kb/min' : '—';
+
+  // Fetch full profile
+  let data;
+  try {
+    const resp = await fetch(`/api/gene/${encodeURIComponent(gene.file)}`);
+    if (!resp.ok) throw new Error('profile not found');
+    data = await resp.json();
+  } catch(e) {
+    console.error('Failed to load gene profile:', e);
+    return;
+  }
+
+  // Fill remaining stats
+  document.getElementById('stat-wave40').textContent =
+    data.wave_40m != null ? (data.wave_40m / 1000).toFixed(1) + ' kb' : '—';
+  document.getElementById('stat-genelen').textContent =
+    data.gene_len != null ? (data.gene_len / 1000).toFixed(0) + ' kb' : '—';
+
+  // Show content
+  document.getElementById('speed-empty').style.display = 'none';
+  document.getElementById('speed-content').style.display = 'flex';
+  document.getElementById('cov-empty').style.display = 'none';
+  document.getElementById('cov-content').style.display = 'flex';
+
+  currentGeneData = data;
+  renderSpeedProfiles(data);
+  renderCoverageProfile(data);
+
+  // Attempt to load epigenomic data for this gene (if tab is active or preload)
+  loadEpigenomics(gene);
+
+  // Attempt to load temporal data
+  loadTemporal(gene, data);
+
+  // Refresh temporal multi-gene view if temporal tab is active
+  if (activeTab === 'temporal' && temporalMultiData) {
+    renderTemporalMulti();
+    renderTemporalMarks();
+  }
+
+  // Feed animation if it is the active tab
+  if (activeTab === 'animation') {
+    if (!ANIM.canvas) animInit();
+    animLoadGene(gene.file, data);
+  }
+}
+
+/* ============================================================
+   Coordinate toggle
+============================================================ */
+function setCoord(coord) {
+  currentCoord = coord;
+  document.getElementById('coord-genomic').classList.toggle('active', coord === 'genomic');
+  document.getElementById('coord-temporal').classList.toggle('active', coord === 'temporal');
+
+  // Show/hide temporal card
+  document.getElementById('temporal-card').style.display =
+    (coord === 'temporal' && temporalAvailable) ? 'block' : 'none';
+}
+
+/* ============================================================
+   Speed profile rendering
+============================================================ */
+function makeLine(x, y, name, color, width=1.5, dash=null) {
+  return {
+    x, y, name,
+    type: 'scatter', mode: 'lines',
+    line: { color, width, dash: dash || 'solid' },
+    hovertemplate: `<b>${name}</b><br>pos: %{x:.0f}<br>speed: %{y:.2f} kb/min<extra></extra>`,
+  };
+}
+
+function waveShape(wave_40m) {
+  if (!wave_40m) return [];
+  return [{
+    type:'line', x0:wave_40m, x1:wave_40m, y0:0, y1:1, yref:'paper',
+    line:{color:'#f44336', width:1.5, dash:'dash'},
+  }];
+}
+
+function waveAnnot(wave_40m) {
+  if (!wave_40m) return [];
+  return [{
+    x: wave_40m, y: 0.97, yref:'paper',
+    text: 'wave end 40m', showarrow:false,
+    font:{size:8, color:'#f44336'}, xanchor:'left',
+  }];
+}
+
+function renderSpeedProfiles(data) {
+  const profiles = data.profiles || {};
+  const pA = profiles['A_raw40m'];
+  const pB = profiles['B_diff40m'];
+  const pC = profiles['C_multitp'];
+
+  // ψ readouts
+  document.getElementById('psi-A').textContent = pA ? pA.psi.toFixed(3) : '—';
+  document.getElementById('psi-B').textContent = pB ? pB.psi.toFixed(3) : '—';
+  document.getElementById('psi-C').textContent = pC ? pC.psi.toFixed(3) : '—';
+
+  // Combined plot
+  const traces = [];
+  if (pA) traces.push(makeLine(pA.positions_bp, pA.speed_kb_min, 'A: C/ρ₄₀ₘ',        '#5b9cf6'));
+  if (pB) traces.push(makeLine(pB.positions_bp, pB.speed_kb_min, 'B: C/(ρ₄₀ₘ−ρ₀ₘ)',  '#4caf50'));
+  if (pC) traces.push(makeLine(pC.positions_bp, pC.speed_kb_min, 'C: multi-tp',        '#ba68c8'));
+
+  Plotly.newPlot('plot-combined', traces, {
+    ...LAYOUT_BASE,
+    xaxis: {...LAYOUT_BASE.xaxis, title:'Position (bp from TSS)'},
+    yaxis: {...LAYOUT_BASE.yaxis, title:'Speed (kb/min)'},
+    shapes: waveShape(data.wave_40m),
+    annotations: waveAnnot(data.wave_40m),
+  }, CONFIG);
+
+  // Individual small plots
+  const layoutSmall = {
+    ...LAYOUT_BASE,
+    margin: {...LAYOUT_BASE.margin, b:35, l:45},
+    xaxis: {...LAYOUT_BASE.xaxis, title:'bp from TSS'},
+    yaxis: {...LAYOUT_BASE.yaxis, title:'kb/min'},
+    shapes: waveShape(data.wave_40m),
+    legend: {show: false},
+  };
+  if (pA) Plotly.newPlot('plot-A', [makeLine(pA.positions_bp, pA.speed_kb_min, 'A', '#5b9cf6')], layoutSmall, CONFIG);
+  if (pB) Plotly.newPlot('plot-B', [makeLine(pB.positions_bp, pB.speed_kb_min, 'B', '#4caf50')], layoutSmall, CONFIG);
+  if (pC) Plotly.newPlot('plot-C', [makeLine(pC.positions_bp, pC.speed_kb_min, 'C', '#ba68c8')], layoutSmall, CONFIG);
+
+  // AD stats
+  const statHtml = [
+    ['A: C/ρ₄₀ₘ',      pA, '#5b9cf6'],
+    ['B: C/Δρ',         pB, '#4caf50'],
+    ['C: multi-tp',     pC, '#ba68c8'],
+  ].filter(([,p]) => p).map(([label, p, col]) => `
+    <div class="stat-item" style="border-left:3px solid ${col}">
+      <div class="stat-label" style="color:${col}">${label}</div>
+      <div class="stat-value">${(p.mean_speed_bp_min/1000).toFixed(2)} kb/min mean</div>
+      <div class="stat-value" style="font-size:0.73rem;color:var(--text-dim);">
+        ψ = ${p.psi.toFixed(3)} · gain = ${p.gain_dB.toFixed(1)} dB · M = ${p.M.toLocaleString()} bp
+      </div>
+    </div>`).join('');
+  document.getElementById('ad-stats').innerHTML = statHtml;
+}
+
+/* ============================================================
+   Coverage rendering
+============================================================ */
+function renderCoverageProfile(data) {
+  const profiles = data.profiles || {};
+  const c0  = profiles['coverage_0m'];
+  const c40 = profiles['coverage_40m'];
+
+  const covTraces = [];
+  if (c0) covTraces.push({
+    x: c0.positions_bp, y: c0.rpm,
+    name: '0m (vehicle)', type:'scatter', mode:'lines',
+    line:{color:'#607d8b', width:1.5},
+    fill:'tozeroy', fillcolor:'#607d8b22',
+    hovertemplate:'pos: %{x:.0f} bp<br>0m RPM: %{y:.4f}<extra></extra>',
+  });
+  if (c40) covTraces.push({
+    x: c40.positions_bp, y: c40.rpm,
+    name: '40m (E2)', type:'scatter', mode:'lines',
+    line:{color:'#ff9800', width:1.5},
+    fill:'tozeroy', fillcolor:'#ff980022',
+    hovertemplate:'pos: %{x:.0f} bp<br>40m RPM: %{y:.4f}<extra></extra>',
+  });
+
+  Plotly.newPlot('plot-coverage', covTraces, {
+    ...LAYOUT_BASE,
+    xaxis: {...LAYOUT_BASE.xaxis, title:'Position (bp from TSS)'},
+    yaxis: {...LAYOUT_BASE.yaxis, title:'RPM', rangemode:'tozero'},
+    shapes: waveShape(data.wave_40m),
+  }, CONFIG);
+
+  // Per-timepoint C plots
+  const ctpColors = {10:'#64b5f6', 25:'#81c784', 40:'#ba68c8'};
+  const ctpTraces = [10, 25, 40].map(tp => {
+    const p = profiles[`C_tp${tp}m`];
+    return p ? makeLine(p.positions_bp, p.speed_kb_min, `${tp}m`, ctpColors[tp]) : null;
+  }).filter(Boolean);
+
+  if (ctpTraces.length) {
+    Plotly.newPlot('plot-C-per-tp', ctpTraces, {
+      ...LAYOUT_BASE,
+      xaxis: {...LAYOUT_BASE.xaxis, title:'Position (bp from TSS)'},
+      yaxis: {...LAYOUT_BASE.yaxis, title:'Speed (kb/min)'},
+    }, CONFIG);
+  }
+}
+
+/* ============================================================
+   Epigenomics loader
+============================================================ */
+async function loadEpigenomics(gene) {
+  if (!gene || !gene.file) return;
+  try {
+    const resp = await fetch(`/api/epigenomics/${encodeURIComponent(gene.file)}`);
+    if (!resp.ok) {
+      // Data not available — keep the waiting state shown
+      return;
+    }
+    const data = await resp.json();
+    renderEpigenomics(gene, data);
+    document.getElementById('epigenomics-waiting').style.display = 'none';
+    document.getElementById('epigenomics-content').style.display = 'flex';
+  } catch(e) { /* silent — epigenomics not yet available */ }
+}
+
+function renderEpigenomics(gene, data) {
+  document.getElementById('epi-gene-name').textContent = gene.gene_id;
+  const container = document.getElementById('epi-plots');
+  container.innerHTML = '';
+
+  const marks = data.marks || {};
+  const speed = data.speed || {};
+
+  const markColors = {
+    methylation: '#c77dff', H3K36me3: '#4caf50', H3K27ac: '#ff9800',
+    H3K4me3: '#5b9cf6', H3K27me3: '#f44336', CTCF: '#ffeb3b',
+  };
+
+  Object.entries(marks).forEach(([mark, markData]) => {
+    const divId = `epi-plot-${mark.replace(/\W/g,'_')}`;
+    const row = document.createElement('div');
+    row.style.cssText = 'border-bottom:1px solid #2d3144;';
+    row.innerHTML = `
+      <div style="padding:5px 14px;font-size:0.72rem;color:${markColors[mark]||'#9ba3bf'};font-weight:600;">${mark}</div>
+      <div id="${divId}" style="height:180px;width:100%;"></div>`;
+    container.appendChild(row);
+
+    const col = markColors[mark] || '#9ba3bf';
+    const traces = [];
+    if (markData.positions && markData.signal) {
+      traces.push({
+        x: markData.positions, y: markData.signal,
+        name: mark, type:'scatter', mode:'lines',
+        line:{color:col, width:1.5},
+        yaxis: 'y2',
+      });
+    }
+    if (speed.positions && speed.values) {
+      traces.push({
+        x: speed.positions, y: speed.values,
+        name: 'Speed (A)', type:'scatter', mode:'lines',
+        line:{color:'#5b7cf6', width:1.5, dash:'dot'},
+        yaxis: 'y',
+      });
+    }
+    Plotly.newPlot(divId, traces, {
+      ...LAYOUT_BASE,
+      margin:{t:4, b:30, l:50, r:50},
+      xaxis:{...LAYOUT_BASE.xaxis, title:'Position (bp from TSS)'},
+      yaxis:{...LAYOUT_BASE.yaxis, title:'Speed (kb/min)', side:'left'},
+      yaxis2:{gridcolor:'transparent', tickfont:{size:8}, title:mark, side:'right', overlaying:'y'},
+    }, CONFIG);
+  });
+}
+
+/* ============================================================
+   Temporal Tab — multi-gene comparison in time coordinates
+============================================================ */
+let temporalMultiData = null;
+
+async function loadTemporalTab() {
+  if (temporalMultiData) { renderTemporalMulti(); renderTemporalMarks(); return; }
+  if (!allGenes || !allGenes.length) return;
+
+  const loading = document.getElementById('temporal-loading');
+  if (loading) loading.style.display = 'block';
+
+  const profiles = [];
+  const BATCH = 8;
+  for (let i = 0; i < allGenes.length; i += BATCH) {
+    const batch = allGenes.slice(i, i + BATCH);
+    const results = await Promise.all(batch.map(async g => {
+      try {
+        const r = await fetch(`/api/temporal/${encodeURIComponent(g.file)}`);
+        if (!r.ok) return null;
+        const d = await r.json();
+        return { gene: g, data: d };
+      } catch { return null; }
+    }));
+    results.forEach(r => { if (r) profiles.push(r); });
+  }
+
+  temporalMultiData = profiles;
+  if (loading) loading.style.display = 'none';
+  const plotDiv = document.getElementById('plot-temporal-multi');
+  if (plotDiv) plotDiv.style.display = 'block';
+
+  renderTemporalMulti();
+  renderTemporalMarks();
+}
+
+function renderTemporalMulti() {
+  if (!temporalMultiData || !temporalMultiData.length) return;
+
+  const rates  = temporalMultiData.map(p => p.gene.danko_rate_kb_min || 0);
+  const maxRate = Math.max(...rates) || 1;
+
+  // Build traces — background genes first, then selected gene on top
+  const bgTraces = [], fgTraces = [];
+
+  temporalMultiData.forEach(({gene, data}) => {
+    const t = data.time_grid_min, v = data.speed_at_time;
+    if (!t || !v) return;
+    const maxV = Math.max(...v.filter(x => x > 0)) || 1;
+    const vNorm = v.map(x => Math.max(0, x) / maxV);
+    const rate = gene.danko_rate_kb_min || 0;
+    const rFrac = maxRate > 0 ? rate / maxRate : 0;
+    const cr = Math.round(60  + rFrac * 195);
+    const cb = Math.round(220 - rFrac * 180);
+    const isSelected = selectedGene && gene.gene_id === selectedGene.gene_id;
+
+    const tr = {
+      x: t, y: vNorm,
+      name: gene.gene_id,
+      type:'scatter', mode:'lines',
+      line: {
+        color: isSelected ? '#f59e0b' : `rgba(${cr},90,${cb},0.22)`,
+        width: isSelected ? 2.8 : 0.9,
+      },
+      hovertemplate: `<b>${gene.gene_id}</b><br>Danko: ${rate ? rate.toFixed(2) : 'N/A'} kb/min<br>t: %{x:.1f} min<br>v(norm): %{y:.2f}<extra></extra>`,
+    };
+    if (isSelected) fgTraces.push(tr); else bgTraces.push(tr);
+  });
+
+  // Metagene average
+  const nPts = temporalMultiData[0]?.data?.time_grid_min?.length || 500;
+  const tGrid = temporalMultiData[0]?.data?.time_grid_min;
+  const sums = new Float64Array(nPts), counts = new Float64Array(nPts);
+  temporalMultiData.forEach(({data}) => {
+    const v = data.speed_at_time;
+    if (!v) return;
+    const maxV = Math.max(...v.filter(x => x > 0)) || 1;
+    for (let i = 0; i < nPts; i++) {
+      const vi = v[i];
+      if (vi !== null && vi > 0) { sums[i] += vi / maxV; counts[i]++; }
+    }
+  });
+  const metaMean = Array.from(sums).map((s, i) => counts[i] > 0 ? s / counts[i] : null);
+  if (tGrid) {
+    fgTraces.push({
+      x: tGrid, y: metaMean,
+      name: 'Metagene mean',
+      type:'scatter', mode:'lines',
+      line: {color:'rgba(245,158,11,0.55)', width:2, dash:'dash'},
+      hovertemplate: 'Metagene mean<br>t: %{x:.1f} min<br>v(norm): %{y:.2f}<extra></extra>',
+    });
+  }
+
+  Plotly.newPlot('plot-temporal-multi', [...bgTraces, ...fgTraces], {
+    ...LAYOUT_BASE,
+    showlegend: false,
+    xaxis: {...LAYOUT_BASE.xaxis, title:'Transcription time (min)', range:[0,40]},
+    yaxis: {...LAYOUT_BASE.yaxis, title:'Speed (normalized to gene max)', range:[0,1.3]},
+  }, CONFIG);
+}
+
+function renderTemporalMarks() {
+  if (!selectedGene || !temporalMultiData) return;
+  const entry = temporalMultiData.find(p => p.gene.gene_id === selectedGene.gene_id);
+  if (!entry) return;
+  const data = entry.data;
+  const tGrid = data.time_grid_min;
+  const marks = data.marks || {};
+
+  const markColors = {
+    H3K36me3:'#4caf50', H3K27ac:'#ff9800', H3K4me3:'#5b9cf6',
+    H3K27me3:'#f44336', CTCF:'#ffeb3b',
+  };
+  const traces = [];
+  Object.entries(marks).forEach(([mark, vals]) => {
+    if (!vals || !vals.length) return;
+    const hasData = vals.some(v => v !== null && isFinite(v) && v > 0);
+    if (!hasData) return;
+    const col = markColors[mark] || '#9ba3bf';
+    traces.push({
+      x: tGrid, y: vals,
+      name: mark, type:'scatter', mode:'lines',
+      line: {color:col, width:1.5},
+      hovertemplate: `${mark}<br>t: %{x:.1f} min<br>signal: %{y:.3f}<extra></extra>`,
+    });
+  });
+
+  if (!traces.length) return;
+  const card = document.getElementById('temporal-marks-card');
+  const title = document.getElementById('temporal-marks-title');
+  if (card) card.style.display = 'block';
+  if (title) title.textContent = `Epigenomic Marks — ${selectedGene.gene_id} (Transcription Time)`;
+
+  Plotly.newPlot('plot-temporal-marks', traces, {
+    ...LAYOUT_BASE,
+    xaxis: {...LAYOUT_BASE.xaxis, title:'Transcription time (min)', range:[0,40]},
+    yaxis: {...LAYOUT_BASE.yaxis, title:'Signal (RPM)', rangemode:'tozero'},
+  }, CONFIG);
+}
+
+/* ============================================================
+   Temporal profile loader
+============================================================ */
+async function loadTemporal(gene, speedData) {
+  if (!temporalAvailable || !gene || !gene.file) return;
+  try {
+    const resp = await fetch(`/api/temporal/${encodeURIComponent(gene.file)}`);
+    if (!resp.ok) return;
+    const data = await resp.json();
+    renderTemporal(data);
+    document.getElementById('temporal-card').style.display = 'block';
+    // Enable toggle
+    document.getElementById('coord-temporal').disabled = false;
+  } catch(e) { /* temporal not available for this gene */ }
+}
+
+function renderTemporal(data) {
+  const tGrid = data.time_grid_min;
+  const spd   = data.speed_at_time;
+  if (!tGrid || !spd || !tGrid.length) return;
+
+  const markColors = {
+    H3K36me3:'#4caf50', H3K27ac:'#ff9800', H3K4me3:'#5b9cf6',
+    H3K27me3:'#f44336', CTCF:'#ffeb3b',
+  };
+
+  const traces = [{
+    x: tGrid, y: spd,
+    name: 'v(t)',
+    type: 'scatter', mode: 'lines',
+    line: {color:'#5b9cf6', width:2},
+    hovertemplate: 'time: %{x:.1f} min<br>speed: %{y:.2f} kb/min<extra></extra>',
+  }];
+
+  // Overlay epigenomic marks on secondary y-axis
+  const marks = data.marks || {};
+  Object.entries(marks).forEach(([mark, vals]) => {
+    if (!vals || !vals.length) return;
+    const hasData = vals.some(v => v !== null && isFinite(v) && v > 0);
+    if (!hasData) return;
+    const col = markColors[mark] || '#9ba3bf';
+    traces.push({
+      x: tGrid, y: vals,
+      name: mark,
+      type:'scatter', mode:'lines',
+      line: {color:col, width:1, dash:'dot'},
+      yaxis: 'y2',
+      hovertemplate: `time: %{x:.1f} min<br>${mark}: %{y:.2f}<extra></extra>`,
+    });
+  });
+
+  Plotly.newPlot('plot-temporal', traces, {
+    ...LAYOUT_BASE,
+    xaxis: {...LAYOUT_BASE.xaxis, title:'Transcription time (min)', range:[0,40]},
+    yaxis: {...LAYOUT_BASE.yaxis, title:'Speed (kb/min)', side:'left'},
+    yaxis2: {gridcolor:'transparent', tickfont:{size:8,color:'#9ba3bf'}, title:'Mark signal',
+             side:'right', overlaying:'y', showgrid:false},
+  }, CONFIG);
+}
+
+/* ============================================================
+   Overview tab: correlation table + scatter plots
+============================================================ */
+async function loadCorrelations() {
+  try {
+    const resp = await fetch('/api/correlations');
+    if (!resp.ok) return;
+    correlations = await resp.json();
+    renderCorrTable();
+  } catch(e) { console.warn('Could not load correlations', e); }
+}
+
+function renderCorrTable() {
+  if (!correlations) return;
+  const labels = {
+    A_raw40m:  'A: C / ρ₄₀ₘ (raw 40m)',
+    B_diff40m: 'B: C / (ρ₄₀ₘ − ρ₀ₘ) (diff)',
+    C_multitp: 'C: Multi-timepoint Z_M×Z_3',
+    groHMM:    'groHMM (wave-front HMM)',
+  };
+  const rows = Object.entries(correlations).map(([key, v]) => {
+    const pval = v.pearson_p < 1e-10 ? '<10⁻¹⁰' : (v.pearson_p||0).toExponential(2);
+    return `<tr>
+      <td style="color:#c8d6f0">${labels[key] || key}</td>
+      <td style="color:var(--accent-lt);font-weight:600">${(v.pearson_r||0).toFixed(3)}</td>
+      <td style="color:var(--text-muted)">${pval}</td>
+      <td>${(v.spearman_rho||0).toFixed(3)}</td>
+      <td style="color:var(--text-muted)">${v.n || '—'}</td>
+    </tr>`;
+  });
+  document.getElementById('corr-body').innerHTML = rows.join('') || '<tr><td colspan="5">No data.</td></tr>';
+}
+
+async function renderOverviewScatter() {
+  const genes = allGenes.filter(g =>
+    g.danko_rate_kb_min != null && g.grohmm_rate_kb_min != null);
+  if (!genes.length) return;
+
+  const danko  = genes.map(g => g.danko_rate_kb_min);
+  const grohmm = genes.map(g => g.grohmm_rate_kb_min);
+  const psiA   = genes.map(g => g.psi_A ?? 0);
+  const texts  = genes.map(g => g.gene_id);
+
+  Plotly.newPlot('plot-overview-scatter', [
+    {
+      x: danko, y: grohmm, text: texts,
+      mode:'markers', type:'scatter',
+      marker:{
+        size:8, color:psiA, colorscale:'Viridis',
+        showscale:true, opacity:0.85,
+        colorbar:{title:'ψ-A', titleside:'right', tickfont:{size:9,color:'#9ba3bf'}, outlinecolor:'#2d3144'},
+      },
+      hovertemplate:'<b>%{text}</b><br>Danko: %{x:.2f} kb/min<br>groHMM: %{y:.2f} kb/min<br>ψ-A: %{marker.color:.3f}<extra></extra>',
+    },
+    { x:[0,4.5], y:[0,4.5], mode:'lines', type:'scatter',
+      line:{color:'#3a3f55', dash:'dash', width:1}, hoverinfo:'none', showlegend:false },
+  ], {
+    ...LAYOUT_BASE,
+    margin:{...LAYOUT_BASE.margin, r:80},
+    xaxis:{...LAYOUT_BASE.xaxis, title:'Danko et al. 2013 rate (kb/min)', range:[0,4.5]},
+    yaxis:{...LAYOUT_BASE.yaxis, title:'groHMM rate (kb/min)'},
+    hovermode:'closest',
+  }, CONFIG);
+
+  // Scatter B: Method A vs Method B
+  const genesAB = allGenes.filter(g =>
+    g.mean_speed_A != null && g.mean_speed_B != null);
+  if (genesAB.length) {
+    const sA   = genesAB.map(g => g.mean_speed_A);
+    const sB   = genesAB.map(g => g.mean_speed_B);
+    const psiV = genesAB.map(g => g.psi_A ?? 0);
+    const lbls = genesAB.map(g => g.gene_id);
+
+    Plotly.newPlot('plot-ab-scatter', [
+      {
+        x:sA, y:sB, text:lbls,
+        mode:'markers', type:'scatter',
+        marker:{
+          size:8, color:psiV, colorscale:'Plasma',
+          showscale:true, opacity:0.85,
+          colorbar:{title:'ψ-A', titleside:'right', tickfont:{size:9,color:'#9ba3bf'}, outlinecolor:'#2d3144'},
+        },
+        hovertemplate:'<b>%{text}</b><br>Method A: %{x:.2f} kb/min<br>Method B: %{y:.2f} kb/min<br>ψ-A: %{marker.color:.3f}<extra></extra>',
+      },
+      { x:[0,6], y:[0,6], mode:'lines', type:'scatter',
+        line:{color:'#3a3f55', dash:'dash', width:1}, hoverinfo:'none', showlegend:false },
+    ], {
+      ...LAYOUT_BASE,
+      margin:{...LAYOUT_BASE.margin, r:80},
+      xaxis:{...LAYOUT_BASE.xaxis, title:'Method A speed (kb/min)'},
+      yaxis:{...LAYOUT_BASE.yaxis, title:'Method B speed (kb/min)'},
+      hovermode:'closest',
+    }, CONFIG);
+  } else {
+    document.getElementById('plot-ab-scatter').innerHTML =
+      '<div style="color:var(--text-muted);padding:40px;text-align:center;font-size:0.8rem;">Method A/B mean speeds not in gene index. Run 07_ad_speed_profiles.py with per-gene mean output.</div>';
+  }
+}
+
+/* ============================================================
+   Tab switching
+============================================================ */
+function showTab(name) {
+  activeTab = name;
+  const tabIds = ['dashboard', 'howitworks', 'speed', 'epigenomics', 'coverage', 'overview', 'animation', 'temporal'];
+
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', tabIds[i] === name);
+  });
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('tab-' + name);
+  if (panel) panel.classList.add('active');
+
+  if (name === 'dashboard' && !dashboardLoaded) {
+    loadDashboard();
+  }
+  if (name === 'overview' && !overviewLoaded) {
+    overviewLoaded = true;
+    renderCorrTable();
+    renderOverviewScatter();
+  }
+  if (name === 'epigenomics' && selectedGene) {
+    loadEpigenomics(selectedGene);
+  }
+  if (name === 'animation') {
+    if (!ANIM.canvas) animInit();
+    // Resize fold canvas now that the tab is visible — try multiple times to catch layout settling
+    if (FOLD.canvas) {
+      foldResizeCanvas();
+      setTimeout(foldResizeCanvas, 30);
+      setTimeout(foldResizeCanvas, 100);
+      setTimeout(foldResizeCanvas, 300);
+    }
+    if (currentGeneData && selectedGene) {
+      // If a different gene was loaded while on another tab, reload it
+      if (!ANIM.gene || ANIM.gene.gene_id !== currentGeneData.gene_id) {
+        animLoadGene(selectedGene.file, currentGeneData);
+      } else {
+        animDraw();  // just redraw (canvas may have resized)
+      }
+    } else {
+      animDraw();   // draw placeholder
+    }
+  }
+  if (name === 'temporal') {
+    if (temporalAvailable) loadTemporalTab();
+  }
+}
+
+/* ============================================================
+   🎬 Animation — RNAPII Traversal Simulator
+   Canvas-based simulation of elongation at v(p) with nascent
+   RNA growth and co-transcriptional stem-loop formation.
+============================================================ */
+const ANIM = {
+  canvas: null, ctx: null,
+  gene: null,
+  positions: [], speeds: [],   // from Method A (bp/min)
+  geneLen: 0,
+  pos: 0,          // current polymerase position in bp
+  simTime: 0,      // elapsed simulated time in minutes
+  playing: false,
+  speedMult: Math.pow(10, 4.7),   // time compression (~50 000×)
+  smoothWindow: 1,                  // boxcar window for speed profile (1=raw)
+  speedsSmoothed: [],               // smoothed copy of speeds array
+  lastTs: null,
+  rafHandle: null,
+  stemLoops: [],   // [{pos_bp, start_bp, end_bp, loopR, slowness, mature}]
+  rnaNodes:  [],   // [{x, y, vx, vy, bp}]  Verlet spring chain
+  rnaLastEmitX: null,   // null = uninitialised; set to polyX on first emit
+  maxSpeed:    1,
+  p99Speed:    1,
+  medianSpeed: 1000,
+  epigenomics: null,
+  // Layout constants (recalculated on resize)
+  margin:      { left: 58, right: 38, top: 52, bottom: 40 },
+  geneBodyY:   110,
+  rnaBaseY:    200,
+  speedPlotY:  330,
+  speedPlotH:   78,
+};
+
+function animInit() {
+  ANIM.canvas = document.getElementById('anim-canvas');
+  if (!ANIM.canvas) return;
+  ANIM.ctx = ANIM.canvas.getContext('2d');
+  function resizeAnim() {
+    const c = ANIM.canvas;
+    const w = c.offsetWidth;
+    const h = c.offsetHeight || 480;
+    if (!w) return;
+    c.width  = w;
+    c.height = Math.max(460, h);
+    const H = c.height;
+    // Recalculate layout so everything scales with canvas height
+    ANIM.geneBodyY  = Math.round(H * 0.23);
+    ANIM.rnaBaseY   = Math.round(H * 0.44);
+    ANIM.speedPlotH = Math.round(H * 0.16);
+    ANIM.speedPlotY = H - ANIM.margin.bottom - ANIM.speedPlotH;
+    animDraw();
+  }
+  window.addEventListener('resize', resizeAnim);
+  setTimeout(resizeAnim, 30);
+  foldInit();
+}
+
+function animLoadGene(geneFile, geneData) {
+  if (!ANIM.canvas) animInit();
+  animPause();
+  ANIM.gene    = geneData;
+  ANIM.geneLen = geneData.gene_len || 1;
+
+  const profs  = geneData.profiles || {};
+  const profile = profs.A_raw40m || profs.B_diff40m || null;
+  if (!profile) { animDraw(); return; }
+
+  ANIM.positions = profile.positions_bp || [];
+  ANIM.speeds = (profile.speed_kb_min || []).map(s => {
+    if (s === null || s === undefined || !isFinite(s) || s <= 0) return null;
+    return s * 1000;  // kb/min → bp/min
+  });
+
+  // Use actual data extent — annotated gene_len is often 3-10× longer than GRO-seq coverage
+  if (ANIM.positions.length > 0) {
+    const dataEnd = ANIM.positions[ANIM.positions.length - 1];
+    if (dataEnd > 0 && dataEnd < ANIM.geneLen) ANIM.geneLen = dataEnd;
+  }
+
+  const valid = ANIM.speeds.filter(s => s !== null && s > 0).sort((a, b) => a - b);
+  ANIM.maxSpeed   = valid.length ? valid[valid.length - 1] : 1;
+  ANIM.p99Speed   = valid.length ? (valid[Math.floor(valid.length * 0.99)] || ANIM.maxSpeed) : 1;
+  ANIM.medianSpeed = valid.length ? (valid[Math.floor(valid.length * 0.5)] || 1000) : 1000;
+
+  // Build smoothed speed profile with current window
+  ANIM.smoothWindow = +(document.getElementById('anim-smooth-slider')?.value || 1);
+  animBuildSmoothed();
+
+  animPrecomputeStemLoops();
+  ANIM.pos      = 0;
+  ANIM.simTime  = 0;
+  ANIM.lastTs   = null;
+  ANIM.epigenomics = null;
+  rnaReset();
+  foldReset();
+
+  // Try to load epigenomics for the gene
+  const epiKey = geneFile.replace(/\.json$/, '_epigenomics.json');
+  fetch('/api/epigenomics/' + encodeURIComponent(epiKey))
+    .then(r => r.ok ? r.json() : null)
+    .then(d => { ANIM.epigenomics = d; if (!ANIM.playing) animDraw(); })
+    .catch(() => {});
+
+  animDraw();
+}
+
+/* ---- RNA chain — fixed catenary model ---- */
+// N fixed nodes: node[N-1] = 3' end (pinned to Pol II), node[0] = 5' end (free).
+// Each frame we compute a target catenary position and smooth-follow it.
+// This guarantees the chain always looks like a natural hanging transcript
+// regardless of frame rate or speed multiplier.
+const RNA_N     = 18;    // fixed node count
+const RNA_HP_K  = 0.055; // hairpin position nudge per unit maturity
+const RNA_BLEND = 0.11;  // follow speed (0=instant, higher=more lag/swing)
+
+function rnaReset() {
+  ANIM.rnaNodes = Array.from({length: RNA_N}, () => ({x: 0, y: 0, bp: 0}));
+  ANIM.rnaInitialized = false;
+}
+
+function rnaUpdate(polyX, exitY, floorY, realSec) {
+  const nodes = ANIM.rnaNodes;
+  const N = RNA_N;
+  const m = ANIM.margin;
+
+  // Seed all nodes at Pol II exit on first call
+  if (!ANIM.rnaInitialized) {
+    for (let i = 0; i < N; i++) { nodes[i].x = polyX; nodes[i].y = exitY; }
+    ANIM.rnaInitialized = true;
+  }
+
+  // Visual chain length in px — grows as transcript gets longer, capped at 200px
+  const maxVisLen = Math.min(200, (polyX - m.left) * 0.80);
+  const visLen    = maxVisLen * Math.min(1, ANIM.pos / Math.max(1, ANIM.geneLen));
+  const wobbleAmp = 2.8 * Math.min(1, visLen / 55); // suppress wobble when chain is tiny
+
+  const showLoops = document.getElementById('anim-show-loops')?.checked !== false;
+
+  for (let i = 0; i < N; i++) {
+    // t: 0 = 3' anchor (newest, at Pol II), 1 = 5' end (oldest, free)
+    const t = (N - 1 - i) / Math.max(1, N - 1);
+
+    // Target x: trail behind Pol II
+    const targetX = polyX - t * visLen;
+
+    // Target y: smooth catenary droop — 0 at anchor, max at 5' end
+    const droopFrac = 1 - Math.cos(t * Math.PI * 0.5); // 0→1 smoothly
+    const rawY = exitY + visLen * 0.52 * droopFrac;
+    const targetY = Math.min(rawY, floorY);
+
+    // Gentle time-varying wobble — organic breathing motion
+    const wobble = Math.sin(realSec * 2.2 + t * Math.PI * 2.8) * wobbleAmp;
+
+    // Smooth follow: nodes lag behind the target creating a swinging effect
+    nodes[i].x += (targetX + wobble * 0.35 - nodes[i].x) * RNA_BLEND;
+    nodes[i].y += (targetY + wobble          - nodes[i].y) * RNA_BLEND;
+
+    // Genomic bp: 5' end (i=0) ≈ 0 bp, 3' end (i=N-1) ≈ ANIM.pos
+    nodes[i].bp = Math.round(ANIM.pos * (i / Math.max(1, N - 1)));
+  }
+
+  // Hairpin attraction — nudge stem-boundary nodes toward each other
+  if (showLoops) {
+    ANIM.stemLoops.forEach(sl => {
+      if (sl.mature < 0.05 || sl.pos_bp > ANIM.pos - 300) return;
+      let ni = 0, nj = 0, dI = Infinity, dJ = Infinity;
+      for (let k = 0; k < N; k++) {
+        const dS = Math.abs(nodes[k].bp - sl.start_bp);
+        const dE = Math.abs(nodes[k].bp - sl.end_bp);
+        if (dS < dI) { dI = dS; ni = k; }
+        if (dE < dJ) { dJ = dE; nj = k; }
+      }
+      if (ni !== nj) {
+        const nudge = sl.mature * RNA_HP_K * 0.6;
+        const a = nodes[ni], b = nodes[nj];
+        const dx = b.x - a.x, dy = b.y - a.y;
+        a.x += nudge * dx; a.y += nudge * dy;
+        b.x -= nudge * dx; b.y -= nudge * dy;
+      }
+    });
+  }
+}
+
+function rnaDraw(ctx, polyX, exitY) {
+  const nodes = ANIM.rnaNodes;
+  const N = nodes.length;
+  if (N < 2) return;
+
+  const showLoops = document.getElementById('anim-show-loops')?.checked !== false;
+  const curSpeed  = animSpeedAtPos(ANIM.pos);
+  const medSpd    = ANIM.medianSpeed || 1000;
+  const inSlowZone = curSpeed < medSpd * 0.62;
+  const nearFold  = showLoops && ANIM.stemLoops.some(
+    sl => sl.pos_bp > ANIM.pos && sl.pos_bp - ANIM.pos < 2000 && sl.mature < 0.5
+  );
+  const tenseRNA  = inSlowZone || nearFold;
+
+  // 1. Full backbone
+  ctx.beginPath();
+  ctx.moveTo(nodes[0].x, nodes[0].y);
+  for (let i = 1; i < N; i++) ctx.lineTo(nodes[i].x, nodes[i].y);
+  ctx.strokeStyle = 'rgba(139,60,255,0.88)';
+  ctx.lineWidth   = 2.4;
+  ctx.stroke();
+
+  // 1b. Nucleotide beads every 3 nodes
+  for (let i = 0; i < N; i += 3) {
+    ctx.beginPath();
+    ctx.arc(nodes[i].x, nodes[i].y, 2.8, 0, Math.PI * 2);
+    ctx.fillStyle = i === 0 ? 'rgba(34,197,94,0.90)'    // 5' end = green
+                            : 'rgba(167,139,250,0.82)';  // interior = lavender
+    ctx.fill();
+  }
+  // 3' end bead (at Pol II) in cyan
+  ctx.beginPath();
+  ctx.arc(nodes[N-1].x, nodes[N-1].y, 3.2, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(6,182,212,0.90)';
+  ctx.fill();
+
+  // 2. Tension highlight on newest segment
+  if (tenseRNA && N >= 7) {
+    ctx.beginPath();
+    const tStart = Math.max(0, N - 9);
+    ctx.moveTo(nodes[tStart].x, nodes[tStart].y);
+    for (let i = tStart+1; i < N; i++) ctx.lineTo(nodes[i].x, nodes[i].y);
+    ctx.strokeStyle = 'rgba(245,158,11,0.90)';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+  }
+
+  // 3. Dashed exit-channel connector — omitted: Pol II section draws downward connector
+
+  // 4. Hairpin loops — drawn along actual chain topology
+  if (showLoops) {
+    ANIM.stemLoops.forEach(sl => {
+      if (sl.mature < 0.04 || sl.pos_bp > ANIM.pos - 250) return;
+      const mf = sl.mature;
+      let ni = -1, nj = -1, dI = Infinity, dJ = Infinity;
+      for (let k = 0; k < N; k++) {
+        const dS = Math.abs(nodes[k].bp - sl.start_bp);
+        const dE = Math.abs(nodes[k].bp - sl.end_bp);
+        if (dS < dI) { dI = dS; ni = k; }
+        if (dE < dJ) { dJ = dE; nj = k; }
+      }
+      // ni < nj: ni = 5' stem anchor, nj = 3' stem anchor, nodes between = loop
+      if (ni < 0 || nj < 0 || ni >= nj || nj - ni < 2) return;
+
+      const rVal = Math.round(130 + sl.slowness * 110);
+      const col  = `rgba(${rVal},50,230,${0.55 + mf * 0.4})`;
+
+      // 4a. Stem base-pair rungs: connect symmetric node pairs flanking the loop
+      //     nodes[ni-1..] paired with nodes[nj+1..]
+      const maxStemRungs = Math.min(6, Math.floor((nj - ni) / 2));
+      ctx.lineWidth = 1.0;
+      for (let r = 1; r <= maxStemRungs; r++) {
+        const ia = ni - r, ib = nj + r;
+        if (ia < 0 || ib >= N) break;
+        const na = nodes[ia], nb = nodes[ib];
+        const dist = Math.hypot(na.x - nb.x, na.y - nb.y);
+        if (dist > 40) break;  // not folded enough to draw rung
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(${rVal},50,230,${(0.20 + mf * 0.30) * (1 - r / (maxStemRungs + 1))})`;
+        ctx.moveTo(na.x, na.y); ctx.lineTo(nb.x, nb.y);
+        ctx.stroke();
+      }
+
+      // 4b. Loop backbone: draw the chain segment from ni to nj highlighted
+      ctx.beginPath();
+      ctx.moveTo(nodes[ni].x, nodes[ni].y);
+      for (let k = ni + 1; k <= nj; k++) ctx.lineTo(nodes[k].x, nodes[k].y);
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 2.2;
+      ctx.stroke();
+
+      // 4c. Stem junction highlight at ni and nj
+      ctx.beginPath();
+      ctx.arc(nodes[ni].x, nodes[ni].y, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = col; ctx.fill();
+      ctx.beginPath();
+      ctx.arc(nodes[nj].x, nodes[nj].y, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 4d. Loop apex circle at chain midpoint
+      const mid = Math.round((ni + nj) / 2);
+      if (mid >= 0 && mid < N) {
+        const mc = nodes[mid];
+        const loopR = sl.loopR * mf;
+        ctx.beginPath();
+        ctx.arc(mc.x, mc.y, loopR * 0.55 + 2, 0, Math.PI * 2);
+        ctx.fillStyle   = `rgba(${rVal},50,230,${0.08 + mf * 0.10})`;
+        ctx.strokeStyle = col;
+        ctx.lineWidth   = 1.4;
+        ctx.fill(); ctx.stroke();
+      }
+    });
+  }
+
+  // 5. Tension arrow (backward from Pol II when stalled)
+  if (tenseRNA && ANIM.pos > 2000) {
+    const last = nodes[N-1];
+    const arrowTipX = last.x - 22, arrowY = exitY - 18;
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(239,68,68,0.88)'; ctx.lineWidth = 2;
+    ctx.moveTo(arrowTipX + 20, arrowY); ctx.lineTo(arrowTipX, arrowY); ctx.stroke();
+    ctx.beginPath();
+    ctx.fillStyle = 'rgba(239,68,68,0.88)';
+    ctx.moveTo(arrowTipX, arrowY);
+    ctx.lineTo(arrowTipX + 6, arrowY - 4);
+    ctx.lineTo(arrowTipX + 6, arrowY + 4);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = 'rgba(239,68,68,0.75)';
+    ctx.font = '7px monospace'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText(inSlowZone ? 'stall' : 'tension', arrowTipX - 3, arrowY);
+  }
+}
+
+function animPrecomputeStemLoops() {
+  ANIM.stemLoops = [];
+  const pts = ANIM.positions, spd = ANIM.speeds;
+  if (!pts.length) return;
+  const valid = spd.filter(s => s !== null && s > 0).sort((a, b) => a - b);
+  if (!valid.length) return;
+  const median = valid[Math.floor(valid.length / 2)] || 1;
+  const thresh = median * 0.60;
+  let inSlow = false, sl0 = 0;
+  for (let i = 0; i <= pts.length; i++) {
+    const s = i < spd.length ? spd[i] : null;
+    const slow = s !== null && s < thresh;
+    if (slow && !inSlow) { inSlow = true; sl0 = i; }
+    else if (!slow && inSlow) {
+      inSlow = false;
+      const mid = (sl0 + i) >> 1;
+      const ms = spd[mid] || thresh;
+      const slowness = Math.min(1, Math.max(0, 1 - ms / median));
+      const startBp = pts[sl0] || 0;
+      const endBp   = pts[Math.min(i, pts.length - 1)] || startBp;
+      ANIM.stemLoops.push({
+        pos_bp:   pts[mid] || 0,
+        start_bp: startBp,
+        end_bp:   endBp,
+        loopR:    5 + slowness * 16,   // loop radius in pixels (fully mature)
+        slowness,
+        mature:   0,
+      });
+    }
+  }
+}
+
+/* Playback speed control — log10 scale 0→7 (1× … 10M×)
+   At the slow end (0–2) the ticks are fine enough to scrub through folding in real time */
+function animSetSpeed(v) {
+  ANIM.speedMult = Math.pow(10, v);
+  const lbl = document.getElementById('anim-speed-label');
+  if (!lbl) return;
+  if (ANIM.speedMult >= 1e6) lbl.textContent = (ANIM.speedMult/1e6).toFixed(2)+'M×';
+  else if (ANIM.speedMult >= 1000) lbl.textContent = (ANIM.speedMult/1000).toFixed(1)+'k×';
+  else lbl.textContent = Math.round(ANIM.speedMult)+'×';
+}
+
+/* Apply boxcar moving average to raw speed array; window=1 → identity */
+function animBuildSmoothed() {
+  const raw = ANIM.speeds;
+  const w   = ANIM.smoothWindow || 1;
+  if (w <= 1) { ANIM.speedsSmoothed = raw.slice(); return; }
+  const half = Math.floor(w / 2);
+  const out  = new Array(raw.length);
+  for (let i = 0; i < raw.length; i++) {
+    let sum = 0, cnt = 0;
+    for (let j = Math.max(0, i - half); j <= Math.min(raw.length - 1, i + half); j++) {
+      if (raw[j] !== null && raw[j] > 0) { sum += raw[j]; cnt++; }
+    }
+    out[i] = cnt > 0 ? sum / cnt : null;
+  }
+  ANIM.speedsSmoothed = out;
+}
+
+function animSpeedAtPos(pos) {
+  const pts = ANIM.positions;
+  const spd = (ANIM.speedsSmoothed && ANIM.speedsSmoothed.length) ? ANIM.speedsSmoothed : ANIM.speeds;
+  if (!pts.length) return 1000;
+  if (pos <= pts[0]) return spd[0] || 1000;
+  const last = pts.length - 1;
+  if (pos >= pts[last]) return spd[last] || 1000;
+  let lo = 0, hi = last;
+  while (hi - lo > 1) { const m = (lo + hi) >> 1; if (pts[m] <= pos) lo = m; else hi = m; }
+  const t  = (pos - pts[lo]) / ((pts[hi] - pts[lo]) || 1);
+  const s0 = spd[lo], s1 = spd[hi];
+  if (s0 === null && s1 === null) return 1000;
+  if (s0 === null) return s1;
+  if (s1 === null) return s0;
+  return s0 + t * (s1 - s0);
+}
+
+function animPlay() {
+  if (!ANIM.gene) return;
+  if (ANIM.pos >= ANIM.geneLen - 50) animRestart();
+  ANIM.playing = true;
+  ANIM.lastTs  = null;
+  const btn = document.getElementById('anim-play-btn');
+  if (btn) btn.textContent = '⏸ Pause';
+  ANIM.rafHandle = requestAnimationFrame(animFrame);
+}
+
+function animPause() {
+  ANIM.playing = false;
+  if (ANIM.rafHandle) { cancelAnimationFrame(ANIM.rafHandle); ANIM.rafHandle = null; }
+  const btn = document.getElementById('anim-play-btn');
+  if (btn) btn.textContent = '▶ Play';
+}
+
+function animToggle() {
+  if (!ANIM.canvas) animInit();
+  if (ANIM.playing) animPause(); else animPlay();
+}
+
+function animRestart() {
+  animPause();
+  ANIM.pos     = 0;
+  ANIM.simTime = 0;
+  ANIM.lastTs  = null;
+  ANIM.stemLoops.forEach(sl => sl.mature = 0);
+  rnaReset();
+  foldReset();
+  animDraw();
+}
+
+function animFrame(ts) {
+  if (!ANIM.playing) return;
+  if (ANIM.lastTs !== null) {
+    const dtReal = Math.min((ts - ANIM.lastTs) / 1000, 0.1);   // real seconds, cap 100 ms
+    const dtSim  = dtReal * ANIM.speedMult / 60;                 // simulated minutes
+    const speed  = Math.max(animSpeedAtPos(ANIM.pos), 50);       // bp/min
+    ANIM.pos     = Math.min(ANIM.pos + speed * dtSim, ANIM.geneLen);
+    ANIM.simTime += dtSim;
+    const showLoops = !(document.getElementById('anim-show-loops')) ||
+                       document.getElementById('anim-show-loops').checked;
+    if (showLoops) {
+      ANIM.stemLoops.forEach(sl => {
+        if (ANIM.pos > sl.pos_bp + 300)
+          sl.mature = Math.min(1, sl.mature + dtReal * 2.2);
+      });
+    }
+    // Update RNA chain (catenary model)
+    if (ANIM.pos > 100) {
+      const _polyX  = ANIM.margin.left + Math.min(1, ANIM.pos / ANIM.geneLen) * (ANIM.canvas.width - ANIM.margin.left - ANIM.margin.right);
+      const _exitY  = ANIM.geneBodyY + 14;
+      const _floorY = ANIM.speedPlotY - 12;  // chain can droop down to just above speed chart
+      rnaUpdate(_polyX, _exitY, _floorY, ts / 1000);
+    }
+  }
+  ANIM.lastTs = ts;
+  if (ANIM.pos >= ANIM.geneLen) {
+    ANIM.pos = ANIM.geneLen;
+    ANIM.playing = false;
+    const btn = document.getElementById('anim-play-btn');
+    if (btn) btn.textContent = '▶ Play';
+  }
+  animDraw();
+  if (ANIM.playing) ANIM.rafHandle = requestAnimationFrame(animFrame);
+}
+
+function animDraw() {
+  if (!ANIM.canvas || !ANIM.ctx) return;
+  const cvs = ANIM.canvas;
+  const ctx = ANIM.ctx;
+  const W = cvs.width, H = cvs.height;
+  const m = ANIM.margin;
+  const trackW = W - m.left - m.right;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0f1117';
+  ctx.fillRect(0, 0, W, H);
+
+  if (!ANIM.gene) {
+    ctx.fillStyle = '#4b5563';
+    ctx.font = '13px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('← Select a gene from the sidebar, then click ▶ Play', W / 2, H / 2);
+    return;
+  }
+
+  const geneLen = ANIM.geneLen;
+  const bpToX   = bp => m.left + Math.min(1, Math.max(0, bp / geneLen)) * trackW;
+  const polyX   = bpToX(ANIM.pos);
+  const gbY     = ANIM.geneBodyY;
+  const gbH     = 14;
+  const rnaY    = ANIM.rnaBaseY;
+  const spY     = ANIM.speedPlotY;
+  const spH     = ANIM.speedPlotH;
+
+  // ── TITLE ────────────────────────────────────────────────────────────
+  const dRate = ANIM.gene.danko_rate_kb_min;
+  ctx.fillStyle = '#a8c7fa';
+  ctx.font = 'bold 10px monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText(
+    (ANIM.gene.gene_id || '') +
+    '  |  ' + (geneLen / 1000).toFixed(0) + ' kb  |  Danko: ' +
+    (dRate != null ? dRate.toFixed(2) + ' kb/min' : 'N/A'),
+    W / 2, m.top - 6);
+
+  // ── EPIGENOMIC MARKS ────────────────────────────────────────────────
+  const showEpi = !(document.getElementById('anim-show-epi')) ||
+                    document.getElementById('anim-show-epi').checked;
+  const epiDefs = [
+    { name:'H3K36me3', rgb:[34,197,94]  },
+    { name:'H3K27ac',  rgb:[245,158,11] },
+    { name:'H3K4me3',  rgb:[167,139,250]},
+    { name:'CTCF',     rgb:[6,182,212]  },
+    { name:'H3K27me3', rgb:[239,68,68]  },
+  ];
+  if (showEpi && ANIM.epigenomics && ANIM.epigenomics.marks) {
+    const marks = ANIM.epigenomics.marks;
+    let row = 0;
+    epiDefs.forEach(def => {
+      const mk = marks[def.name];
+      if (!mk || !mk.signal || !mk.signal.length) return;
+      const sig = mk.signal;
+      const step = geneLen / sig.length;
+      const maxS = Math.max(...sig.filter(s => s !== null && isFinite(s))) || 1;
+      const mH = 14, mBaseY = gbY - 20 - row * (mH + 3);
+      const [r, g, b] = def.rgb;
+      for (let i = 0; i < sig.length; i++) {
+        const s = sig[i];
+        if (s === null || !isFinite(s) || s <= 0) continue;
+        const frac = Math.min(1, s / maxS);
+        const x1 = bpToX(i * step), x2 = bpToX((i + 1) * step);
+        ctx.fillStyle = `rgba(${r},${g},${b},${0.1 + frac * 0.55})`;
+        ctx.fillRect(x1, mBaseY - mH * frac, Math.max(1, x2 - x1 + 0.5), mH * frac);
+      }
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.font = '7px monospace';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(def.name, m.left + 2, mBaseY);
+      row++;
+    });
+  }
+
+  // ── GENE BODY ────────────────────────────────────────────────────────
+  if (ANIM.positions.length > 1) {
+    for (let i = 0; i < ANIM.positions.length - 1; i++) {
+      const x1 = bpToX(ANIM.positions[i]), x2 = bpToX(ANIM.positions[i + 1]);
+      const s = ANIM.speeds[i];
+      let r, g, b;
+      if (s === null || s <= 0) {
+        [r, g, b] = [45, 49, 68];
+      } else {
+        const f = Math.min(1, s / ANIM.p99Speed);
+        r = Math.round(28  + f * 220);
+        g = Math.round(80  + f * 100);
+        b = Math.round(200 - f * 165);
+      }
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillRect(x1, gbY - gbH / 2, Math.max(0.5, x2 - x1 + 0.5), gbH);
+    }
+  } else {
+    ctx.fillStyle = '#2d3144';
+    ctx.fillRect(m.left, gbY - gbH / 2, trackW, gbH);
+  }
+
+  // TSS / TES
+  ctx.font = '8px monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'bottom';
+  ctx.fillStyle = '#22c55e';
+  ctx.fillRect(m.left - 1, gbY - gbH / 2 - 4, 3, gbH + 8);
+  ctx.fillText('TSS', m.left, gbY - gbH / 2 - 6);
+  ctx.fillStyle = '#ef4444';
+  ctx.fillRect(m.left + trackW - 2, gbY - gbH / 2 - 4, 3, gbH + 8);
+  ctx.fillText('TES', m.left + trackW, gbY - gbH / 2 - 6);
+
+  // Scale bar
+  const scaleKb = Math.max(5, Math.round(geneLen / 8000) * 5);
+  const scaleW  = (scaleKb * 1000 / geneLen) * trackW;
+  ctx.fillStyle = '#4b5563';
+  ctx.fillRect(m.left + trackW - scaleW - 2, gbY + gbH / 2 + 5, scaleW, 2);
+  ctx.font = '8px monospace';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'top';
+  ctx.fillText(scaleKb + ' kb', m.left + trackW - 2, gbY + gbH / 2 + 9);
+
+  // ── NASCENT RNA — catenary chain ─────────────────────────────────────
+  if (ANIM.pos > 100 && polyX > m.left + 2) {
+    // When paused/scrubbing, update chain position without waiting for animFrame
+    if (!ANIM.playing) {
+      rnaUpdate(polyX, gbY + 14, spY - 12, performance.now() / 1000);
+    }
+    rnaDraw(ctx, polyX, gbY + 14);
+  }
+
+  // ── RNAPII COMPLEX ───────────────────────────────────────────────────
+  if (ANIM.pos > 0) {
+    const px = polyX, py = gbY;
+    const sf = Math.min(1, Math.max(0, animSpeedAtPos(ANIM.pos) / ANIM.p99Speed));
+
+    // Speed glow
+    const gr = ctx.createRadialGradient(px, py, 7, px, py, 24 + sf * 10);
+    gr.addColorStop(0, `rgba(91,124,246,${0.3 + sf * 0.35})`);
+    gr.addColorStop(1, 'rgba(91,124,246,0)');
+    ctx.beginPath();
+    ctx.arc(px, py, 24 + sf * 10, 0, Math.PI * 2);
+    ctx.fillStyle = gr;
+    ctx.fill();
+
+    // Body circle
+    ctx.beginPath();
+    ctx.arc(px, py, 13, 0, Math.PI * 2);
+    ctx.fillStyle = '#1e3a8a';
+    ctx.fill();
+    ctx.strokeStyle = '#93c5fd';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Label
+    ctx.fillStyle = '#e0e0e0';
+    ctx.font = 'bold 7px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Pol II', px, py);
+
+    // Short dashed stub from Pol II body down to RNA exit point
+    // (the chain's newest node is already pinned at exitY = py+14, so keep this stub short)
+    const chainExitY = gbY + 14;
+    if (chainExitY > py + 14) {
+      ctx.beginPath();
+      ctx.strokeStyle = '#4c1d95';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 3]);
+      ctx.moveTo(px, py + 14);
+      ctx.lineTo(px, chainExitY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+
+  // ── SPEED PROFILE CHART ─────────────────────────────────────────────
+  ctx.fillStyle = '#13161f';
+  ctx.fillRect(m.left, spY, trackW, spH);
+  ctx.strokeStyle = '#2d3144';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(m.left, spY, trackW, spH);
+
+  if (ANIM.positions.length > 1) {
+    // Fill under curve (area chart)
+    ctx.beginPath();
+    let fp = true;
+    for (let i = 0; i < ANIM.positions.length; i++) {
+      const s = ANIM.speeds[i];
+      if (s === null || s <= 0 || !isFinite(s)) continue;
+      const x = bpToX(ANIM.positions[i]);
+      const y = spY + spH - Math.min(1, s / ANIM.p99Speed) * spH;
+      if (fp) { ctx.moveTo(x, spY + spH); ctx.lineTo(x, y); fp = false; }
+      else ctx.lineTo(x, y);
+    }
+    ctx.lineTo(bpToX(ANIM.positions[ANIM.positions.length - 1]), spY + spH);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(91,156,246,0.1)';
+    ctx.fill();
+
+    // Line
+    ctx.beginPath();
+    ctx.strokeStyle = '#5b9cf6';
+    ctx.lineWidth = 1.5;
+    fp = true;
+    for (let i = 0; i < ANIM.positions.length; i++) {
+      const s = ANIM.speeds[i];
+      if (s === null || s <= 0 || !isFinite(s)) continue;
+      const x = bpToX(ANIM.positions[i]);
+      const y = spY + spH - Math.min(1, s / ANIM.p99Speed) * spH;
+      if (fp) { ctx.moveTo(x, y); fp = false; } else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+
+  // Cursor
+  if (ANIM.pos > 0) {
+    ctx.beginPath();
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth = 2;
+    ctx.moveTo(polyX, spY - 7);
+    ctx.lineTo(polyX, spY + spH + 7);
+    ctx.stroke();
+
+    // Cursor label (current speed)
+    const cspd = animSpeedAtPos(ANIM.pos);
+    ctx.fillStyle = '#f59e0b';
+    ctx.font = '8px monospace';
+    ctx.textAlign = polyX < W - 100 ? 'left' : 'right';
+    ctx.textBaseline = 'bottom';
+    const lx = polyX < W - 100 ? polyX + 3 : polyX - 3;
+    ctx.fillText((cspd / 1000).toFixed(2) + ' kb/min', lx, spY - 1);
+  }
+
+  // Y-axis label
+  ctx.fillStyle = '#6b7280';
+  ctx.font = '8px monospace';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  ctx.fillText('v(p)   max ≈ ' + (ANIM.p99Speed / 1000).toFixed(1) + ' kb/min', m.left + 4, spY + 3);
+  ctx.fillText('Danko rate', m.left + 4, spY + spH - 11);
+
+  // Danko horizontal reference line
+  if (ANIM.gene.danko_rate_kb_min) {
+    const dY = spY + spH - Math.min(1, (ANIM.gene.danko_rate_kb_min * 1000) / ANIM.p99Speed) * spH;
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(239,68,68,0.4)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.moveTo(m.left, dY);
+    ctx.lineTo(m.left + trackW, dY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#ef4444';
+    ctx.font = '7px monospace';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('Danko', m.left + trackW, dY);
+  }
+
+  // ── STATS BOX ────────────────────────────────────────────────────────
+  const statsX = W - 198, statsY2 = spY + 3;
+  const posKb    = (ANIM.pos / 1000).toFixed(1);
+  const totalKb  = (geneLen / 1000).toFixed(0);
+  const pct      = (ANIM.pos / geneLen * 100).toFixed(0);
+  const cspd     = ANIM.pos > 0 ? animSpeedAtPos(ANIM.pos) : 0;
+  const simMin   = ANIM.simTime.toFixed(2);
+  const lMat     = ANIM.stemLoops.filter(sl => sl.mature > 0.5).length;
+  const lAll     = ANIM.stemLoops.length;
+  const cFac     = ANIM.speedMult >= 1e6
+    ? (ANIM.speedMult / 1e6).toFixed(1) + 'M×'
+    : (ANIM.speedMult / 1000).toFixed(0) + 'k×';
+
+  ctx.fillStyle = 'rgba(19,22,31,0.92)';
+  ctx.fillRect(statsX, statsY2, 188, 75);
+  ctx.strokeStyle = '#3a3f55';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(statsX, statsY2, 188, 75);
+
+  const slines = [
+    ['Position',   posKb + ' / ' + totalKb + ' kb (' + pct + '%)'],
+    ['Speed',      (cspd / 1000).toFixed(2) + ' kb/min'],
+    ['Sim time',   simMin + ' min elapsed'],
+    ['Stem-loops', lMat + ' / ' + lAll + ' formed'],
+    ['Compress',   cFac + ' real time'],
+  ];
+  ctx.font = '9px monospace';
+  ctx.textBaseline = 'top';
+  slines.forEach(([lbl, val], i) => {
+    const ly = statsY2 + 7 + i * 13;
+    ctx.fillStyle = '#6b7280';
+    ctx.textAlign = 'left';
+    ctx.fillText(lbl + ':', statsX + 6, ly);
+    ctx.fillStyle = '#c8d6f0';
+    ctx.textAlign = 'right';
+    ctx.fillText(val, statsX + 183, ly);
+  });
+}
+
+/* ============================================================
+   🔬 Fold Panel — accurate co-transcriptional RNA folding viewer
+   Nussinov secondary-structure prediction + Verlet bead-chain
+   simulation with real base-pair springs, arc-diagram overlay,
+   and mechanochemical drag-force estimate on RNA Pol II.
+============================================================ */
+const FOLD = {
+  canvas:   null,
+  ctx:      null,
+  // Synthetic full-gene RNA sequence (Uint8Array, 0=A 1=U 2=G 3=C)
+  seq:      null,
+  // Sliding window: last WIN_NT nucleotides of emerged transcript
+  WIN_NT:   150,        // window size in nucleotides
+  winStart: 0,          // 5'-most nt index in window (into FOLD.seq)
+  winEnd:   0,          // 3'-most nt index (exclusive)
+  // Nussinov result for current window
+  pairs:    null,       // Int16Array[WIN_NT], pairs[i]=j or -1
+  energy:   0,          // total ΔG of predicted structure (kcal/mol)
+  // Verlet bead nodes — one per nucleotide in window
+  nodes:    [],         // [{x,y,vx,vy}]
+  pinX:     0,
+  pinY:     0,
+  zoom:     1.0,
+  // Force bookkeeping
+  forcePN:  0,          // total drag force on RNAP (pN), updated each frame
+  // When to re-run Nussinov (every REFOLD_NT new nucleotides)
+  lastFoldWinEnd: -1,
+  REFOLD_NT:  5,
+  // Smooth animation state: lerp between old and new layout on each fold rerun
+  layoutPrev:   null,   // layout snapshot before most recent fold
+  layoutTarget: null,   // layout from most recent fold (destination)
+  layoutAlpha:  1.0,    // lerp progress 0→1
+  LERP_SPEED:   0.035,  // alpha per frame (~28 frames = ~0.47s at 60fps)
+  // Animation loop
+  lastTs:   null,
+  rafHandle: null,
+  // "emerged" nucleotide count (nt ahead of active site through exit channel)
+  EXIT_OFFSET_NT: 16,   // ~16 nt upstream of active site in exit channel
+};
+
+// kcal/mol free energies (simplified Turner nearest-neighbour)
+// Indices: 0=A 1=U 2=G 3=C
+function foldPairEnergy(a, b) {
+  if ((a===2&&b===3)||(a===3&&b===2)) return -3.4; // G-C
+  if ((a===0&&b===1)||(a===1&&b===0)) return -2.0; // A-U
+  if ((a===2&&b===1)||(a===1&&b===2)) return -1.1; // G-U wobble
+  return 9999;
+}
+
+/* -- Nussinov minimum-free-energy fold on a sub-array of FOLD.seq ------- */
+function nussinovFold(seq, i0, i1) {
+  // seq: Uint8Array full sequence; fold window [i0, i1) (i1 exclusive)
+  const n = i1 - i0;
+  if (n < 6) return { pairs: new Int16Array(n).fill(-1), energy: 0 };
+
+  // DP: dp[i*n+j] = min energy for subsequence [i,j] (local indices)
+  const dp = new Float32Array(n * n);
+  function idx(i,j){ return i*n+j; }
+  function g(i,j){ return (i>=j) ? 0 : dp[idx(i,j)]; }
+
+  for (let len = 4; len < n; len++) {
+    for (let i = 0; i < n-len; i++) {
+      const j = i + len;
+      let best = g(i, j-1);          // j unpaired
+      for (let k = i; k < j-3; k++) {  // min hairpin loop = 3
+        const e = foldPairEnergy(seq[i0+k], seq[i0+j]);
+        if (e < 1) {
+          const s = (k>i ? g(i,k-1) : 0) + e + g(k+1,j-1);
+          if (s < best) best = s;
+        }
+      }
+      dp[idx(i,j)] = best;
+    }
+  }
+
+  const pairs = new Int16Array(n).fill(-1);
+  (function tb(i,j) {
+    if (i >= j) return;
+    const cur = dp[idx(i,j)];
+    if (Math.abs(cur - g(i,j-1)) < 1e-4) { tb(i,j-1); return; }
+    for (let k = i; k < j-3; k++) {
+      const e = foldPairEnergy(seq[i0+k], seq[i0+j]);
+      if (e < 1) {
+        const s = (k>i ? g(i,k-1) : 0) + e + g(k+1,j-1);
+        if (Math.abs(cur - s) < 1e-4) {
+          pairs[k] = j; pairs[j] = k;
+          if (k>i) tb(i,k-1);
+          tb(k+1,j-1);
+          return;
+        }
+      }
+    }
+  })(0, n-1);
+
+  return { pairs, energy: dp[idx(0,n-1)] };
+}
+
+/* -- computeRNALayout: proper 2D RNA secondary structure layout ----------- */
+// Lays out the RNA as a proper stem-loop diagram.
+// Backbone runs left-to-right at y=0; stems hang downward as two-strand
+// ladders with horizontal base-pair rungs; hairpin loops as semicircles
+// at the tip of each stem.  The backbone visits every nt in sequence
+// order 0→n-1, so the path drawn by foldDraw traces a clean U-shape for
+// each hairpin (down 5'-strand → around loop → up 3'-strand → back to backbone).
+// Returns {px, py}: Float32Arrays of canvas positions (before translation).
+function computeRNALayout(pairs, n) {
+  if (n < 2) return null;
+  const PX = new Float32Array(n);
+  const PY = new Float32Array(n);
+
+  const BP  = 10;   // px per base-pair step down the stem
+  const SEP = 14;   // px between the two strands of a stem (stem width)
+  const SS  =  9;   // px per unpaired nt along the horizontal backbone
+
+  // Walk [from..to] along the horizontal row at rowY.
+  // Returns new cursor x after the last nt.
+  function layRow(from, to, startX, rowY) {
+    let cx = startX;
+    let i  = from;
+    while (i <= to) {
+      const j = pairs[i];
+      if (j === -1 || j < i || j > to) {
+        PX[i] = cx; PY[i] = rowY;
+        cx += SS; i++;
+      } else {
+        cx = layStem(i, j, cx, rowY);
+        i = j + 1;
+      }
+    }
+    return cx;
+  }
+
+  // Lay out stem with outermost pair (i5, j3) anchored at (x, y).
+  // 5'-strand:  i5, i5+1, … going DOWN (increasing y).
+  // 3'-strand:  j3, j3-1, … also placed going DOWN from y —
+  //   so in backbone sequence order j3-sLen+1 → j3, the 3' strand
+  //   reads from BOTTOM to TOP (correct antiparallel direction).
+  //   Combined with the loop, the backbone traces a clean U-shape.
+  function layStem(i5, j3, x, y) {
+    let sLen = 0;
+    while (i5 + sLen <= j3 - sLen &&
+           pairs[i5 + sLen] === j3 - sLen &&
+           pairs[i5 + sLen] > i5 + sLen) {
+      sLen++;
+    }
+    if (sLen === 0) { PX[i5] = x; PY[i5] = y; return x + SS; }
+
+    // 5'-strand: i5 at (x, y), i5+1 at (x, y+BP), …
+    for (let s = 0; s < sLen; s++) {
+      PX[i5 + s] = x;
+      PY[i5 + s] = y + s * BP;
+    }
+
+    // 3'-strand: j3 at (x+SEP, y), j3-1 at (x+SEP, y+BP), …
+    // Outermost 3' nt (j3) placed opposite i5 → horizontal rungs. ✓
+    // In sequence order j3-sLen+1 → j3 the strand reads bottom→top (UP). ✓
+    for (let s = 0; s < sLen; s++) {
+      PX[j3 - s] = x + SEP;
+      PY[j3 - s] = y + s * BP;           // ← key fix vs previous (sLen-1-s)
+    }
+
+    const intS       = i5 + sLen;
+    const intE       = j3 - sLen;
+    const stemBotY   = y + (sLen - 1) * BP;  // y of innermost bp
+
+    if (intS <= intE) {
+      const intLen = intE - intS + 1;
+
+      let hasNested = false;
+      for (let k = intS; k <= intE; k++) {
+        if (pairs[k] > k && pairs[k] <= intE) { hasNested = true; break; }
+      }
+
+      if (!hasNested) {
+        // Hairpin loop: semicircle opening downward from stemBotY.
+        // Arc spans from (x, stemBotY) on the left to (x+SEP, stemBotY) on the right.
+        const lcx  = x + SEP / 2;
+        const r    = Math.max(SEP / 2, intLen * 2.7 / Math.PI);
+        // Angles at which the arc coincides with the two stem-bottom positions:
+        //   PX = lcx - r*cos(α), so cos(α) = (lcx-x)/r = SEP/(2r)
+        const halfA = Math.acos(Math.min(1.0, SEP / (2 * r)));
+        const angL  = halfA;              // angle at left stem bottom
+        const angR  = Math.PI - halfA;    // angle at right stem bottom
+        for (let s = 0; s < intLen; s++) {
+          const t   = (s + 1) / (intLen + 1);
+          const ang = angL + t * (angR - angL);
+          PX[intS + s] = lcx - r * Math.cos(ang);
+          PY[intS + s] = stemBotY + r * Math.sin(ang);  // opens downward ✓
+        }
+      } else {
+        // Internal / multi-loop: recurse as a sub-row one step below stem tip
+        layRow(intS, intE, x - SEP * 0.4, stemBotY + SS);
+      }
+    }
+
+    return x + SEP + SS;
+  }
+
+  layRow(0, n - 1, 0, 0);
+  return { px: PX, py: PY };
+}
+
+/* -- Generate synthetic RNA sequence with realistic GC-content ----------- */
+function foldGenSeq(length, gcFrac) {
+  const gc = Math.max(0.3, Math.min(0.7, gcFrac || 0.52));
+  const seq = new Uint8Array(length);
+  // Simple first-order Markov to give runs of purines/pyrimidines
+  const trans = [
+    // from A: stay purine (A/G) more often
+    [0.28, 0.22, 0.32, 0.18],
+    // from U: stay pyrimidine (U/C) more often
+    [0.18, 0.30, 0.16, 0.36],
+    // from G: GC-rich
+    [0.15, 0.16, 0.36, 0.33],
+    // from C: GC-rich
+    [0.14, 0.18, 0.34, 0.34],
+  ];
+  seq[0] = Math.random() < gc ? (Math.random()<0.5?2:3) : (Math.random()<0.5?0:1);
+  for (let i = 1; i < length; i++) {
+    const row = trans[seq[i-1]];
+    const r = Math.random();
+    let cum = 0;
+    for (let b = 0; b < 4; b++) { cum += row[b]; if (r < cum) { seq[i] = b; break; } }
+  }
+  return seq;
+}
+/* -- foldResizeCanvas: size the fold canvas to fit the panel ------------ */
+function foldResizeCanvas() {
+  const c = FOLD.canvas;
+  if (!c) return;
+  const panel = document.getElementById('fold-panel');
+  const rect  = panel ? panel.getBoundingClientRect() : null;
+  const w   = (rect && rect.width  > 0 ? Math.round(rect.width)  : 0) || (panel ? panel.clientWidth  : 0) || 320;
+  const hFull = (rect && rect.height > 0 ? Math.round(rect.height) : 0) || (panel ? panel.clientHeight : 0) || 520;
+  const hh  = Math.max(hFull - 42, 220);
+  if (c.width !== w || c.height !== hh) {
+    c.width  = w;
+    c.height = hh;
+    FOLD.pinX = Math.round(w / 2);
+    FOLD.pinY = 34;
+  }
+  if (FOLD.ctx) foldDraw();
+}
+
+/* -- foldInit: attach canvas, start the independent RAF loop ------------- */
+function foldInit() {
+  FOLD.canvas = document.getElementById('fold-canvas');
+  if (!FOLD.canvas) return;
+  FOLD.ctx = FOLD.canvas.getContext('2d');
+
+  window.addEventListener('resize', foldResizeCanvas);
+  const panel = document.getElementById('fold-panel');
+  if (panel && window.ResizeObserver)
+    new ResizeObserver(() => foldResizeCanvas()).observe(panel);
+  [0, 50, 150, 350].forEach(d => setTimeout(foldResizeCanvas, d));
+
+  function foldLoop(ts) {
+    const c = FOLD.canvas;
+    const panelVisible = !(document.getElementById('fold-panel')?.style.display === 'none');
+    if (c && (c.width === 0 || c.height === 0)) foldResizeCanvas();
+
+    if (c && c.width > 0 && c.height > 0 && panelVisible) {
+      FOLD.lastTs = ts;
+
+      // Advance window: how many nt have emerged from exit channel?
+      if (ANIM.gene && FOLD.seq) {
+        const ntEmit = Math.max(0,
+          Math.floor(ANIM.pos / (ANIM.geneLen / FOLD.seq.length)) - FOLD.EXIT_OFFSET_NT);
+        const winEnd = Math.min(ntEmit, FOLD.seq.length);
+        const winStart = Math.max(0, winEnd - FOLD.WIN_NT);
+        const prevEnd = FOLD.winEnd;
+        FOLD.winStart = winStart;
+        FOLD.winEnd   = winEnd;
+
+        // Re-run Nussinov when enough new nt have appeared
+        if (winEnd >= FOLD.lastFoldWinEnd + FOLD.REFOLD_NT || FOLD.pairs === null) {
+          foldRunStructure();
+          FOLD.lastFoldWinEnd = winEnd;
+        }
+      }
+
+      foldDraw();
+    } else if (!panelVisible) {
+      FOLD.lastTs = null;
+    }
+    FOLD.rafHandle = requestAnimationFrame(foldLoop);
+  }
+  FOLD.rafHandle = requestAnimationFrame(foldLoop);
+}
+
+/* -- foldReset: called when a new gene loads or animation restarts ------- */
+function foldReset() {
+  FOLD.nodes          = [];
+  FOLD.winStart       = 0;
+  FOLD.winEnd         = 0;
+  FOLD.pairs          = null;
+  FOLD.energy         = 0;
+  FOLD.forcePN        = 0;
+  FOLD.lastFoldWinEnd = -1;
+  FOLD.layoutPrev     = null;
+  FOLD.layoutTarget   = null;
+  FOLD.layoutAlpha    = 1.0;
+  // Generate synthetic RNA sequence for the full gene at realistic GC content
+  if (ANIM.geneLen > 0) {
+    const gcFrac = ANIM.gcContent || 0.52;
+    FOLD.seq = foldGenSeq(FOLD.WIN_NT * 10, gcFrac); // generate plenty
+  } else {
+    FOLD.seq = null;
+  }
+}
+
+/* -- foldRunStructure: Nussinov fold on current window + force calc ------ */
+function foldRunStructure() {
+  const n = FOLD.winEnd - FOLD.winStart;
+  if (n < 6 || !FOLD.seq) { FOLD.pairs = null; return; }
+  const result = nussinovFold(FOLD.seq, FOLD.winStart % FOLD.seq.length,
+                               Math.min(FOLD.winStart % FOLD.seq.length + n, FOLD.seq.length));
+  FOLD.pairs  = result.pairs;
+  FOLD.energy = result.energy;  // kcal/mol, negative = stable
+
+  // Precompute layout and set up smooth lerp to new structure
+  const newLayout = computeRNALayout(FOLD.pairs, n);
+  if (newLayout) {
+    // Snapshot current mid-lerp position as the new "prev" so transitions
+    // always start from wherever the beads currently are on screen.
+    if (FOLD.layoutPrev && FOLD.layoutTarget && FOLD.layoutAlpha < 1.0 &&
+        FOLD.layoutPrev.px.length === FOLD.layoutTarget.px.length) {
+      const a = FOLD.layoutAlpha;
+      const pn = FOLD.layoutPrev.px.length;
+      const ppx = new Float32Array(pn), ppy = new Float32Array(pn);
+      for (let i = 0; i < pn; i++) {
+        ppx[i] = FOLD.layoutPrev.px[i]*(1-a) + FOLD.layoutTarget.px[i]*a;
+        ppy[i] = FOLD.layoutPrev.py[i]*(1-a) + FOLD.layoutTarget.py[i]*a;
+      }
+      FOLD.layoutPrev = { px: ppx, py: ppy };
+    } else {
+      FOLD.layoutPrev = FOLD.layoutTarget;
+    }
+    FOLD.layoutTarget = newLayout;
+    FOLD.layoutAlpha  = 0.0;
+  }
+
+  // --- Mechanochemical drag force on RNA Pol II ---
+  // Physical basis (Galburt 2007, Larson 2008, Nudler 2012):
+  //   Each stem-loop that has formed upstream of the exit channel
+  //   exerts a backward pulling force on the nascent RNA, resisting
+  //   forward translocation of RNAP.
+  //
+  //   F_stem = |ΔG_stem| / Δx
+  //   where Δx = N_stem × 0.59 nm (ssRNA rise per nt at ~5 pN, WLC model)
+  //   and 1 kcal/mol = 69.5 pN·nm at 310 K
+  //
+  //   We also include an entropic backpressure term from the RNA chain:
+  //   F_entropic ≈ kT/l_p × (extension/contour ratio) using WLC
+  //   kT = 4.28 pN·nm at 310K, l_p(RNA) ≈ 1.0 nm
+  const kT_pNnm   = 4.28;      // thermal energy at 310 K (pN·nm)
+  const lp_nm     = 1.0;       // RNA persistence length (nm)
+  const rise_nm   = 0.59;      // ssRNA rise per nt (nm)
+  const kcal_pNnm = 69.5;      // 1 kcal/mol in pN·nm at 310K
+
+  // Identify stems in pair list
+  let totalF = 0;
+  const pairs = FOLD.pairs;
+  if (pairs) {
+    let i = 0;
+    while (i < pairs.length) {
+      const j = pairs[i];
+      if (j > i) {
+        // Found a base pair (i,j). Walk outward to count stem length.
+        let stemLen = 0, k = i;
+        while (k < pairs.length && pairs[k] === j - (k - i) && pairs[k] > k) {
+          stemLen++; k++;
+        }
+        if (stemLen >= 2) {
+          // ΔG of this stem (sum of pair energies, negative = stable)
+          let dg = 0;
+          for (let s = 0; s < stemLen; s++) {
+            const a = FOLD.seq[(FOLD.winStart + i + s) % FOLD.seq.length];
+            const b = FOLD.seq[(FOLD.winStart + pairs[i+s]) % FOLD.seq.length];
+            const e = foldPairEnergy(a, b);
+            if (e < 1) dg += e;
+          }
+          // Force from this stem (pN)
+          const dx_nm = stemLen * rise_nm;
+          const F_stem = Math.abs(dg) * kcal_pNnm / dx_nm;
+          // Distance of stem from exit channel (in nt) → maturity weighting
+          // Stem is in window positions i..i+stemLen; 3' end = index winEnd-1
+          const dist5prime_nt = (FOLD.winEnd - FOLD.winStart) - i;
+          const maturity = Math.max(0, Math.min(1, 1 - dist5prime_nt / 40));
+          totalF += F_stem * maturity;
+        }
+        i = k;
+      } else {
+        i++;
+      }
+    }
+  }
+
+  // Entropic backpressure from RNA chain (WLC model)
+  // L = contour length (nm), x = end-to-end extension (nm)
+  const ntFree = FOLD.winEnd - FOLD.winStart;
+  if (ntFree > 10) {
+    const L_nm = ntFree * rise_nm;
+    const x_nm = Math.min(L_nm * 0.85, L_nm - 0.1);   // ~85% extended
+    const r    = x_nm / L_nm;
+    // WLC: F = (kT/lp) × [1/(4(1-r)²) - 1/4 + r]
+    const F_wlc = (kT_pNnm / lp_nm) * (1 / (4*(1-r)*(1-r)) - 0.25 + r);
+    totalF += Math.min(F_wlc, 8);  // entropic term caps at ~8 pN
+  }
+
+  FOLD.forcePN = Math.max(0, totalF);
+}
+
+/* -- foldUpdate: replaced by computeRNALayout deterministic layout ------- */
+function foldUpdate() { /* no-op: layout is now computed deterministically */ }
+
+/* -- foldDraw: render bead chain (top) + arc diagram (bottom) + force --- */
+function foldDraw() {
+  const c = FOLD.canvas;
+  if (!c || !FOLD.ctx) return;
+  const ctx  = FOLD.ctx;
+  const W = c.width, H = c.height;
+  const Z = FOLD.zoom || 1.0;
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#07080e';
+  ctx.fillRect(0,0,W,H);
+
+  // Subtle grid
+  ctx.fillStyle = 'rgba(124,58,237,0.05)';
+  for (let gx=16;gx<W;gx+=22) for (let gy=16;gy<H;gy+=22) {
+    ctx.beginPath(); ctx.arc(gx,gy,1,0,Math.PI*2); ctx.fill();
+  }
+
+  if (!ANIM.gene) {
+    ctx.fillStyle = '#a78bfa'; ctx.font = 'bold 14px monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('🔬 RNA Fold View', W/2, H/2-18);
+    ctx.fillStyle = '#6d4ea8'; ctx.font = '11px monospace';
+    ctx.fillText('Load a gene → ▶ Play', W/2, H/2+8);
+    return;
+  }
+
+  const pairs = FOLD.pairs;
+  const physH = Math.round(H * 0.54);  // top section: secondary structure layout
+  const arcY0 = physH + 14;             // arc diagram baseline
+  const arcH  = H - arcY0 - 26;         // height available for arc diagram
+  const GAUGE_X = W - 24;              // force gauge x position
+
+  // ═══════════════════════════════════════════════════
+  // SECTION 1: 2D RNA secondary structure layout (top portion)
+  // Proper stem-loop diagram: stems as antiparallel strand ladders,
+  // hairpin loops as semicircles. Layout computed from Nussinov pairs.
+  // ═══════════════════════════════════════════════════
+  // Divider line
+  ctx.strokeStyle = 'rgba(80,40,160,0.4)'; ctx.lineWidth = 1;
+  ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(0, physH+2); ctx.lineTo(W-30, physH+2); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Section labels
+  ctx.fillStyle = 'rgba(100,60,200,0.55)'; ctx.font = '8px monospace';
+  ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  ctx.fillText('secondary structure', 4, 4);
+  ctx.fillText('base-pair arcs', 4, arcY0);
+
+  const winN1 = FOLD.winEnd - FOLD.winStart;
+  // Advance lerp alpha every draw frame (smoothstep easing)
+  if (FOLD.layoutAlpha < 1.0) {
+    FOLD.layoutAlpha = Math.min(1.0, FOLD.layoutAlpha + FOLD.LERP_SPEED);
+  }
+  if (winN1 > 3 && FOLD.layoutTarget && pairs && FOLD.seq) {
+    const targetL  = FOLD.layoutTarget;
+    const prevL    = FOLD.layoutPrev;
+    const lerpA    = FOLD.layoutAlpha;
+    // Smoothstep easing: ss = lerpA²*(3-2*lerpA)
+    const ss = lerpA * lerpA * (3 - 2 * lerpA);
+    let lx, ly;
+    if (prevL && lerpA < 1.0 && prevL.px.length === winN1 && targetL.px.length === winN1) {
+      lx = new Float32Array(winN1); ly = new Float32Array(winN1);
+      for (let i = 0; i < winN1; i++) {
+        lx[i] = prevL.px[i]*(1-ss) + targetL.px[i]*ss;
+        ly[i] = prevL.py[i]*(1-ss) + targetL.py[i]*ss;
+      }
+    } else {
+      lx = targetL.px; ly = targetL.py;
+    }
+    if (lx) {
+
+      // Compute bounding box of layout
+      let bbMinX = Infinity, bbMaxX = -Infinity, bbMinY = Infinity, bbMaxY = -Infinity;
+      for (let i = 0; i < winN1; i++) {
+        if (lx[i] < bbMinX) bbMinX = lx[i];
+        if (lx[i] > bbMaxX) bbMaxX = lx[i];
+        if (ly[i] < bbMinY) bbMinY = ly[i];
+        if (ly[i] > bbMaxY) bbMaxY = ly[i];
+      }
+
+      // Scale to fit the top panel with margin
+      const availW1 = GAUGE_X - 20;
+      const availH1 = physH - 24;
+      const bbW = Math.max(1, bbMaxX - bbMinX);
+      const bbH = Math.max(1, bbMaxY - bbMinY);
+      const sc  = Math.min(availW1 / bbW, availH1 / bbH, 4);
+
+      // Translate: centre horizontally, place top of layout at y=16
+      const offX1 = (availW1 - bbW * sc) / 2 + 10 - bbMinX * sc;
+      const offY1 = 16 - bbMinY * sc;
+
+      // Map layout coords to canvas
+      function lc(i) {
+        return { x: lx[i] * sc + offX1, y: ly[i] * sc + offY1 };
+      }
+
+      // --- Draw base-pair rungs (between stem strands) ---
+      ctx.lineWidth = 1.0;
+      for (let i = 0; i < winN1; i++) {
+        const j = pairs[i];
+        if (j > i && j < winN1) {
+          const a = lc(i), b = lc(j);
+          const bI = FOLD.seq[(FOLD.winStart + i) % FOLD.seq.length];
+          const bJ = FOLD.seq[(FOLD.winStart + j) % FOLD.seq.length];
+          const e  = foldPairEnergy(bI, bJ);
+          ctx.strokeStyle = e < -2.5 ? 'rgba(52,211,153,0.80)'
+                          : e < -1.5 ? 'rgba(251,191,36,0.75)'
+                                      : 'rgba(251,146,60,0.65)';
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+
+      // --- Draw backbone (continuous 5'→3' path) ---
+      ctx.beginPath();
+      const p0 = lc(0);
+      ctx.moveTo(p0.x, p0.y);
+      for (let i = 1; i < winN1; i++) {
+        // Don't draw backbone across base-pair rungs (across the helix gap)
+        // Skip the connection between paired nt j and j+1 if j is the outer 3'-end
+        // (they're on different strands). Detect: if pairs[i-1] < i-1 && pairs[i] > i
+        // this is an awkward transition. Simple heuristic: skip if distance is large.
+        const pp = lc(i-1), pc = lc(i);
+        const dist = Math.hypot(pc.x-pp.x, pc.y-pp.y);
+        if (dist > 30 * sc + 20) {
+          ctx.moveTo(pc.x, pc.y);  // lift pen for large jumps
+        } else {
+          ctx.lineTo(pc.x, pc.y);
+        }
+      }
+      ctx.strokeStyle = 'rgba(139,60,255,0.75)'; ctx.lineWidth = 1.4; ctx.stroke();
+
+      // --- Draw nucleotide beads (coloured by base) ---
+      const BCOL1 = ['rgba(248,113,113,0.92)',  // A: red
+                     'rgba(96,165,250,0.92)',   // U: blue
+                     'rgba(52,211,153,0.92)',   // G: teal
+                     'rgba(251,191,36,0.92)']; // C: amber
+      const DOT_R = Math.max(2.0, Math.min(4.5, sc * 1.4));
+      for (let i = 0; i < winN1; i++) {
+        const { x: bx, y: by } = lc(i);
+        const bIdx = FOLD.seq[(FOLD.winStart + i) % FOLD.seq.length];
+        ctx.beginPath(); ctx.arc(bx, by, DOT_R, 0, Math.PI * 2);
+        ctx.fillStyle = BCOL1[bIdx]; ctx.fill();
+      }
+
+      // 5' / 3' labels
+      const p5 = lc(0), p3 = lc(winN1 - 1);
+      ctx.font = '8px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      ctx.fillStyle = 'rgba(34,197,94,0.9)';
+      ctx.fillText("5'", p5.x, p5.y - 3);
+      ctx.fillStyle = 'rgba(6,182,212,0.9)';
+      ctx.fillText("3'", p3.x, p3.y - 3);
+
+      // Annotate stems: show stem labels
+      ctx.font = '7px monospace'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = 'rgba(180,160,255,0.60)';
+      let stemCount = 0;
+      for (let i = 0; i < winN1; i++) {
+        const j = pairs[i];
+        if (j > i && j < winN1) {
+          // Midpoint of the base-pair rung
+          const a = lc(i), b = lc(j);
+          const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+          stemCount++;
+          break; // just label first pair
+        }
+      }
+    }
+  } else {
+    ctx.fillStyle = '#7c3aed'; ctx.font = '11px monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('Awaiting transcript…', W/2, physH/2);
+  }
+
+  // ═══════════════════════════════════════════════════
+  // SECTION 2: Arc diagram — accurate 2D secondary structure
+  // ═══════════════════════════════════════════════════
+  const winN = FOLD.winEnd - FOLD.winStart;
+  if (winN > 2 && pairs && FOLD.seq) {
+    const margin = 14;
+    const availW = GAUGE_X - margin*2;
+    const bpx    = availW / Math.max(1, winN-1);  // px per nucleotide
+    const baseY  = arcY0 + arcH * 0.62;           // sequence baseline
+    const maxArcH = arcH * 0.82;
+
+    // Backbone line
+    ctx.strokeStyle = 'rgba(100,70,200,0.5)'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(margin, baseY);
+    ctx.lineTo(margin + availW, baseY);
+    ctx.stroke();
+
+    // Arc for each base pair
+    for (let i = 0; i < pairs.length && i < winN; i++) {
+      const j = pairs[i];
+      if (j > i && j < winN) {
+        const xi = margin + i * bpx;
+        const xj = margin + j * bpx;
+        const xmid = (xi+xj)/2;
+        const arcRad = Math.min((xj-xi)/2, maxArcH);
+        const a = FOLD.seq[(FOLD.winStart+i)%FOLD.seq.length];
+        const b = FOLD.seq[(FOLD.winStart+j)%FOLD.seq.length];
+        const e = foldPairEnergy(a, b);
+        const col = e < -2.5 ? 'rgba(52,211,153,0.70)'   // G-C
+                  : e < -1.5 ? 'rgba(251,191,36,0.65)'   // A-U
+                              : 'rgba(251,146,60,0.55)';  // G-U
+        ctx.beginPath();
+        ctx.arc(xmid, baseY, arcRad, Math.PI, 0);
+        ctx.strokeStyle = col; ctx.lineWidth = 1.0; ctx.stroke();
+      }
+    }
+
+    // Nucleotide circles on baseline (color-coded by base)
+    const BCOL2 = ['#f87171','#60a5fa','#34d399','#fbbf24']; // A U G C
+    const dotR  = Math.max(1.5, Math.min(3.5, bpx*0.38));
+    for (let i=0; i<winN; i++) {
+      const bIdx = FOLD.seq[(FOLD.winStart+i) % FOLD.seq.length];
+      ctx.beginPath();
+      ctx.arc(margin + i*bpx, baseY, dotR, 0, Math.PI*2);
+      ctx.fillStyle = BCOL2[bIdx]; ctx.fill();
+    }
+
+    // 5'/3' labels
+    ctx.fillStyle='rgba(34,197,94,0.8)'; ctx.font='8px monospace';
+    ctx.textAlign='center'; ctx.textBaseline='top';
+    ctx.fillText("5'", margin, baseY+4);
+    ctx.fillStyle='rgba(6,182,212,0.8)';
+    ctx.fillText("3'", margin+availW, baseY+4);
+
+    // Base legend (bottom right of arc section)
+    const legX = margin+4, legY = arcY0 + arcH - 2;
+    const labels = [['A','#f87171'],['U','#60a5fa'],['G','#34d399'],['C','#fbbf24']];
+    labels.forEach(([l,col],k) => {
+      ctx.fillStyle=col; ctx.font='7px monospace'; ctx.textAlign='left';
+      ctx.textBaseline='bottom';
+      ctx.fillText(l, legX + k*18, legY);
+    });
+    // pair type legend
+    [['G·C','rgba(52,211,153,0.8)'],['A·U','rgba(251,191,36,0.8)'],['G·U','rgba(251,146,60,0.8)']].forEach(([l,c],k)=>{
+      ctx.strokeStyle=c; ctx.lineWidth=1.5; ctx.beginPath();
+      ctx.moveTo(legX+80+k*32, legY-4); ctx.lineTo(legX+94+k*32, legY-4); ctx.stroke();
+      ctx.fillStyle=c; ctx.font='6px monospace'; ctx.textAlign='left';
+      ctx.fillText(l, legX+82+k*32, legY);
+    });
+  }
+
+  // ═══════════════════════════════════════════════════
+  // SECTION 3: Mechanochemical drag-force gauge (right strip)
+  // ═══════════════════════════════════════════════════
+  const gx = GAUGE_X + 2, gy0 = 30, gh = H - 60;
+  const maxF = 40;   // pN scale max
+  const F    = Math.min(FOLD.forcePN, maxF);
+  const frac = F / maxF;
+
+  // Background track
+  ctx.fillStyle = 'rgba(30,20,60,0.8)';
+  ctx.fillRect(gx, gy0, 18, gh);
+
+  // Filled bar (gradient green→yellow→red)
+  const barTop = gy0 + gh * (1-frac);
+  const grd = ctx.createLinearGradient(0, gy0+gh, 0, gy0);
+  grd.addColorStop(0,   'rgba(52,211,153,0.9)');
+  grd.addColorStop(0.5, 'rgba(251,191,36,0.9)');
+  grd.addColorStop(1.0, 'rgba(239,68,68,0.9)');
+  ctx.fillStyle = grd;
+  ctx.fillRect(gx, barTop, 18, gh*frac);
+
+  // Tick marks at 10, 20, 30 pN
+  [10,20,30].forEach(tF => {
+    const ty = gy0 + gh*(1-tF/maxF);
+    ctx.strokeStyle='rgba(180,160,255,0.4)'; ctx.lineWidth=0.8;
+    ctx.beginPath(); ctx.moveTo(gx,ty); ctx.lineTo(gx+18,ty); ctx.stroke();
+    ctx.fillStyle='rgba(180,160,255,0.55)'; ctx.font='6px monospace';
+    ctx.textAlign='right'; ctx.textBaseline='middle';
+    ctx.fillText(tF, gx-2, ty);
+  });
+
+  // Current force value
+  ctx.fillStyle = F>25 ? '#ef4444' : F>12 ? '#fbbf24' : '#34d399';
+  ctx.font = 'bold 7px monospace';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+  ctx.fillText(F.toFixed(1), gx+9, barTop-2);
+
+  // Label: pN
+  ctx.save(); ctx.translate(gx+9, gy0+gh/2);
+  ctx.rotate(-Math.PI/2); ctx.fillStyle='rgba(160,130,240,0.6)';
+  ctx.font='7px monospace'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('drag force (pN)', 0, 0); ctx.restore();
+
+  // ═══════════════════════════════════════════════════
+  // Stats bar (bottom)
+  // ═══════════════════════════════════════════════════
+  const npairs = pairs ? pairs.reduce((s,v,i)=>s+(v>i?1:0), 0) : 0;
+  const dg     = FOLD.energy;
+  ctx.fillStyle = 'rgba(8,9,18,0.94)';
+  ctx.fillRect(0, H-22, W, 22);
+  ctx.fillStyle = '#a78bfa'; ctx.font='8.5px monospace';
+  ctx.textAlign='left'; ctx.textBaseline='middle';
+  ctx.fillText(
+    `win ${FOLD.winStart}-${FOLD.winEnd} nt · ${npairs} bp · ΔG ${dg.toFixed(1)} kcal/mol · F ${FOLD.forcePN.toFixed(1)} pN`,
+    5, H-11);
+}
+
+/* ============================================================
+   Utility
+============================================================ */
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{
+  "description": "MCF-7 epigenomic data from ENCODE (GRCh38)",
+  "downloaded": "2026-04-04T15:51:55.221786+00:00",
+  "tracks": {
+    "WGBS_methylation": {
+      "status": "not_found"
+    },
+    "H3K36me3": {
+      "experiment_accession": "ENCSR610IYQ",
+      "file_accession": "ENCFF685ECA",
+      "assay_used": "Histone ChIP-seq",
+      "output_type": "fold change over control",
+      "assembly": "GRCh38",
+      "local_file": "/home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/data/epigenomics/H3K36me3/ENCFF685ECA.bigWig",
+      "status": "downloaded"
+    },
+    "H3K27ac": {
+      "experiment_accession": "ENCSR752UOD",
+      "file_accession": "ENCFF515VXR",
+      "assay_used": "Histone ChIP-seq",
+      "output_type": "fold change over control",
+      "assembly": "GRCh38",
+      "local_file": "/home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/data/epigenomics/H3K27ac/ENCFF515VXR.bigWig",
+      "status": "downloaded"
+    },
+    "H3K4me3": {
+      "experiment_accession": "ENCSR985MIB",
+      "file_accession": "ENCFF267OQQ",
+      "assay_used": "Histone ChIP-seq",
+      "output_type": "fold change over control",
+      "assembly": "GRCh38",
+      "local_file": "/home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/data/epigenomics/H3K4me3/ENCFF267OQQ.bigWig",
+      "status": "downloaded"
+    },
+    "H3K27me3": {
+      "experiment_accession": "ENCSR761DLU",
+      "file_accession": "ENCFF495QYP",
+      "assay_used": "Histone ChIP-seq",
+      "output_type": "fold change over control",
+      "assembly": "GRCh38",
+      "local_file": "/home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/data/epigenomics/H3K27me3/ENCFF495QYP.bigWig",
+      "status": "downloaded"
+    },
+    "CTCF": {
+      "experiment_accession": "ENCSR560BUE",
+      "file_accession": "ENCFF157EYO",
+      "assay_used": "TF ChIP-seq",
+      "output_type": "fold change over control",
+      "assembly": "GRCh38",
+      "local_file": "/home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/data/epigenomics/CTCF/ENCFF157EYO.bigWig",
+      "status": "downloaded"
+    }
+  }
+}

@@ -1,0 +1,2882 @@
+{
+  "H3K36me3": {
+    "chr1_17719200_17902750_+": {
+      "file": "results/epigenomics/chr1_17719200_17902750_+_H3K36me3.npy",
+      "length_bp": 183550,
+      "mean": 0.41271308064460754,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_15123211_15267238_+": {
+      "file": "results/epigenomics/chr1_15123211_15267238_+_H3K36me3.npy",
+      "length_bp": 144027,
+      "mean": 0.8077362775802612,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_160306204_160606437_+": {
+      "file": "results/epigenomics/chr1_160306204_160606437_+_H3K36me3.npy",
+      "length_bp": 300233,
+      "mean": 0.6998165249824524,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_198273750_198413950_+": {
+      "file": "results/epigenomics/chr1_198273750_198413950_+_H3K36me3.npy",
+      "length_bp": 140200,
+      "mean": 0.7753634452819824,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_21416326_21544621_-": {
+      "file": "results/epigenomics/chr1_21416326_21544621_-_H3K36me3.npy",
+      "length_bp": 128295,
+      "mean": 0.37270504236221313,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_65071493_65204775_-": {
+      "file": "results/epigenomics/chr1_65071493_65204775_-_H3K36me3.npy",
+      "length_bp": 133282,
+      "mean": 0.564572811126709,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_94230981_94359293_-": {
+      "file": "results/epigenomics/chr1_94230981_94359293_-_H3K36me3.npy",
+      "length_bp": 128312,
+      "mean": 0.4026992619037628,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_80498797_80746291_+": {
+      "file": "results/epigenomics/chr10_80498797_80746291_+_H3K36me3.npy",
+      "length_bp": 247494,
+      "mean": 0.6933726072311401,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_134201342_134446974_+": {
+      "file": "results/epigenomics/chr10_134201342_134446974_+_H3K36me3.npy",
+      "length_bp": 245632,
+      "mean": NaN,
+      "nan_frac": 1.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_12431737_12908148_+": {
+      "file": "results/epigenomics/chr10_12431737_12908148_+_H3K36me3.npy",
+      "length_bp": 476411,
+      "mean": 0.6319599747657776,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_129595314_129774152_+": {
+      "file": "results/epigenomics/chr10_129595314_129774152_+_H3K36me3.npy",
+      "length_bp": 178838,
+      "mean": 0.9370731115341187,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_95056175_95232064_-": {
+      "file": "results/epigenomics/chr10_95056175_95232064_-_H3K36me3.npy",
+      "length_bp": 175889,
+      "mean": 0.5652090311050415,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_29786282_30064736_-": {
+      "file": "results/epigenomics/chr10_29786282_30064736_-_H3K36me3.npy",
+      "length_bp": 278454,
+      "mean": 0.5634230971336365,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_17402681_17536260_-": {
+      "file": "results/epigenomics/chr10_17402681_17536260_-_H3K36me3.npy",
+      "length_bp": 133579,
+      "mean": 0.7008143067359924,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_131067500_131279900_+": {
+      "file": "results/epigenomics/chr11_131067500_131279900_+_H3K36me3.npy",
+      "length_bp": 212400,
+      "mean": 0.2707643210887909,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_86189138_86341478_+": {
+      "file": "results/epigenomics/chr11_86189138_86341478_+_H3K36me3.npy",
+      "length_bp": 152340,
+      "mean": 1.191972017288208,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_77603984_77806516_-": {
+      "file": "results/epigenomics/chr11_77603984_77806516_-_H3K36me3.npy",
+      "length_bp": 202532,
+      "mean": 1.6148484945297241,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_16765787_16992539_-": {
+      "file": "results/epigenomics/chr11_16765787_16992539_-_H3K36me3.npy",
+      "length_bp": 226752,
+      "mean": 1.397587776184082,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_34129110_34335378_-": {
+      "file": "results/epigenomics/chr11_34129110_34335378_-_H3K36me3.npy",
+      "length_bp": 206268,
+      "mean": 1.1884146928787231,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_85829797_86061075_-": {
+      "file": "results/epigenomics/chr11_85829797_86061075_-_H3K36me3.npy",
+      "length_bp": 231278,
+      "mean": 1.7859439849853516,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_62524807_62827880_+": {
+      "file": "results/epigenomics/chr12_62524807_62827880_+_H3K36me3.npy",
+      "length_bp": 303073,
+      "mean": 1.4269297122955322,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_103374907_103676013_+": {
+      "file": "results/epigenomics/chr12_103374907_103676013_+_H3K36me3.npy",
+      "length_bp": 301106,
+      "mean": 0.5463209748268127,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_37973296_38123185_-": {
+      "file": "results/epigenomics/chr12_37973296_38123185_-_H3K36me3.npy",
+      "length_bp": 149889,
+      "mean": 0.6144288182258606,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_112670757_112800863_+": {
+      "file": "results/epigenomics/chr13_112670757_112800863_+_H3K36me3.npy",
+      "length_bp": 130106,
+      "mean": 0.6052082180976868,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_97593434_97900024_+": {
+      "file": "results/epigenomics/chr13_97593434_97900024_+_H3K36me3.npy",
+      "length_bp": 306590,
+      "mean": 0.3059423863887787,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_112392643_112589483_+": {
+      "file": "results/epigenomics/chr13_112392643_112589483_+_H3K36me3.npy",
+      "length_bp": 196840,
+      "mean": 0.8884177803993225,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_92675200_93009350_+": {
+      "file": "results/epigenomics/chr13_92675200_93009350_+_H3K36me3.npy",
+      "length_bp": 334150,
+      "mean": 0.3013872504234314,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr14_90807419_90953886_-": {
+      "file": "results/epigenomics/chr14_90807419_90953886_-_H3K36me3.npy",
+      "length_bp": 146467,
+      "mean": 0.9285248517990112,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr14_92473011_92652016_-": {
+      "file": "results/epigenomics/chr14_92473011_92652016_-_H3K36me3.npy",
+      "length_bp": 179005,
+      "mean": 0.7164302468299866,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_55671405_55797045_+": {
+      "file": "results/epigenomics/chr15_55671405_55797045_+_H3K36me3.npy",
+      "length_bp": 125640,
+      "mean": 0.6156619191169739,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_78858766_79031054_+": {
+      "file": "results/epigenomics/chr15_78858766_79031054_+_H3K36me3.npy",
+      "length_bp": 172288,
+      "mean": 1.2325384616851807,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_30853636_31147377_-": {
+      "file": "results/epigenomics/chr15_30853636_31147377_-_H3K36me3.npy",
+      "length_bp": 293741,
+      "mean": 0.7617778182029724,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr16_3952652_4106187_-": {
+      "file": "results/epigenomics/chr16_3952652_4106187_-_H3K36me3.npy",
+      "length_bp": 153535,
+      "mean": 1.266274333000183,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr16_17103681_17472239_-": {
+      "file": "results/epigenomics/chr16_17103681_17472239_-_H3K36me3.npy",
+      "length_bp": 368558,
+      "mean": 0.703319251537323,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_72789086_73008273_+": {
+      "file": "results/epigenomics/chr17_72789086_73008273_+_H3K36me3.npy",
+      "length_bp": 219187,
+      "mean": 0.965531587600708,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_62804385_63120109_+": {
+      "file": "results/epigenomics/chr17_62804385_63120109_+_H3K36me3.npy",
+      "length_bp": 315724,
+      "mean": 0.9699971079826355,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_41327543_41461546_+": {
+      "file": "results/epigenomics/chr17_41327543_41461546_+_H3K36me3.npy",
+      "length_bp": 134003,
+      "mean": 0.5026981830596924,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_8865583_9088042_+": {
+      "file": "results/epigenomics/chr17_8865583_9088042_+_H3K36me3.npy",
+      "length_bp": 222459,
+      "mean": 0.592168927192688,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_68842118_69151822_-": {
+      "file": "results/epigenomics/chr17_68842118_69151822_-_H3K36me3.npy",
+      "length_bp": 309704,
+      "mean": 0.5382962226867676,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_9698227_9852553_+": {
+      "file": "results/epigenomics/chr18_9698227_9852553_+_H3K36me3.npy",
+      "length_bp": 154326,
+      "mean": 1.0707987546920776,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_19523559_19789027_+": {
+      "file": "results/epigenomics/chr18_19523559_19789027_+_H3K36me3.npy",
+      "length_bp": 265468,
+      "mean": 0.0007463119691237807,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_44319424_44643576_+": {
+      "file": "results/epigenomics/chr18_44319424_44643576_+_H3K36me3.npy",
+      "length_bp": 324152,
+      "mean": 0.3133334219455719,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_40514860_40902473_+": {
+      "file": "results/epigenomics/chr18_40514860_40902473_+_H3K36me3.npy",
+      "length_bp": 387613,
+      "mean": 0.30719247460365295,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr19_4920123_5104608_+": {
+      "file": "results/epigenomics/chr19_4920123_5104608_+_H3K36me3.npy",
+      "length_bp": 184485,
+      "mean": 0.9852450489997864,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr19_38804712_38956254_+": {
+      "file": "results/epigenomics/chr19_38804712_38956254_+_H3K36me3.npy",
+      "length_bp": 151542,
+      "mean": 1.2636666297912598,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_200879229_201055231_+": {
+      "file": "results/epigenomics/chr2_200879229_201055231_+_H3K36me3.npy",
+      "length_bp": 176002,
+      "mean": 1.6828601360321045,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_6974973_7101760_+": {
+      "file": "results/epigenomics/chr2_6974973_7101760_+_H3K36me3.npy",
+      "length_bp": 126787,
+      "mean": 0.6040396094322205,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_218372756_218517041_-": {
+      "file": "results/epigenomics/chr2_218372756_218517041_-_H3K36me3.npy",
+      "length_bp": 144285,
+      "mean": 1.1796621084213257,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr20_34142839_34284135_+": {
+      "file": "results/epigenomics/chr20_34142839_34284135_+_H3K36me3.npy",
+      "length_bp": 141296,
+      "mean": 0.5592560768127441,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr20_24397834_24595167_+": {
+      "file": "results/epigenomics/chr20_24397834_24595167_+_H3K36me3.npy",
+      "length_bp": 197333,
+      "mean": 0.5466839075088501,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_31412606_31853161_-": {
+      "file": "results/epigenomics/chr21_31412606_31853161_-_H3K36me3.npy",
+      "length_bp": 440555,
+      "mean": 0.7955901026725769,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_44742202_44955923_-": {
+      "file": "results/epigenomics/chr21_44742202_44955923_-_H3K36me3.npy",
+      "length_bp": 213721,
+      "mean": 1.30082106590271,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_38661052_38955488_-": {
+      "file": "results/epigenomics/chr21_38661052_38955488_-_H3K36me3.npy",
+      "length_bp": 294436,
+      "mean": 0.7517614364624023,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr22_21852551_21990224_+": {
+      "file": "results/epigenomics/chr22_21852551_21990224_+_H3K36me3.npy",
+      "length_bp": 137673,
+      "mean": 0.8705830574035645,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_57969166_58133022_+": {
+      "file": "results/epigenomics/chr3_57969166_58133022_+_H3K36me3.npy",
+      "length_bp": 163856,
+      "mean": 1.384520411491394,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_61522282_62255613_+": {
+      "file": "results/epigenomics/chr3_61522282_62255613_+_H3K36me3.npy",
+      "length_bp": 733331,
+      "mean": 0.6242140531539917,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_152287274_152634500_+": {
+      "file": "results/epigenomics/chr3_152287274_152634500_+_H3K36me3.npy",
+      "length_bp": 347226,
+      "mean": 0.8637334108352661,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_66511910_66633535_-": {
+      "file": "results/epigenomics/chr3_66511910_66633535_-_H3K36me3.npy",
+      "length_bp": 121625,
+      "mean": 0.4944196939468384,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_50375234_50515896_-": {
+      "file": "results/epigenomics/chr3_50375234_50515896_-_H3K36me3.npy",
+      "length_bp": 140662,
+      "mean": 0.31622520089149475,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_191157211_191322920_-": {
+      "file": "results/epigenomics/chr3_191157211_191322920_-_H3K36me3.npy",
+      "length_bp": 165709,
+      "mean": 0.5203292965888977,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_88075177_88281229_+": {
+      "file": "results/epigenomics/chr4_88075177_88281229_+_H3K36me3.npy",
+      "length_bp": 206052,
+      "mean": 0.7257614135742188,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_37569114_37817189_+": {
+      "file": "results/epigenomics/chr4_37569114_37817189_+_H3K36me3.npy",
+      "length_bp": 248075,
+      "mean": 0.778730571269989,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_37131946_37271527_+": {
+      "file": "results/epigenomics/chr4_37131946_37271527_+_H3K36me3.npy",
+      "length_bp": 139581,
+      "mean": 0.4699217975139618,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_2233623_2391950_-": {
+      "file": "results/epigenomics/chr4_2233623_2391950_-_H3K36me3.npy",
+      "length_bp": 158327,
+      "mean": 0.8421388864517212,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_139008129_139148300_+": {
+      "file": "results/epigenomics/chr5_139008129_139148300_+_H3K36me3.npy",
+      "length_bp": 140171,
+      "mean": 1.0629018545150757,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_167651642_167831884_+": {
+      "file": "results/epigenomics/chr5_167651642_167831884_+_H3K36me3.npy",
+      "length_bp": 180242,
+      "mean": 0.5206982493400574,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_60663856_60877755_+": {
+      "file": "results/epigenomics/chr5_60663856_60877755_+_H3K36me3.npy",
+      "length_bp": 213899,
+      "mean": 0.8902491927146912,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_65927931_66318107_+": {
+      "file": "results/epigenomics/chr5_65927931_66318107_+_H3K36me3.npy",
+      "length_bp": 390176,
+      "mean": 1.2191442251205444,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr6_15354505_15630232_+": {
+      "file": "results/epigenomics/chr6_15354505_15630232_+_H3K36me3.npy",
+      "length_bp": 275727,
+      "mean": 1.7099848985671997,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr6_20190850_20325900_-": {
+      "file": "results/epigenomics/chr6_20190850_20325900_-_H3K36me3.npy",
+      "length_bp": 135050,
+      "mean": 0.6393460035324097,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_36159360_36307677_+": {
+      "file": "results/epigenomics/chr7_36159360_36307677_+_H3K36me3.npy",
+      "length_bp": 148317,
+      "mean": 0.6511324644088745,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_141705800_142108133_+": {
+      "file": "results/epigenomics/chr7_141705800_142108133_+_H3K36me3.npy",
+      "length_bp": 402333,
+      "mean": 0.639624297618866,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_150884133_151205249_-": {
+      "file": "results/epigenomics/chr7_150884133_151205249_-_H3K36me3.npy",
+      "length_bp": 321116,
+      "mean": 0.9740012884140015,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_16093676_16427472_-": {
+      "file": "results/epigenomics/chr7_16093676_16427472_-_H3K36me3.npy",
+      "length_bp": 333796,
+      "mean": 0.6278478503227234,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_131458630_131911863_-": {
+      "file": "results/epigenomics/chr7_131458630_131911863_-_H3K36me3.npy",
+      "length_bp": 453233,
+      "mean": 0.7260255813598633,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr8_97575100_97698900_+": {
+      "file": "results/epigenomics/chr8_97575100_97698900_+_H3K36me3.npy",
+      "length_bp": 123800,
+      "mean": 0.8526509404182434,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr8_17545583_17702706_-": {
+      "file": "results/epigenomics/chr8_17545583_17702706_-_H3K36me3.npy",
+      "length_bp": 157123,
+      "mean": 1.4474962949752808,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr9_37905894_38059210_-": {
+      "file": "results/epigenomics/chr9_37905894_38059210_-_H3K36me3.npy",
+      "length_bp": 153316,
+      "mean": 1.890464425086975,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr9_85052126_85343168_-": {
+      "file": "results/epigenomics/chr9_85052126_85343168_-_H3K36me3.npy",
+      "length_bp": 291042,
+      "mean": 0.5456750988960266,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chrX_149282208_149433106_+": {
+      "file": "results/epigenomics/chrX_149282208_149433106_+_H3K36me3.npy",
+      "length_bp": 150898,
+      "mean": 0.5158390402793884,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chrX_10373595_10517949_-": {
+      "file": "results/epigenomics/chrX_10373595_10517949_-_H3K36me3.npy",
+      "length_bp": 144354,
+      "mean": 0.5712018013000488,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "_correlations": {
+      "pearson_r_grohmm": 0.08966152402350273,
+      "p_grohmm": 0.4289846688439656,
+      "pearson_r_danko": 0.05147156446812578,
+      "p_danko": 0.6502385652489158,
+      "n_genes": 80
+    }
+  },
+  "H3K27ac": {
+    "chr1_17719200_17902750_+": {
+      "file": "results/epigenomics/chr1_17719200_17902750_+_H3K27ac.npy",
+      "length_bp": 183550,
+      "mean": 0.35907959938049316,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_15123211_15267238_+": {
+      "file": "results/epigenomics/chr1_15123211_15267238_+_H3K27ac.npy",
+      "length_bp": 144027,
+      "mean": 1.3510794639587402,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_160306204_160606437_+": {
+      "file": "results/epigenomics/chr1_160306204_160606437_+_H3K27ac.npy",
+      "length_bp": 300233,
+      "mean": 0.42598867416381836,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_198273750_198413950_+": {
+      "file": "results/epigenomics/chr1_198273750_198413950_+_H3K27ac.npy",
+      "length_bp": 140200,
+      "mean": 0.4710739254951477,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_21416326_21544621_-": {
+      "file": "results/epigenomics/chr1_21416326_21544621_-_H3K27ac.npy",
+      "length_bp": 128295,
+      "mean": 0.34201955795288086,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_65071493_65204775_-": {
+      "file": "results/epigenomics/chr1_65071493_65204775_-_H3K27ac.npy",
+      "length_bp": 133282,
+      "mean": 0.5490598678588867,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_94230981_94359293_-": {
+      "file": "results/epigenomics/chr1_94230981_94359293_-_H3K27ac.npy",
+      "length_bp": 128312,
+      "mean": 0.5886740684509277,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_80498797_80746291_+": {
+      "file": "results/epigenomics/chr10_80498797_80746291_+_H3K27ac.npy",
+      "length_bp": 247494,
+      "mean": 0.6044621467590332,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_134201342_134446974_+": {
+      "file": "results/epigenomics/chr10_134201342_134446974_+_H3K27ac.npy",
+      "length_bp": 245632,
+      "mean": NaN,
+      "nan_frac": 1.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_12431737_12908148_+": {
+      "file": "results/epigenomics/chr10_12431737_12908148_+_H3K27ac.npy",
+      "length_bp": 476411,
+      "mean": 0.5931833386421204,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_129595314_129774152_+": {
+      "file": "results/epigenomics/chr10_129595314_129774152_+_H3K27ac.npy",
+      "length_bp": 178838,
+      "mean": 0.568021297454834,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_95056175_95232064_-": {
+      "file": "results/epigenomics/chr10_95056175_95232064_-_H3K27ac.npy",
+      "length_bp": 175889,
+      "mean": 0.46366235613822937,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_29786282_30064736_-": {
+      "file": "results/epigenomics/chr10_29786282_30064736_-_H3K27ac.npy",
+      "length_bp": 278454,
+      "mean": 0.9365949034690857,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_17402681_17536260_-": {
+      "file": "results/epigenomics/chr10_17402681_17536260_-_H3K27ac.npy",
+      "length_bp": 133579,
+      "mean": 0.9503147602081299,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_131067500_131279900_+": {
+      "file": "results/epigenomics/chr11_131067500_131279900_+_H3K27ac.npy",
+      "length_bp": 212400,
+      "mean": 0.21633709967136383,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_86189138_86341478_+": {
+      "file": "results/epigenomics/chr11_86189138_86341478_+_H3K27ac.npy",
+      "length_bp": 152340,
+      "mean": 0.8399417400360107,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_77603984_77806516_-": {
+      "file": "results/epigenomics/chr11_77603984_77806516_-_H3K27ac.npy",
+      "length_bp": 202532,
+      "mean": 0.6477808356285095,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_16765787_16992539_-": {
+      "file": "results/epigenomics/chr11_16765787_16992539_-_H3K27ac.npy",
+      "length_bp": 226752,
+      "mean": 1.365220308303833,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_34129110_34335378_-": {
+      "file": "results/epigenomics/chr11_34129110_34335378_-_H3K27ac.npy",
+      "length_bp": 206268,
+      "mean": 1.6063450574874878,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_85829797_86061075_-": {
+      "file": "results/epigenomics/chr11_85829797_86061075_-_H3K27ac.npy",
+      "length_bp": 231278,
+      "mean": 1.1560200452804565,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_62524807_62827880_+": {
+      "file": "results/epigenomics/chr12_62524807_62827880_+_H3K27ac.npy",
+      "length_bp": 303073,
+      "mean": 0.9290862083435059,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_103374907_103676013_+": {
+      "file": "results/epigenomics/chr12_103374907_103676013_+_H3K27ac.npy",
+      "length_bp": 301106,
+      "mean": 0.46084466576576233,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_37973296_38123185_-": {
+      "file": "results/epigenomics/chr12_37973296_38123185_-_H3K27ac.npy",
+      "length_bp": 149889,
+      "mean": 0.3263377845287323,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_112670757_112800863_+": {
+      "file": "results/epigenomics/chr13_112670757_112800863_+_H3K27ac.npy",
+      "length_bp": 130106,
+      "mean": 0.7704378962516785,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_97593434_97900024_+": {
+      "file": "results/epigenomics/chr13_97593434_97900024_+_H3K27ac.npy",
+      "length_bp": 306590,
+      "mean": 0.2536647319793701,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_112392643_112589483_+": {
+      "file": "results/epigenomics/chr13_112392643_112589483_+_H3K27ac.npy",
+      "length_bp": 196840,
+      "mean": 0.6475032567977905,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_92675200_93009350_+": {
+      "file": "results/epigenomics/chr13_92675200_93009350_+_H3K27ac.npy",
+      "length_bp": 334150,
+      "mean": 0.24102024734020233,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr14_90807419_90953886_-": {
+      "file": "results/epigenomics/chr14_90807419_90953886_-_H3K27ac.npy",
+      "length_bp": 146467,
+      "mean": 0.5481683015823364,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr14_92473011_92652016_-": {
+      "file": "results/epigenomics/chr14_92473011_92652016_-_H3K27ac.npy",
+      "length_bp": 179005,
+      "mean": 0.6530100107192993,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_55671405_55797045_+": {
+      "file": "results/epigenomics/chr15_55671405_55797045_+_H3K27ac.npy",
+      "length_bp": 125640,
+      "mean": 0.6007115840911865,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_78858766_79031054_+": {
+      "file": "results/epigenomics/chr15_78858766_79031054_+_H3K27ac.npy",
+      "length_bp": 172288,
+      "mean": 1.112493634223938,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_30853636_31147377_-": {
+      "file": "results/epigenomics/chr15_30853636_31147377_-_H3K27ac.npy",
+      "length_bp": 293741,
+      "mean": 0.5529845356941223,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr16_3952652_4106187_-": {
+      "file": "results/epigenomics/chr16_3952652_4106187_-_H3K27ac.npy",
+      "length_bp": 153535,
+      "mean": 0.7462999224662781,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr16_17103681_17472239_-": {
+      "file": "results/epigenomics/chr16_17103681_17472239_-_H3K27ac.npy",
+      "length_bp": 368558,
+      "mean": 1.038417935371399,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_72789086_73008273_+": {
+      "file": "results/epigenomics/chr17_72789086_73008273_+_H3K27ac.npy",
+      "length_bp": 219187,
+      "mean": 0.6021982431411743,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_62804385_63120109_+": {
+      "file": "results/epigenomics/chr17_62804385_63120109_+_H3K27ac.npy",
+      "length_bp": 315724,
+      "mean": 0.9476827383041382,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_41327543_41461546_+": {
+      "file": "results/epigenomics/chr17_41327543_41461546_+_H3K27ac.npy",
+      "length_bp": 134003,
+      "mean": 1.0082836151123047,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_8865583_9088042_+": {
+      "file": "results/epigenomics/chr17_8865583_9088042_+_H3K27ac.npy",
+      "length_bp": 222459,
+      "mean": 0.5986320972442627,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_68842118_69151822_-": {
+      "file": "results/epigenomics/chr17_68842118_69151822_-_H3K27ac.npy",
+      "length_bp": 309704,
+      "mean": 0.43618836998939514,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_9698227_9852553_+": {
+      "file": "results/epigenomics/chr18_9698227_9852553_+_H3K27ac.npy",
+      "length_bp": 154326,
+      "mean": 1.2006545066833496,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_19523559_19789027_+": {
+      "file": "results/epigenomics/chr18_19523559_19789027_+_H3K27ac.npy",
+      "length_bp": 265468,
+      "mean": 0.0009668568382039666,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_44319424_44643576_+": {
+      "file": "results/epigenomics/chr18_44319424_44643576_+_H3K27ac.npy",
+      "length_bp": 324152,
+      "mean": 0.28563010692596436,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_40514860_40902473_+": {
+      "file": "results/epigenomics/chr18_40514860_40902473_+_H3K27ac.npy",
+      "length_bp": 387613,
+      "mean": 0.27249184250831604,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr19_4920123_5104608_+": {
+      "file": "results/epigenomics/chr19_4920123_5104608_+_H3K27ac.npy",
+      "length_bp": 184485,
+      "mean": 0.8309188485145569,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr19_38804712_38956254_+": {
+      "file": "results/epigenomics/chr19_38804712_38956254_+_H3K27ac.npy",
+      "length_bp": 151542,
+      "mean": 3.6894304752349854,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_200879229_201055231_+": {
+      "file": "results/epigenomics/chr2_200879229_201055231_+_H3K27ac.npy",
+      "length_bp": 176002,
+      "mean": 1.1185505390167236,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_6974973_7101760_+": {
+      "file": "results/epigenomics/chr2_6974973_7101760_+_H3K27ac.npy",
+      "length_bp": 126787,
+      "mean": 0.45414862036705017,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_218372756_218517041_-": {
+      "file": "results/epigenomics/chr2_218372756_218517041_-_H3K27ac.npy",
+      "length_bp": 144285,
+      "mean": 1.6480755805969238,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr20_34142839_34284135_+": {
+      "file": "results/epigenomics/chr20_34142839_34284135_+_H3K27ac.npy",
+      "length_bp": 141296,
+      "mean": 0.5117359757423401,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr20_24397834_24595167_+": {
+      "file": "results/epigenomics/chr20_24397834_24595167_+_H3K27ac.npy",
+      "length_bp": 197333,
+      "mean": 0.45928826928138733,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_31412606_31853161_-": {
+      "file": "results/epigenomics/chr21_31412606_31853161_-_H3K27ac.npy",
+      "length_bp": 440555,
+      "mean": 0.694678783416748,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_44742202_44955923_-": {
+      "file": "results/epigenomics/chr21_44742202_44955923_-_H3K27ac.npy",
+      "length_bp": 213721,
+      "mean": 1.2750831842422485,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_38661052_38955488_-": {
+      "file": "results/epigenomics/chr21_38661052_38955488_-_H3K27ac.npy",
+      "length_bp": 294436,
+      "mean": 1.2964693307876587,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr22_21852551_21990224_+": {
+      "file": "results/epigenomics/chr22_21852551_21990224_+_H3K27ac.npy",
+      "length_bp": 137673,
+      "mean": 0.68044114112854,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_57969166_58133022_+": {
+      "file": "results/epigenomics/chr3_57969166_58133022_+_H3K27ac.npy",
+      "length_bp": 163856,
+      "mean": 2.735496759414673,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_61522282_62255613_+": {
+      "file": "results/epigenomics/chr3_61522282_62255613_+_H3K27ac.npy",
+      "length_bp": 733331,
+      "mean": 0.5316745042800903,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_152287274_152634500_+": {
+      "file": "results/epigenomics/chr3_152287274_152634500_+_H3K27ac.npy",
+      "length_bp": 347226,
+      "mean": 0.5721087455749512,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_66511910_66633535_-": {
+      "file": "results/epigenomics/chr3_66511910_66633535_-_H3K27ac.npy",
+      "length_bp": 121625,
+      "mean": 0.5438404679298401,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_50375234_50515896_-": {
+      "file": "results/epigenomics/chr3_50375234_50515896_-_H3K27ac.npy",
+      "length_bp": 140662,
+      "mean": 0.30063483119010925,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_191157211_191322920_-": {
+      "file": "results/epigenomics/chr3_191157211_191322920_-_H3K27ac.npy",
+      "length_bp": 165709,
+      "mean": 0.43305182456970215,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_88075177_88281229_+": {
+      "file": "results/epigenomics/chr4_88075177_88281229_+_H3K27ac.npy",
+      "length_bp": 206052,
+      "mean": 0.6854124665260315,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_37569114_37817189_+": {
+      "file": "results/epigenomics/chr4_37569114_37817189_+_H3K27ac.npy",
+      "length_bp": 248075,
+      "mean": 0.8181272745132446,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_37131946_37271527_+": {
+      "file": "results/epigenomics/chr4_37131946_37271527_+_H3K27ac.npy",
+      "length_bp": 139581,
+      "mean": 0.36174291372299194,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_2233623_2391950_-": {
+      "file": "results/epigenomics/chr4_2233623_2391950_-_H3K27ac.npy",
+      "length_bp": 158327,
+      "mean": 0.6073213219642639,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_139008129_139148300_+": {
+      "file": "results/epigenomics/chr5_139008129_139148300_+_H3K27ac.npy",
+      "length_bp": 140171,
+      "mean": 1.0557899475097656,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_167651642_167831884_+": {
+      "file": "results/epigenomics/chr5_167651642_167831884_+_H3K27ac.npy",
+      "length_bp": 180242,
+      "mean": 0.4545782208442688,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_60663856_60877755_+": {
+      "file": "results/epigenomics/chr5_60663856_60877755_+_H3K27ac.npy",
+      "length_bp": 213899,
+      "mean": 0.737725019454956,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_65927931_66318107_+": {
+      "file": "results/epigenomics/chr5_65927931_66318107_+_H3K27ac.npy",
+      "length_bp": 390176,
+      "mean": 0.6693325638771057,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr6_15354505_15630232_+": {
+      "file": "results/epigenomics/chr6_15354505_15630232_+_H3K27ac.npy",
+      "length_bp": 275727,
+      "mean": 1.0115513801574707,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr6_20190850_20325900_-": {
+      "file": "results/epigenomics/chr6_20190850_20325900_-_H3K27ac.npy",
+      "length_bp": 135050,
+      "mean": 1.5370298624038696,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_36159360_36307677_+": {
+      "file": "results/epigenomics/chr7_36159360_36307677_+_H3K27ac.npy",
+      "length_bp": 148317,
+      "mean": 0.8066965341567993,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_141705800_142108133_+": {
+      "file": "results/epigenomics/chr7_141705800_142108133_+_H3K27ac.npy",
+      "length_bp": 402333,
+      "mean": 0.4903392791748047,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_150884133_151205249_-": {
+      "file": "results/epigenomics/chr7_150884133_151205249_-_H3K27ac.npy",
+      "length_bp": 321116,
+      "mean": 1.5316839218139648,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_16093676_16427472_-": {
+      "file": "results/epigenomics/chr7_16093676_16427472_-_H3K27ac.npy",
+      "length_bp": 333796,
+      "mean": 0.5493389964103699,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_131458630_131911863_-": {
+      "file": "results/epigenomics/chr7_131458630_131911863_-_H3K27ac.npy",
+      "length_bp": 453233,
+      "mean": 0.7462365627288818,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr8_97575100_97698900_+": {
+      "file": "results/epigenomics/chr8_97575100_97698900_+_H3K27ac.npy",
+      "length_bp": 123800,
+      "mean": 0.7600664496421814,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr8_17545583_17702706_-": {
+      "file": "results/epigenomics/chr8_17545583_17702706_-_H3K27ac.npy",
+      "length_bp": 157123,
+      "mean": 1.3181452751159668,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr9_37905894_38059210_-": {
+      "file": "results/epigenomics/chr9_37905894_38059210_-_H3K27ac.npy",
+      "length_bp": 153316,
+      "mean": 4.413386821746826,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr9_85052126_85343168_-": {
+      "file": "results/epigenomics/chr9_85052126_85343168_-_H3K27ac.npy",
+      "length_bp": 291042,
+      "mean": 0.4310692846775055,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chrX_149282208_149433106_+": {
+      "file": "results/epigenomics/chrX_149282208_149433106_+_H3K27ac.npy",
+      "length_bp": 150898,
+      "mean": 0.3939395546913147,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chrX_10373595_10517949_-": {
+      "file": "results/epigenomics/chrX_10373595_10517949_-_H3K27ac.npy",
+      "length_bp": 144354,
+      "mean": 0.3784763813018799,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "_correlations": {
+      "pearson_r_grohmm": 0.10739720847283961,
+      "p_grohmm": 0.3430186098909113,
+      "pearson_r_danko": 0.04957885248413093,
+      "p_danko": 0.6623026062488054,
+      "n_genes": 80
+    }
+  },
+  "H3K4me3": {
+    "chr1_17719200_17902750_+": {
+      "file": "results/epigenomics/chr1_17719200_17902750_+_H3K4me3.npy",
+      "length_bp": 183550,
+      "mean": 0.3739374577999115,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_15123211_15267238_+": {
+      "file": "results/epigenomics/chr1_15123211_15267238_+_H3K4me3.npy",
+      "length_bp": 144027,
+      "mean": 1.2088403701782227,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_160306204_160606437_+": {
+      "file": "results/epigenomics/chr1_160306204_160606437_+_H3K4me3.npy",
+      "length_bp": 300233,
+      "mean": 0.6282690167427063,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_198273750_198413950_+": {
+      "file": "results/epigenomics/chr1_198273750_198413950_+_H3K4me3.npy",
+      "length_bp": 140200,
+      "mean": 0.4587131142616272,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_21416326_21544621_-": {
+      "file": "results/epigenomics/chr1_21416326_21544621_-_H3K4me3.npy",
+      "length_bp": 128295,
+      "mean": 0.5800442695617676,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_65071493_65204775_-": {
+      "file": "results/epigenomics/chr1_65071493_65204775_-_H3K4me3.npy",
+      "length_bp": 133282,
+      "mean": 1.000301480293274,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_94230981_94359293_-": {
+      "file": "results/epigenomics/chr1_94230981_94359293_-_H3K4me3.npy",
+      "length_bp": 128312,
+      "mean": 0.969001293182373,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_80498797_80746291_+": {
+      "file": "results/epigenomics/chr10_80498797_80746291_+_H3K4me3.npy",
+      "length_bp": 247494,
+      "mean": 0.6172592639923096,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_134201342_134446974_+": {
+      "file": "results/epigenomics/chr10_134201342_134446974_+_H3K4me3.npy",
+      "length_bp": 245632,
+      "mean": NaN,
+      "nan_frac": 1.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_12431737_12908148_+": {
+      "file": "results/epigenomics/chr10_12431737_12908148_+_H3K4me3.npy",
+      "length_bp": 476411,
+      "mean": 0.5374274253845215,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_129595314_129774152_+": {
+      "file": "results/epigenomics/chr10_129595314_129774152_+_H3K4me3.npy",
+      "length_bp": 178838,
+      "mean": 0.49918103218078613,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_95056175_95232064_-": {
+      "file": "results/epigenomics/chr10_95056175_95232064_-_H3K4me3.npy",
+      "length_bp": 175889,
+      "mean": 0.6974281072616577,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_29786282_30064736_-": {
+      "file": "results/epigenomics/chr10_29786282_30064736_-_H3K4me3.npy",
+      "length_bp": 278454,
+      "mean": 0.6530175805091858,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_17402681_17536260_-": {
+      "file": "results/epigenomics/chr10_17402681_17536260_-_H3K4me3.npy",
+      "length_bp": 133579,
+      "mean": 0.9514370560646057,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_131067500_131279900_+": {
+      "file": "results/epigenomics/chr11_131067500_131279900_+_H3K4me3.npy",
+      "length_bp": 212400,
+      "mean": 0.2445974200963974,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_86189138_86341478_+": {
+      "file": "results/epigenomics/chr11_86189138_86341478_+_H3K4me3.npy",
+      "length_bp": 152340,
+      "mean": 1.2043859958648682,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_77603984_77806516_-": {
+      "file": "results/epigenomics/chr11_77603984_77806516_-_H3K4me3.npy",
+      "length_bp": 202532,
+      "mean": 0.6775787472724915,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_16765787_16992539_-": {
+      "file": "results/epigenomics/chr11_16765787_16992539_-_H3K4me3.npy",
+      "length_bp": 226752,
+      "mean": 0.7565860152244568,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_34129110_34335378_-": {
+      "file": "results/epigenomics/chr11_34129110_34335378_-_H3K4me3.npy",
+      "length_bp": 206268,
+      "mean": 0.6448081135749817,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_85829797_86061075_-": {
+      "file": "results/epigenomics/chr11_85829797_86061075_-_H3K4me3.npy",
+      "length_bp": 231278,
+      "mean": 0.6696814298629761,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_62524807_62827880_+": {
+      "file": "results/epigenomics/chr12_62524807_62827880_+_H3K4me3.npy",
+      "length_bp": 303073,
+      "mean": 0.7398043274879456,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_103374907_103676013_+": {
+      "file": "results/epigenomics/chr12_103374907_103676013_+_H3K4me3.npy",
+      "length_bp": 301106,
+      "mean": 0.591259777545929,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_37973296_38123185_-": {
+      "file": "results/epigenomics/chr12_37973296_38123185_-_H3K4me3.npy",
+      "length_bp": 149889,
+      "mean": 0.6067212224006653,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_112670757_112800863_+": {
+      "file": "results/epigenomics/chr13_112670757_112800863_+_H3K4me3.npy",
+      "length_bp": 130106,
+      "mean": 0.6866903901100159,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_97593434_97900024_+": {
+      "file": "results/epigenomics/chr13_97593434_97900024_+_H3K4me3.npy",
+      "length_bp": 306590,
+      "mean": 0.26593104004859924,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_112392643_112589483_+": {
+      "file": "results/epigenomics/chr13_112392643_112589483_+_H3K4me3.npy",
+      "length_bp": 196840,
+      "mean": 0.5587304830551147,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_92675200_93009350_+": {
+      "file": "results/epigenomics/chr13_92675200_93009350_+_H3K4me3.npy",
+      "length_bp": 334150,
+      "mean": 0.26509538292884827,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr14_90807419_90953886_-": {
+      "file": "results/epigenomics/chr14_90807419_90953886_-_H3K4me3.npy",
+      "length_bp": 146467,
+      "mean": 0.6814467906951904,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr14_92473011_92652016_-": {
+      "file": "results/epigenomics/chr14_92473011_92652016_-_H3K4me3.npy",
+      "length_bp": 179005,
+      "mean": 0.6910296082496643,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_55671405_55797045_+": {
+      "file": "results/epigenomics/chr15_55671405_55797045_+_H3K4me3.npy",
+      "length_bp": 125640,
+      "mean": 0.9531241655349731,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_78858766_79031054_+": {
+      "file": "results/epigenomics/chr15_78858766_79031054_+_H3K4me3.npy",
+      "length_bp": 172288,
+      "mean": 1.2922468185424805,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_30853636_31147377_-": {
+      "file": "results/epigenomics/chr15_30853636_31147377_-_H3K4me3.npy",
+      "length_bp": 293741,
+      "mean": 0.7458561658859253,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr16_3952652_4106187_-": {
+      "file": "results/epigenomics/chr16_3952652_4106187_-_H3K4me3.npy",
+      "length_bp": 153535,
+      "mean": 0.621938943862915,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr16_17103681_17472239_-": {
+      "file": "results/epigenomics/chr16_17103681_17472239_-_H3K4me3.npy",
+      "length_bp": 368558,
+      "mean": 0.6479267477989197,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_72789086_73008273_+": {
+      "file": "results/epigenomics/chr17_72789086_73008273_+_H3K4me3.npy",
+      "length_bp": 219187,
+      "mean": 0.490153968334198,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_62804385_63120109_+": {
+      "file": "results/epigenomics/chr17_62804385_63120109_+_H3K4me3.npy",
+      "length_bp": 315724,
+      "mean": 0.7056577801704407,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_41327543_41461546_+": {
+      "file": "results/epigenomics/chr17_41327543_41461546_+_H3K4me3.npy",
+      "length_bp": 134003,
+      "mean": 0.5517951250076294,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_8865583_9088042_+": {
+      "file": "results/epigenomics/chr17_8865583_9088042_+_H3K4me3.npy",
+      "length_bp": 222459,
+      "mean": 0.8786588907241821,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_68842118_69151822_-": {
+      "file": "results/epigenomics/chr17_68842118_69151822_-_H3K4me3.npy",
+      "length_bp": 309704,
+      "mean": 0.4594559371471405,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_9698227_9852553_+": {
+      "file": "results/epigenomics/chr18_9698227_9852553_+_H3K4me3.npy",
+      "length_bp": 154326,
+      "mean": 1.0153683423995972,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_19523559_19789027_+": {
+      "file": "results/epigenomics/chr18_19523559_19789027_+_H3K4me3.npy",
+      "length_bp": 265468,
+      "mean": 0.020280111581087112,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_44319424_44643576_+": {
+      "file": "results/epigenomics/chr18_44319424_44643576_+_H3K4me3.npy",
+      "length_bp": 324152,
+      "mean": 0.26861339807510376,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_40514860_40902473_+": {
+      "file": "results/epigenomics/chr18_40514860_40902473_+_H3K4me3.npy",
+      "length_bp": 387613,
+      "mean": 0.25699174404144287,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr19_4920123_5104608_+": {
+      "file": "results/epigenomics/chr19_4920123_5104608_+_H3K4me3.npy",
+      "length_bp": 184485,
+      "mean": 0.5828665494918823,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr19_38804712_38956254_+": {
+      "file": "results/epigenomics/chr19_38804712_38956254_+_H3K4me3.npy",
+      "length_bp": 151542,
+      "mean": 2.5413570404052734,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_200879229_201055231_+": {
+      "file": "results/epigenomics/chr2_200879229_201055231_+_H3K4me3.npy",
+      "length_bp": 176002,
+      "mean": 1.28607177734375,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_6974973_7101760_+": {
+      "file": "results/epigenomics/chr2_6974973_7101760_+_H3K4me3.npy",
+      "length_bp": 126787,
+      "mean": 0.5485640168190002,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_218372756_218517041_-": {
+      "file": "results/epigenomics/chr2_218372756_218517041_-_H3K4me3.npy",
+      "length_bp": 144285,
+      "mean": 1.5684984922409058,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr20_34142839_34284135_+": {
+      "file": "results/epigenomics/chr20_34142839_34284135_+_H3K4me3.npy",
+      "length_bp": 141296,
+      "mean": 0.6474453806877136,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr20_24397834_24595167_+": {
+      "file": "results/epigenomics/chr20_24397834_24595167_+_H3K4me3.npy",
+      "length_bp": 197333,
+      "mean": 0.69234299659729,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_31412606_31853161_-": {
+      "file": "results/epigenomics/chr21_31412606_31853161_-_H3K4me3.npy",
+      "length_bp": 440555,
+      "mean": 0.948646605014801,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_44742202_44955923_-": {
+      "file": "results/epigenomics/chr21_44742202_44955923_-_H3K4me3.npy",
+      "length_bp": 213721,
+      "mean": 2.191472053527832,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_38661052_38955488_-": {
+      "file": "results/epigenomics/chr21_38661052_38955488_-_H3K4me3.npy",
+      "length_bp": 294436,
+      "mean": 0.8943603038787842,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr22_21852551_21990224_+": {
+      "file": "results/epigenomics/chr22_21852551_21990224_+_H3K4me3.npy",
+      "length_bp": 137673,
+      "mean": 1.4853073358535767,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_57969166_58133022_+": {
+      "file": "results/epigenomics/chr3_57969166_58133022_+_H3K4me3.npy",
+      "length_bp": 163856,
+      "mean": 1.1049219369888306,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_61522282_62255613_+": {
+      "file": "results/epigenomics/chr3_61522282_62255613_+_H3K4me3.npy",
+      "length_bp": 733331,
+      "mean": 0.6381047368049622,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_152287274_152634500_+": {
+      "file": "results/epigenomics/chr3_152287274_152634500_+_H3K4me3.npy",
+      "length_bp": 347226,
+      "mean": 0.5287247896194458,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_66511910_66633535_-": {
+      "file": "results/epigenomics/chr3_66511910_66633535_-_H3K4me3.npy",
+      "length_bp": 121625,
+      "mean": 0.4212592542171478,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_50375234_50515896_-": {
+      "file": "results/epigenomics/chr3_50375234_50515896_-_H3K4me3.npy",
+      "length_bp": 140662,
+      "mean": 0.42538681626319885,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_191157211_191322920_-": {
+      "file": "results/epigenomics/chr3_191157211_191322920_-_H3K4me3.npy",
+      "length_bp": 165709,
+      "mean": 0.44892439246177673,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_88075177_88281229_+": {
+      "file": "results/epigenomics/chr4_88075177_88281229_+_H3K4me3.npy",
+      "length_bp": 206052,
+      "mean": 0.6754990220069885,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_37569114_37817189_+": {
+      "file": "results/epigenomics/chr4_37569114_37817189_+_H3K4me3.npy",
+      "length_bp": 248075,
+      "mean": 0.7066409587860107,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_37131946_37271527_+": {
+      "file": "results/epigenomics/chr4_37131946_37271527_+_H3K4me3.npy",
+      "length_bp": 139581,
+      "mean": 0.39086633920669556,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_2233623_2391950_-": {
+      "file": "results/epigenomics/chr4_2233623_2391950_-_H3K4me3.npy",
+      "length_bp": 158327,
+      "mean": 1.2046457529067993,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_139008129_139148300_+": {
+      "file": "results/epigenomics/chr5_139008129_139148300_+_H3K4me3.npy",
+      "length_bp": 140171,
+      "mean": 0.5886340141296387,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_167651642_167831884_+": {
+      "file": "results/epigenomics/chr5_167651642_167831884_+_H3K4me3.npy",
+      "length_bp": 180242,
+      "mean": 0.466931015253067,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_60663856_60877755_+": {
+      "file": "results/epigenomics/chr5_60663856_60877755_+_H3K4me3.npy",
+      "length_bp": 213899,
+      "mean": 1.0513523817062378,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_65927931_66318107_+": {
+      "file": "results/epigenomics/chr5_65927931_66318107_+_H3K4me3.npy",
+      "length_bp": 390176,
+      "mean": 0.6824122071266174,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr6_15354505_15630232_+": {
+      "file": "results/epigenomics/chr6_15354505_15630232_+_H3K4me3.npy",
+      "length_bp": 275727,
+      "mean": 0.6433655023574829,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr6_20190850_20325900_-": {
+      "file": "results/epigenomics/chr6_20190850_20325900_-_H3K4me3.npy",
+      "length_bp": 135050,
+      "mean": 0.9876369833946228,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_36159360_36307677_+": {
+      "file": "results/epigenomics/chr7_36159360_36307677_+_H3K4me3.npy",
+      "length_bp": 148317,
+      "mean": 0.5672448873519897,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_141705800_142108133_+": {
+      "file": "results/epigenomics/chr7_141705800_142108133_+_H3K4me3.npy",
+      "length_bp": 402333,
+      "mean": 0.5981228947639465,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_150884133_151205249_-": {
+      "file": "results/epigenomics/chr7_150884133_151205249_-_H3K4me3.npy",
+      "length_bp": 321116,
+      "mean": 1.9861705303192139,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_16093676_16427472_-": {
+      "file": "results/epigenomics/chr7_16093676_16427472_-_H3K4me3.npy",
+      "length_bp": 333796,
+      "mean": 0.6260043382644653,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_131458630_131911863_-": {
+      "file": "results/epigenomics/chr7_131458630_131911863_-_H3K4me3.npy",
+      "length_bp": 453233,
+      "mean": 0.6851284503936768,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr8_97575100_97698900_+": {
+      "file": "results/epigenomics/chr8_97575100_97698900_+_H3K4me3.npy",
+      "length_bp": 123800,
+      "mean": 1.1036298274993896,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr8_17545583_17702706_-": {
+      "file": "results/epigenomics/chr8_17545583_17702706_-_H3K4me3.npy",
+      "length_bp": 157123,
+      "mean": 0.7568475604057312,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr9_37905894_38059210_-": {
+      "file": "results/epigenomics/chr9_37905894_38059210_-_H3K4me3.npy",
+      "length_bp": 153316,
+      "mean": 0.8363903164863586,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr9_85052126_85343168_-": {
+      "file": "results/epigenomics/chr9_85052126_85343168_-_H3K4me3.npy",
+      "length_bp": 291042,
+      "mean": 0.4825076758861542,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chrX_149282208_149433106_+": {
+      "file": "results/epigenomics/chrX_149282208_149433106_+_H3K4me3.npy",
+      "length_bp": 150898,
+      "mean": 0.4037683606147766,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chrX_10373595_10517949_-": {
+      "file": "results/epigenomics/chrX_10373595_10517949_-_H3K4me3.npy",
+      "length_bp": 144354,
+      "mean": 0.3607974648475647,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "_correlations": {
+      "pearson_r_grohmm": 0.06806243556951509,
+      "p_grohmm": 0.5485834914074972,
+      "pearson_r_danko": -0.16499047483041324,
+      "p_danko": 0.14359387376753982,
+      "n_genes": 80
+    }
+  },
+  "H3K27me3": {
+    "chr1_17719200_17902750_+": {
+      "file": "results/epigenomics/chr1_17719200_17902750_+_H3K27me3.npy",
+      "length_bp": 183550,
+      "mean": 0.8631624579429626,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_15123211_15267238_+": {
+      "file": "results/epigenomics/chr1_15123211_15267238_+_H3K27me3.npy",
+      "length_bp": 144027,
+      "mean": 0.49979475140571594,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_160306204_160606437_+": {
+      "file": "results/epigenomics/chr1_160306204_160606437_+_H3K27me3.npy",
+      "length_bp": 300233,
+      "mean": 0.6528065204620361,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_198273750_198413950_+": {
+      "file": "results/epigenomics/chr1_198273750_198413950_+_H3K27me3.npy",
+      "length_bp": 140200,
+      "mean": 0.8902462124824524,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_21416326_21544621_-": {
+      "file": "results/epigenomics/chr1_21416326_21544621_-_H3K27me3.npy",
+      "length_bp": 128295,
+      "mean": 0.2824108600616455,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_65071493_65204775_-": {
+      "file": "results/epigenomics/chr1_65071493_65204775_-_H3K27me3.npy",
+      "length_bp": 133282,
+      "mean": 0.48136985301971436,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_94230981_94359293_-": {
+      "file": "results/epigenomics/chr1_94230981_94359293_-_H3K27me3.npy",
+      "length_bp": 128312,
+      "mean": 0.6532221436500549,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_80498797_80746291_+": {
+      "file": "results/epigenomics/chr10_80498797_80746291_+_H3K27me3.npy",
+      "length_bp": 247494,
+      "mean": 0.5827867388725281,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_134201342_134446974_+": {
+      "file": "results/epigenomics/chr10_134201342_134446974_+_H3K27me3.npy",
+      "length_bp": 245632,
+      "mean": NaN,
+      "nan_frac": 1.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_12431737_12908148_+": {
+      "file": "results/epigenomics/chr10_12431737_12908148_+_H3K27me3.npy",
+      "length_bp": 476411,
+      "mean": 1.1086300611495972,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_129595314_129774152_+": {
+      "file": "results/epigenomics/chr10_129595314_129774152_+_H3K27me3.npy",
+      "length_bp": 178838,
+      "mean": 0.4968598186969757,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_95056175_95232064_-": {
+      "file": "results/epigenomics/chr10_95056175_95232064_-_H3K27me3.npy",
+      "length_bp": 175889,
+      "mean": 0.504432737827301,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_29786282_30064736_-": {
+      "file": "results/epigenomics/chr10_29786282_30064736_-_H3K27me3.npy",
+      "length_bp": 278454,
+      "mean": 0.7185665369033813,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_17402681_17536260_-": {
+      "file": "results/epigenomics/chr10_17402681_17536260_-_H3K27me3.npy",
+      "length_bp": 133579,
+      "mean": 0.5719966292381287,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_131067500_131279900_+": {
+      "file": "results/epigenomics/chr11_131067500_131279900_+_H3K27me3.npy",
+      "length_bp": 212400,
+      "mean": 1.1472923755645752,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_86189138_86341478_+": {
+      "file": "results/epigenomics/chr11_86189138_86341478_+_H3K27me3.npy",
+      "length_bp": 152340,
+      "mean": 0.5277469158172607,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_77603984_77806516_-": {
+      "file": "results/epigenomics/chr11_77603984_77806516_-_H3K27me3.npy",
+      "length_bp": 202532,
+      "mean": 0.44930484890937805,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_16765787_16992539_-": {
+      "file": "results/epigenomics/chr11_16765787_16992539_-_H3K27me3.npy",
+      "length_bp": 226752,
+      "mean": 0.4098508059978485,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_34129110_34335378_-": {
+      "file": "results/epigenomics/chr11_34129110_34335378_-_H3K27me3.npy",
+      "length_bp": 206268,
+      "mean": 0.4450939893722534,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_85829797_86061075_-": {
+      "file": "results/epigenomics/chr11_85829797_86061075_-_H3K27me3.npy",
+      "length_bp": 231278,
+      "mean": 0.45246008038520813,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_62524807_62827880_+": {
+      "file": "results/epigenomics/chr12_62524807_62827880_+_H3K27me3.npy",
+      "length_bp": 303073,
+      "mean": 0.4873947501182556,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_103374907_103676013_+": {
+      "file": "results/epigenomics/chr12_103374907_103676013_+_H3K27me3.npy",
+      "length_bp": 301106,
+      "mean": 0.9429364204406738,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_37973296_38123185_-": {
+      "file": "results/epigenomics/chr12_37973296_38123185_-_H3K27me3.npy",
+      "length_bp": 149889,
+      "mean": 0.4227444529533386,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_112670757_112800863_+": {
+      "file": "results/epigenomics/chr13_112670757_112800863_+_H3K27me3.npy",
+      "length_bp": 130106,
+      "mean": 0.38978299498558044,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_97593434_97900024_+": {
+      "file": "results/epigenomics/chr13_97593434_97900024_+_H3K27me3.npy",
+      "length_bp": 306590,
+      "mean": 0.5319446325302124,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_112392643_112589483_+": {
+      "file": "results/epigenomics/chr13_112392643_112589483_+_H3K27me3.npy",
+      "length_bp": 196840,
+      "mean": 0.3630427122116089,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_92675200_93009350_+": {
+      "file": "results/epigenomics/chr13_92675200_93009350_+_H3K27me3.npy",
+      "length_bp": 334150,
+      "mean": 0.6403940916061401,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr14_90807419_90953886_-": {
+      "file": "results/epigenomics/chr14_90807419_90953886_-_H3K27me3.npy",
+      "length_bp": 146467,
+      "mean": 0.5210972428321838,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr14_92473011_92652016_-": {
+      "file": "results/epigenomics/chr14_92473011_92652016_-_H3K27me3.npy",
+      "length_bp": 179005,
+      "mean": 0.7023047804832458,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_55671405_55797045_+": {
+      "file": "results/epigenomics/chr15_55671405_55797045_+_H3K27me3.npy",
+      "length_bp": 125640,
+      "mean": 0.5054473280906677,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_78858766_79031054_+": {
+      "file": "results/epigenomics/chr15_78858766_79031054_+_H3K27me3.npy",
+      "length_bp": 172288,
+      "mean": 0.6227589249610901,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_30853636_31147377_-": {
+      "file": "results/epigenomics/chr15_30853636_31147377_-_H3K27me3.npy",
+      "length_bp": 293741,
+      "mean": 0.5626484155654907,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr16_3952652_4106187_-": {
+      "file": "results/epigenomics/chr16_3952652_4106187_-_H3K27me3.npy",
+      "length_bp": 153535,
+      "mean": 0.5146402716636658,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr16_17103681_17472239_-": {
+      "file": "results/epigenomics/chr16_17103681_17472239_-_H3K27me3.npy",
+      "length_bp": 368558,
+      "mean": 0.6430097222328186,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_72789086_73008273_+": {
+      "file": "results/epigenomics/chr17_72789086_73008273_+_H3K27me3.npy",
+      "length_bp": 219187,
+      "mean": 0.46982353925704956,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_62804385_63120109_+": {
+      "file": "results/epigenomics/chr17_62804385_63120109_+_H3K27me3.npy",
+      "length_bp": 315724,
+      "mean": 0.503690779209137,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_41327543_41461546_+": {
+      "file": "results/epigenomics/chr17_41327543_41461546_+_H3K27me3.npy",
+      "length_bp": 134003,
+      "mean": 0.5650292038917542,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_8865583_9088042_+": {
+      "file": "results/epigenomics/chr17_8865583_9088042_+_H3K27me3.npy",
+      "length_bp": 222459,
+      "mean": 0.7743837833404541,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_68842118_69151822_-": {
+      "file": "results/epigenomics/chr17_68842118_69151822_-_H3K27me3.npy",
+      "length_bp": 309704,
+      "mean": 1.5941334962844849,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_9698227_9852553_+": {
+      "file": "results/epigenomics/chr18_9698227_9852553_+_H3K27me3.npy",
+      "length_bp": 154326,
+      "mean": 0.5160165429115295,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_19523559_19789027_+": {
+      "file": "results/epigenomics/chr18_19523559_19789027_+_H3K27me3.npy",
+      "length_bp": 265468,
+      "mean": 0.000659061421174556,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_44319424_44643576_+": {
+      "file": "results/epigenomics/chr18_44319424_44643576_+_H3K27me3.npy",
+      "length_bp": 324152,
+      "mean": 0.5591346025466919,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_40514860_40902473_+": {
+      "file": "results/epigenomics/chr18_40514860_40902473_+_H3K27me3.npy",
+      "length_bp": 387613,
+      "mean": 0.5307459831237793,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr19_4920123_5104608_+": {
+      "file": "results/epigenomics/chr19_4920123_5104608_+_H3K27me3.npy",
+      "length_bp": 184485,
+      "mean": 0.24120201170444489,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr19_38804712_38956254_+": {
+      "file": "results/epigenomics/chr19_38804712_38956254_+_H3K27me3.npy",
+      "length_bp": 151542,
+      "mean": 0.37050867080688477,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_200879229_201055231_+": {
+      "file": "results/epigenomics/chr2_200879229_201055231_+_H3K27me3.npy",
+      "length_bp": 176002,
+      "mean": 0.41274502873420715,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_6974973_7101760_+": {
+      "file": "results/epigenomics/chr2_6974973_7101760_+_H3K27me3.npy",
+      "length_bp": 126787,
+      "mean": 2.0015487670898438,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_218372756_218517041_-": {
+      "file": "results/epigenomics/chr2_218372756_218517041_-_H3K27me3.npy",
+      "length_bp": 144285,
+      "mean": 0.5121709108352661,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr20_34142839_34284135_+": {
+      "file": "results/epigenomics/chr20_34142839_34284135_+_H3K27me3.npy",
+      "length_bp": 141296,
+      "mean": 0.5079619884490967,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr20_24397834_24595167_+": {
+      "file": "results/epigenomics/chr20_24397834_24595167_+_H3K27me3.npy",
+      "length_bp": 197333,
+      "mean": 1.101607084274292,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_31412606_31853161_-": {
+      "file": "results/epigenomics/chr21_31412606_31853161_-_H3K27me3.npy",
+      "length_bp": 440555,
+      "mean": 0.4942866861820221,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_44742202_44955923_-": {
+      "file": "results/epigenomics/chr21_44742202_44955923_-_H3K27me3.npy",
+      "length_bp": 213721,
+      "mean": 0.7258215546607971,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_38661052_38955488_-": {
+      "file": "results/epigenomics/chr21_38661052_38955488_-_H3K27me3.npy",
+      "length_bp": 294436,
+      "mean": 0.7676372528076172,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr22_21852551_21990224_+": {
+      "file": "results/epigenomics/chr22_21852551_21990224_+_H3K27me3.npy",
+      "length_bp": 137673,
+      "mean": 0.35479092597961426,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_57969166_58133022_+": {
+      "file": "results/epigenomics/chr3_57969166_58133022_+_H3K27me3.npy",
+      "length_bp": 163856,
+      "mean": 0.3516063988208771,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_61522282_62255613_+": {
+      "file": "results/epigenomics/chr3_61522282_62255613_+_H3K27me3.npy",
+      "length_bp": 733331,
+      "mean": 0.7766700983047485,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_152287274_152634500_+": {
+      "file": "results/epigenomics/chr3_152287274_152634500_+_H3K27me3.npy",
+      "length_bp": 347226,
+      "mean": 0.7971628904342651,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_66511910_66633535_-": {
+      "file": "results/epigenomics/chr3_66511910_66633535_-_H3K27me3.npy",
+      "length_bp": 121625,
+      "mean": 0.627425491809845,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_50375234_50515896_-": {
+      "file": "results/epigenomics/chr3_50375234_50515896_-_H3K27me3.npy",
+      "length_bp": 140662,
+      "mean": 0.537518322467804,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_191157211_191322920_-": {
+      "file": "results/epigenomics/chr3_191157211_191322920_-_H3K27me3.npy",
+      "length_bp": 165709,
+      "mean": 1.0881375074386597,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_88075177_88281229_+": {
+      "file": "results/epigenomics/chr4_88075177_88281229_+_H3K27me3.npy",
+      "length_bp": 206052,
+      "mean": 0.4971499443054199,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_37569114_37817189_+": {
+      "file": "results/epigenomics/chr4_37569114_37817189_+_H3K27me3.npy",
+      "length_bp": 248075,
+      "mean": 0.5136734247207642,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_37131946_37271527_+": {
+      "file": "results/epigenomics/chr4_37131946_37271527_+_H3K27me3.npy",
+      "length_bp": 139581,
+      "mean": 1.2487986087799072,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_2233623_2391950_-": {
+      "file": "results/epigenomics/chr4_2233623_2391950_-_H3K27me3.npy",
+      "length_bp": 158327,
+      "mean": 0.4037926197052002,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_139008129_139148300_+": {
+      "file": "results/epigenomics/chr5_139008129_139148300_+_H3K27me3.npy",
+      "length_bp": 140171,
+      "mean": 0.4554412066936493,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_167651642_167831884_+": {
+      "file": "results/epigenomics/chr5_167651642_167831884_+_H3K27me3.npy",
+      "length_bp": 180242,
+      "mean": 1.9937299489974976,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_60663856_60877755_+": {
+      "file": "results/epigenomics/chr5_60663856_60877755_+_H3K27me3.npy",
+      "length_bp": 213899,
+      "mean": 0.47114279866218567,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_65927931_66318107_+": {
+      "file": "results/epigenomics/chr5_65927931_66318107_+_H3K27me3.npy",
+      "length_bp": 390176,
+      "mean": 0.5038701891899109,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr6_15354505_15630232_+": {
+      "file": "results/epigenomics/chr6_15354505_15630232_+_H3K27me3.npy",
+      "length_bp": 275727,
+      "mean": 0.4646044671535492,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr6_20190850_20325900_-": {
+      "file": "results/epigenomics/chr6_20190850_20325900_-_H3K27me3.npy",
+      "length_bp": 135050,
+      "mean": 0.5435572266578674,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_36159360_36307677_+": {
+      "file": "results/epigenomics/chr7_36159360_36307677_+_H3K27me3.npy",
+      "length_bp": 148317,
+      "mean": 0.8393189907073975,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_141705800_142108133_+": {
+      "file": "results/epigenomics/chr7_141705800_142108133_+_H3K27me3.npy",
+      "length_bp": 402333,
+      "mean": 0.9508851170539856,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_150884133_151205249_-": {
+      "file": "results/epigenomics/chr7_150884133_151205249_-_H3K27me3.npy",
+      "length_bp": 321116,
+      "mean": 0.7474470734596252,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_16093676_16427472_-": {
+      "file": "results/epigenomics/chr7_16093676_16427472_-_H3K27me3.npy",
+      "length_bp": 333796,
+      "mean": 0.6555349230766296,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_131458630_131911863_-": {
+      "file": "results/epigenomics/chr7_131458630_131911863_-_H3K27me3.npy",
+      "length_bp": 453233,
+      "mean": 0.7873876690864563,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr8_97575100_97698900_+": {
+      "file": "results/epigenomics/chr8_97575100_97698900_+_H3K27me3.npy",
+      "length_bp": 123800,
+      "mean": 0.47548332810401917,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr8_17545583_17702706_-": {
+      "file": "results/epigenomics/chr8_17545583_17702706_-_H3K27me3.npy",
+      "length_bp": 157123,
+      "mean": 0.3584783971309662,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr9_37905894_38059210_-": {
+      "file": "results/epigenomics/chr9_37905894_38059210_-_H3K27me3.npy",
+      "length_bp": 153316,
+      "mean": 0.44022220373153687,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr9_85052126_85343168_-": {
+      "file": "results/epigenomics/chr9_85052126_85343168_-_H3K27me3.npy",
+      "length_bp": 291042,
+      "mean": 1.2554758787155151,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chrX_149282208_149433106_+": {
+      "file": "results/epigenomics/chrX_149282208_149433106_+_H3K27me3.npy",
+      "length_bp": 150898,
+      "mean": 0.7503738403320312,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chrX_10373595_10517949_-": {
+      "file": "results/epigenomics/chrX_10373595_10517949_-_H3K27me3.npy",
+      "length_bp": 144354,
+      "mean": 0.7801637053489685,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "_correlations": {
+      "pearson_r_grohmm": -0.24929760536562084,
+      "p_grohmm": 0.025745592986023743,
+      "pearson_r_danko": -0.1719395269437036,
+      "p_danko": 0.1272461401612104,
+      "n_genes": 80
+    }
+  },
+  "CTCF": {
+    "chr1_17719200_17902750_+": {
+      "file": "results/epigenomics/chr1_17719200_17902750_+_CTCF.npy",
+      "length_bp": 183550,
+      "mean": 0.710469663143158,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_15123211_15267238_+": {
+      "file": "results/epigenomics/chr1_15123211_15267238_+_CTCF.npy",
+      "length_bp": 144027,
+      "mean": 0.9495853781700134,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_160306204_160606437_+": {
+      "file": "results/epigenomics/chr1_160306204_160606437_+_CTCF.npy",
+      "length_bp": 300233,
+      "mean": 0.6519314646720886,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_198273750_198413950_+": {
+      "file": "results/epigenomics/chr1_198273750_198413950_+_CTCF.npy",
+      "length_bp": 140200,
+      "mean": 0.6720209121704102,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_21416326_21544621_-": {
+      "file": "results/epigenomics/chr1_21416326_21544621_-_CTCF.npy",
+      "length_bp": 128295,
+      "mean": 0.693147599697113,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_65071493_65204775_-": {
+      "file": "results/epigenomics/chr1_65071493_65204775_-_CTCF.npy",
+      "length_bp": 133282,
+      "mean": 0.6395589709281921,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr1_94230981_94359293_-": {
+      "file": "results/epigenomics/chr1_94230981_94359293_-_CTCF.npy",
+      "length_bp": 128312,
+      "mean": 0.7670749425888062,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_80498797_80746291_+": {
+      "file": "results/epigenomics/chr10_80498797_80746291_+_CTCF.npy",
+      "length_bp": 247494,
+      "mean": 1.037428855895996,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_134201342_134446974_+": {
+      "file": "results/epigenomics/chr10_134201342_134446974_+_CTCF.npy",
+      "length_bp": 245632,
+      "mean": NaN,
+      "nan_frac": 1.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_12431737_12908148_+": {
+      "file": "results/epigenomics/chr10_12431737_12908148_+_CTCF.npy",
+      "length_bp": 476411,
+      "mean": 0.8341472148895264,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_129595314_129774152_+": {
+      "file": "results/epigenomics/chr10_129595314_129774152_+_CTCF.npy",
+      "length_bp": 178838,
+      "mean": 0.6306420564651489,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_95056175_95232064_-": {
+      "file": "results/epigenomics/chr10_95056175_95232064_-_CTCF.npy",
+      "length_bp": 175889,
+      "mean": 0.7166928648948669,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_29786282_30064736_-": {
+      "file": "results/epigenomics/chr10_29786282_30064736_-_CTCF.npy",
+      "length_bp": 278454,
+      "mean": 0.8918140530586243,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr10_17402681_17536260_-": {
+      "file": "results/epigenomics/chr10_17402681_17536260_-_CTCF.npy",
+      "length_bp": 133579,
+      "mean": 0.8615210056304932,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_131067500_131279900_+": {
+      "file": "results/epigenomics/chr11_131067500_131279900_+_CTCF.npy",
+      "length_bp": 212400,
+      "mean": 0.3025118112564087,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_86189138_86341478_+": {
+      "file": "results/epigenomics/chr11_86189138_86341478_+_CTCF.npy",
+      "length_bp": 152340,
+      "mean": 0.9485642910003662,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_77603984_77806516_-": {
+      "file": "results/epigenomics/chr11_77603984_77806516_-_CTCF.npy",
+      "length_bp": 202532,
+      "mean": 0.7015298008918762,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_16765787_16992539_-": {
+      "file": "results/epigenomics/chr11_16765787_16992539_-_CTCF.npy",
+      "length_bp": 226752,
+      "mean": 0.920246958732605,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_34129110_34335378_-": {
+      "file": "results/epigenomics/chr11_34129110_34335378_-_CTCF.npy",
+      "length_bp": 206268,
+      "mean": 0.800073504447937,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr11_85829797_86061075_-": {
+      "file": "results/epigenomics/chr11_85829797_86061075_-_CTCF.npy",
+      "length_bp": 231278,
+      "mean": 0.792904257774353,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_62524807_62827880_+": {
+      "file": "results/epigenomics/chr12_62524807_62827880_+_CTCF.npy",
+      "length_bp": 303073,
+      "mean": 0.8441678285598755,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_103374907_103676013_+": {
+      "file": "results/epigenomics/chr12_103374907_103676013_+_CTCF.npy",
+      "length_bp": 301106,
+      "mean": 0.8830297589302063,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr12_37973296_38123185_-": {
+      "file": "results/epigenomics/chr12_37973296_38123185_-_CTCF.npy",
+      "length_bp": 149889,
+      "mean": 0.47009530663490295,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_112670757_112800863_+": {
+      "file": "results/epigenomics/chr13_112670757_112800863_+_CTCF.npy",
+      "length_bp": 130106,
+      "mean": 0.4026336371898651,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_97593434_97900024_+": {
+      "file": "results/epigenomics/chr13_97593434_97900024_+_CTCF.npy",
+      "length_bp": 306590,
+      "mean": 0.44183284044265747,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_112392643_112589483_+": {
+      "file": "results/epigenomics/chr13_112392643_112589483_+_CTCF.npy",
+      "length_bp": 196840,
+      "mean": 0.5542962551116943,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr13_92675200_93009350_+": {
+      "file": "results/epigenomics/chr13_92675200_93009350_+_CTCF.npy",
+      "length_bp": 334150,
+      "mean": 0.34775274991989136,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr14_90807419_90953886_-": {
+      "file": "results/epigenomics/chr14_90807419_90953886_-_CTCF.npy",
+      "length_bp": 146467,
+      "mean": 0.7516806125640869,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr14_92473011_92652016_-": {
+      "file": "results/epigenomics/chr14_92473011_92652016_-_CTCF.npy",
+      "length_bp": 179005,
+      "mean": 0.9922060370445251,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_55671405_55797045_+": {
+      "file": "results/epigenomics/chr15_55671405_55797045_+_CTCF.npy",
+      "length_bp": 125640,
+      "mean": 0.8313482403755188,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_78858766_79031054_+": {
+      "file": "results/epigenomics/chr15_78858766_79031054_+_CTCF.npy",
+      "length_bp": 172288,
+      "mean": 1.246891975402832,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr15_30853636_31147377_-": {
+      "file": "results/epigenomics/chr15_30853636_31147377_-_CTCF.npy",
+      "length_bp": 293741,
+      "mean": 0.6864708065986633,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr16_3952652_4106187_-": {
+      "file": "results/epigenomics/chr16_3952652_4106187_-_CTCF.npy",
+      "length_bp": 153535,
+      "mean": 0.7672505378723145,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr16_17103681_17472239_-": {
+      "file": "results/epigenomics/chr16_17103681_17472239_-_CTCF.npy",
+      "length_bp": 368558,
+      "mean": 0.8849743604660034,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_72789086_73008273_+": {
+      "file": "results/epigenomics/chr17_72789086_73008273_+_CTCF.npy",
+      "length_bp": 219187,
+      "mean": 0.6845114827156067,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_62804385_63120109_+": {
+      "file": "results/epigenomics/chr17_62804385_63120109_+_CTCF.npy",
+      "length_bp": 315724,
+      "mean": 0.8364515900611877,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_41327543_41461546_+": {
+      "file": "results/epigenomics/chr17_41327543_41461546_+_CTCF.npy",
+      "length_bp": 134003,
+      "mean": 0.8191273212432861,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_8865583_9088042_+": {
+      "file": "results/epigenomics/chr17_8865583_9088042_+_CTCF.npy",
+      "length_bp": 222459,
+      "mean": 0.9035742282867432,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr17_68842118_69151822_-": {
+      "file": "results/epigenomics/chr17_68842118_69151822_-_CTCF.npy",
+      "length_bp": 309704,
+      "mean": 0.6941624283790588,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_9698227_9852553_+": {
+      "file": "results/epigenomics/chr18_9698227_9852553_+_CTCF.npy",
+      "length_bp": 154326,
+      "mean": 0.8815628290176392,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_19523559_19789027_+": {
+      "file": "results/epigenomics/chr18_19523559_19789027_+_CTCF.npy",
+      "length_bp": 265468,
+      "mean": 0.02178213931620121,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_44319424_44643576_+": {
+      "file": "results/epigenomics/chr18_44319424_44643576_+_CTCF.npy",
+      "length_bp": 324152,
+      "mean": 0.40225598216056824,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr18_40514860_40902473_+": {
+      "file": "results/epigenomics/chr18_40514860_40902473_+_CTCF.npy",
+      "length_bp": 387613,
+      "mean": 0.3161862790584564,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr19_4920123_5104608_+": {
+      "file": "results/epigenomics/chr19_4920123_5104608_+_CTCF.npy",
+      "length_bp": 184485,
+      "mean": 0.6238241791725159,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr19_38804712_38956254_+": {
+      "file": "results/epigenomics/chr19_38804712_38956254_+_CTCF.npy",
+      "length_bp": 151542,
+      "mean": 1.1910549402236938,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_200879229_201055231_+": {
+      "file": "results/epigenomics/chr2_200879229_201055231_+_CTCF.npy",
+      "length_bp": 176002,
+      "mean": 0.802794873714447,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_6974973_7101760_+": {
+      "file": "results/epigenomics/chr2_6974973_7101760_+_CTCF.npy",
+      "length_bp": 126787,
+      "mean": 1.11423659324646,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr2_218372756_218517041_-": {
+      "file": "results/epigenomics/chr2_218372756_218517041_-_CTCF.npy",
+      "length_bp": 144285,
+      "mean": 0.8513423204421997,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr20_34142839_34284135_+": {
+      "file": "results/epigenomics/chr20_34142839_34284135_+_CTCF.npy",
+      "length_bp": 141296,
+      "mean": 0.7266296744346619,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr20_24397834_24595167_+": {
+      "file": "results/epigenomics/chr20_24397834_24595167_+_CTCF.npy",
+      "length_bp": 197333,
+      "mean": 0.7210599184036255,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_31412606_31853161_-": {
+      "file": "results/epigenomics/chr21_31412606_31853161_-_CTCF.npy",
+      "length_bp": 440555,
+      "mean": 0.744534432888031,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_44742202_44955923_-": {
+      "file": "results/epigenomics/chr21_44742202_44955923_-_CTCF.npy",
+      "length_bp": 213721,
+      "mean": 1.3595025539398193,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr21_38661052_38955488_-": {
+      "file": "results/epigenomics/chr21_38661052_38955488_-_CTCF.npy",
+      "length_bp": 294436,
+      "mean": 0.8740876913070679,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr22_21852551_21990224_+": {
+      "file": "results/epigenomics/chr22_21852551_21990224_+_CTCF.npy",
+      "length_bp": 137673,
+      "mean": 0.9562312960624695,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_57969166_58133022_+": {
+      "file": "results/epigenomics/chr3_57969166_58133022_+_CTCF.npy",
+      "length_bp": 163856,
+      "mean": 0.6718311309814453,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_61522282_62255613_+": {
+      "file": "results/epigenomics/chr3_61522282_62255613_+_CTCF.npy",
+      "length_bp": 733331,
+      "mean": 0.7505967020988464,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_152287274_152634500_+": {
+      "file": "results/epigenomics/chr3_152287274_152634500_+_CTCF.npy",
+      "length_bp": 347226,
+      "mean": 0.7877616286277771,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_66511910_66633535_-": {
+      "file": "results/epigenomics/chr3_66511910_66633535_-_CTCF.npy",
+      "length_bp": 121625,
+      "mean": 0.6343590617179871,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_50375234_50515896_-": {
+      "file": "results/epigenomics/chr3_50375234_50515896_-_CTCF.npy",
+      "length_bp": 140662,
+      "mean": 0.5785800814628601,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr3_191157211_191322920_-": {
+      "file": "results/epigenomics/chr3_191157211_191322920_-_CTCF.npy",
+      "length_bp": 165709,
+      "mean": 0.6487898230552673,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_88075177_88281229_+": {
+      "file": "results/epigenomics/chr4_88075177_88281229_+_CTCF.npy",
+      "length_bp": 206052,
+      "mean": 0.6655842661857605,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_37569114_37817189_+": {
+      "file": "results/epigenomics/chr4_37569114_37817189_+_CTCF.npy",
+      "length_bp": 248075,
+      "mean": 0.8701295256614685,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_37131946_37271527_+": {
+      "file": "results/epigenomics/chr4_37131946_37271527_+_CTCF.npy",
+      "length_bp": 139581,
+      "mean": 0.5464665293693542,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr4_2233623_2391950_-": {
+      "file": "results/epigenomics/chr4_2233623_2391950_-_CTCF.npy",
+      "length_bp": 158327,
+      "mean": 0.5800668001174927,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_139008129_139148300_+": {
+      "file": "results/epigenomics/chr5_139008129_139148300_+_CTCF.npy",
+      "length_bp": 140171,
+      "mean": 0.7065341472625732,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_167651642_167831884_+": {
+      "file": "results/epigenomics/chr5_167651642_167831884_+_CTCF.npy",
+      "length_bp": 180242,
+      "mean": 0.6313847899436951,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_60663856_60877755_+": {
+      "file": "results/epigenomics/chr5_60663856_60877755_+_CTCF.npy",
+      "length_bp": 213899,
+      "mean": 0.8046471476554871,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr5_65927931_66318107_+": {
+      "file": "results/epigenomics/chr5_65927931_66318107_+_CTCF.npy",
+      "length_bp": 390176,
+      "mean": 0.7495454549789429,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr6_15354505_15630232_+": {
+      "file": "results/epigenomics/chr6_15354505_15630232_+_CTCF.npy",
+      "length_bp": 275727,
+      "mean": 0.9003889560699463,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr6_20190850_20325900_-": {
+      "file": "results/epigenomics/chr6_20190850_20325900_-_CTCF.npy",
+      "length_bp": 135050,
+      "mean": 0.7451310753822327,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_36159360_36307677_+": {
+      "file": "results/epigenomics/chr7_36159360_36307677_+_CTCF.npy",
+      "length_bp": 148317,
+      "mean": 0.8117727637290955,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_141705800_142108133_+": {
+      "file": "results/epigenomics/chr7_141705800_142108133_+_CTCF.npy",
+      "length_bp": 402333,
+      "mean": 0.7753293514251709,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_150884133_151205249_-": {
+      "file": "results/epigenomics/chr7_150884133_151205249_-_CTCF.npy",
+      "length_bp": 321116,
+      "mean": 1.4976167678833008,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_16093676_16427472_-": {
+      "file": "results/epigenomics/chr7_16093676_16427472_-_CTCF.npy",
+      "length_bp": 333796,
+      "mean": 0.6276733875274658,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr7_131458630_131911863_-": {
+      "file": "results/epigenomics/chr7_131458630_131911863_-_CTCF.npy",
+      "length_bp": 453233,
+      "mean": 0.938714861869812,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr8_97575100_97698900_+": {
+      "file": "results/epigenomics/chr8_97575100_97698900_+_CTCF.npy",
+      "length_bp": 123800,
+      "mean": 0.8144552111625671,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr8_17545583_17702706_-": {
+      "file": "results/epigenomics/chr8_17545583_17702706_-_CTCF.npy",
+      "length_bp": 157123,
+      "mean": 0.7853561639785767,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr9_37905894_38059210_-": {
+      "file": "results/epigenomics/chr9_37905894_38059210_-_CTCF.npy",
+      "length_bp": 153316,
+      "mean": 0.9158909320831299,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chr9_85052126_85343168_-": {
+      "file": "results/epigenomics/chr9_85052126_85343168_-_CTCF.npy",
+      "length_bp": 291042,
+      "mean": 0.7101693153381348,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chrX_149282208_149433106_+": {
+      "file": "results/epigenomics/chrX_149282208_149433106_+_CTCF.npy",
+      "length_bp": 150898,
+      "mean": 0.582194447517395,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "chrX_10373595_10517949_-": {
+      "file": "results/epigenomics/chrX_10373595_10517949_-_CTCF.npy",
+      "length_bp": 144354,
+      "mean": 0.46119391918182373,
+      "nan_frac": 0.0,
+      "genome_build_bw": "hg19"
+    },
+    "_correlations": {
+      "pearson_r_grohmm": 0.013890734282889117,
+      "p_grohmm": 0.9026669870509948,
+      "pearson_r_danko": -0.11727579186294101,
+      "p_danko": 0.3001937808960009,
+      "n_genes": 80
+    }
+  }
+}

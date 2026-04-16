@@ -1,0 +1,5 @@
+# hg19 gene annotations go here
+# - hg19.chrom.sizes (from UCSC)
+# - refGene.txt.gz (from UCSC)
+# - hg19_refseq_genes.bed (processed)
+# - E2-induced gene list from Danko 2013 supplemental Table S1

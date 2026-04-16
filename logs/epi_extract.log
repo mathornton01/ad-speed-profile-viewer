@@ -1,0 +1,27 @@
+Loading gene index from /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/results/speed_profiles/_gene_index.json
+  81 genes loaded.
+  Skipping WGBS_methylation: not_found in metadata
+Loaded 5 bigWig entries from metadata.json
+
+--- Processing mark: H3K36me3  (ENCFF685ECA.bigWig) ---
+H3K36me3:   0%|          | 0/81 [00:00<?, ?gene/s]H3K36me3:  67%|██████▋   | 54/81 [00:00<00:00, 534.48gene/s]                                                            
+--- Processing mark: H3K27ac  (ENCFF515VXR.bigWig) ---
+H3K27ac:   0%|          | 0/81 [00:00<?, ?gene/s]H3K27ac:  69%|██████▉   | 56/81 [00:00<00:00, 516.81gene/s]                                                           
+--- Processing mark: H3K4me3  (ENCFF267OQQ.bigWig) ---
+H3K4me3:   0%|          | 0/81 [00:00<?, ?gene/s]H3K4me3:  74%|███████▍  | 60/81 [00:00<00:00, 596.96gene/s]                                                           
+--- Processing mark: H3K27me3  (ENCFF495QYP.bigWig) ---
+H3K27me3:   0%|          | 0/81 [00:00<?, ?gene/s]H3K27me3:  70%|███████   | 57/81 [00:00<00:00, 547.86gene/s]                                                            
+--- Processing mark: CTCF  (ENCFF157EYO.bigWig) ---
+CTCF:   0%|          | 0/81 [00:00<?, ?gene/s]CTCF:  77%|███████▋  | 62/81 [00:00<00:00, 617.04gene/s]                                                        
+======================================================================
+Mark                             r vs grohmm    p grohmm   r vs danko     p danko
+----------------------------------------------------------------------
+H3K36me3                              0.0897      0.4290       0.0515      0.6502
+H3K27ac                               0.1074      0.3430       0.0496      0.6623
+H3K4me3                               0.0681      0.5486      -0.1650      0.1436
+H3K27me3                             -0.2493      0.0257      -0.1719      0.1272
+CTCF                                  0.0139      0.9027      -0.1173      0.3002
+======================================================================
+
+Summary index written to /home/mathornton/micah/herald-workspaces/simon/Projects/AD Experiments/read accumulation rate experiments/results/epigenomics/_epi_index.json
+Done.
